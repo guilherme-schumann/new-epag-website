@@ -1,26 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Colors: Primary ── */
+  --color-primary-500: #17C3FA;
+  --color-primary-600: #0EAEE2;
+  --color-primary-700: #0899C9;
+
+  /* ── Colors: Secondary ── */
+  --color-secondary-100: #EBF7FF;
+  --color-secondary-500: #30A6E9;
+  --color-secondary-900: #002C45;
+
+  /* ── Colors: Theme ── */
+  --color-theme-secondary: #016197;
+  --color-theme-middle-blue: #019FD1;
+  --color-theme-dark-blue-400: #62C6FF;
+
+  /* ── Colors: Neutral ── */
+  --color-light: #FFFFFF;
+  --color-dark-gray: #333333;
+  --color-light-gray: #999999;
+  --color-background: #F2F2F2;
+
+  /* ── Colors: Menu ── */
+  --color-menu-bg: #016197;
+  --color-menu-selected: #019FD1;
+  --color-menu-hover: #6ACDF6;
+  --color-menu-default: #FFFFFF;
+
+  /* ── Typography ── */
+  --font-sans: 'Open Sans', sans-serif;
+
+  /* ── Shadows ── */
+  --shadow-card: 10px 20px 40px 0px rgba(0, 0, 0, 0.05);
+  --shadow-navbar: 10px 20px 40px 0px rgba(0, 0, 0, 0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * ── Page layout utilities ──────────────────────────────────────────────────
+ *
+ * page-section   → padding padrão de todas as seções de página
+ *                  mobile: px-6 py-14 | sm: px-10 | lg: px-16 py-16 | xl: px-[120px] py-20
+ *
+ * page-x         → apenas padding horizontal (seção que gerencia o próprio ritmo vertical)
+ *
+ * page-container → max-width + centralização (sempre usar junto com page-x ou page-section)
+ */
+@utility page-section {
+  padding-inline: 1.5rem;   /* px-6  — 24px  */
+  padding-block:  3.5rem;   /* py-14 — 56px  */
+
+  @media (min-width: 640px) {
+    padding-inline: 2.5rem; /* sm:px-10 — 40px */
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;   /* lg:px-16 — 64px */
+    padding-block:  4rem;   /* lg:py-16 — 64px */
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 7.5rem; /* xl:px-[120px] */
+    padding-block:  5rem;   /* xl:py-20 — 80px */
   }
 }
 
+@utility page-x {
+  padding-inline: 1.5rem;
+
+  @media (min-width: 640px) {
+    padding-inline: 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 7.5rem;
+  }
+}
+
+@utility page-container {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-dark-gray);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

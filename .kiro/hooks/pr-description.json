@@ -1,0 +1,12 @@
+{
+  "name": "PR Description",
+  "version": "1.0.0",
+  "description": "Generates a pull request description based on the current git diff against main.",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Run `git diff main...HEAD` to see all changes on this branch, then write a PR description in this format:\n\n## What\nOne sentence explaining what this PR does.\n\n## Why\nBrief context on why this change is needed.\n\n## Changes\n- Bullet points of specific changes made\n- Group related changes together\n- Mention any files deleted or renamed"
+  }
+}

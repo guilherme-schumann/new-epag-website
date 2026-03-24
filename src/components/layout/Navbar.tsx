@@ -7,108 +7,75 @@ import NavDropdown, { type DropdownData } from './NavDropdown';
 
 type MenuItem = {
   label: string;
+  href?: string;
   dropdown?: DropdownData;
 };
 
 const menuItems: MenuItem[] = [
   {
-    label: 'Solutions & Features',
+    label: 'Payments',
     dropdown: {
       columns: [
         {
-          title: 'Pay-in Solutions',
+          title: 'Solutions & Features',
           items: [
-            { label: 'Pay-in & Payout', href: '/solutions/pay-in-payout', bold: true },
-            { label: 'PIX', href: '/solutions/pix' },
-            { label: 'Boleto', href: '/solutions/boleto' },
-            { label: 'OXXO', href: '/solutions/oxxo' },
-            { label: 'SPEI', href: '/solutions/spei' },
-            { label: 'Credit & Debit Cards', href: '/solutions/cards' },
-          ],
-        },
-        {
-          title: 'Payout & B2B',
-          items: [
-            { label: 'Mass Payouts', href: '/solutions/mass-payouts', bold: true },
-            { label: 'B2B Payments', href: '/solutions/b2b', bold: true },
-            { label: 'Recurrence', href: '/solutions/recurrence' },
-            { label: 'High Order Value', href: '/solutions/high-order-value' },
-            { label: 'Single Transaction', href: '/solutions/single-transaction' },
-          ],
-        },
-        {
-          title: 'Value-Added Services',
-          items: [
-            { label: 'Fraud & Risk Management', href: '/solutions/fraud-risk', bold: true },
-            { label: 'Invoice Management', href: '/solutions/invoice' },
-            { label: 'Performance Optimization', href: '/solutions/performance' },
-            { label: 'Anti Fraud', href: '/solutions/anti-fraud' },
-          ],
-        },
-      ],
-      feature: {
-        title: 'Why EPAG',
-        description:
-          'Understand how EPAG connects global brands to payment solutions across Latin America.',
-        href: '/why-epag',
-      },
-    },
-  },
-  {
-    label: 'Coverage',
-    dropdown: {
-      columns: [
-        {
-          title: 'Countries',
-          items: [
-            { label: 'Brazil', href: '/coverage/brazil', bold: true },
-            { label: 'Mexico', href: '/coverage/mexico', bold: true },
-            { label: 'Colombia', href: '/coverage/colombia' },
-            { label: 'Chile', href: '/coverage/chile' },
-            { label: 'Argentina', href: '/coverage/argentina' },
-            { label: 'Peru', href: '/coverage/peru' },
+            // ✅ Live
+            { label: 'Payin', href: '/solutions/payin', bold: true },
+            // Pending pages — routes reserved for future implementation
+            { label: 'Payout', href: '/solutions/payout', bold: true },
+            { label: 'Server-to-server', href: '/solutions/server-to-server' },
+            { label: 'Hosted Checkout', href: '/solutions/hosted-checkout' },
+            { label: 'Redirect Checkout', href: '/solutions/redirect-checkout' },
+            { label: 'ID Validation', href: '/solutions/id-validation' },
+            { label: 'Subscriptions', href: '/solutions/subscriptions' },
           ],
         },
         {
           title: 'Payment Methods',
           items: [
-            { label: 'Local Credit Cards', href: '/coverage/local-cards' },
-            { label: 'Digital Wallets', href: '/coverage/wallets' },
-            { label: 'Bank Transfers', href: '/coverage/bank-transfer' },
-            { label: 'Cash Vouchers', href: '/coverage/cash' },
-            { label: 'Instant Payments', href: '/coverage/instant' },
+            { label: 'PIX', href: '/payment-methods/pix' },
+            { label: 'OXXO', href: '/payment-methods/oxxo' },
+            { label: 'Credit / Debit Card', href: '/payment-methods/cards' },
+            { label: 'Boleto', href: '/payment-methods/boleto' },
+            { label: 'Wallets', href: '/payment-methods/wallets' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    label: 'Markets',
+    dropdown: {
+      columns: [
+        {
+          title: 'Coverage',
+          items: [
+            { label: 'Brazil', href: '/coverage/brazil', bold: true },
+            { label: 'Mexico', href: '/coverage/mexico', bold: true },
+            { label: 'Colombia', href: '/coverage/colombia' },
+            { label: 'Peru', href: '/coverage/peru' },
+            { label: 'Ecuador', href: '/coverage/ecuador' },
+            { label: 'Chile', href: '/coverage/chile' },
+            { label: 'Costa Rica', href: '/coverage/costa-rica' },
+            { label: 'Guatemala', href: '/coverage/guatemala' },
+            { label: 'Panama', href: '/coverage/panama' },
+            { label: 'Honduras', href: '/coverage/honduras' },
+            { label: 'Dominican Republic', href: '/coverage/dominican-republic' },
+            { label: 'El Salvador', href: '/coverage/el-salvador' },
           ],
         },
       ],
       feature: {
         title: 'Full Coverage Map',
-        description: 'Explore all supported countries, currencies, and payment methods at a glance.',
+        description:
+          '670M+ individuals reachable across 12 countries with 140+ payment partners.',
         href: '/coverage',
       },
     },
   },
   {
     label: 'Pricing',
-    dropdown: {
-      columns: [
-        {
-          title: 'Plans',
-          items: [
-            { label: 'Starter', href: '/pricing/starter' },
-            { label: 'Growth', href: '/pricing/growth' },
-            { label: 'Enterprise', href: '/pricing/enterprise' },
-          ],
-        },
-        {
-          title: 'Resources',
-          items: [
-            { label: 'Fee Calculator', href: '/pricing/calculator' },
-            { label: 'Compare Plans', href: '/pricing/compare' },
-            { label: 'Custom Quote', href: '/contact' },
-          ],
-        },
-      ],
-    },
+    href: '/pricing',
   },
   {
     label: 'Institucional',
@@ -117,28 +84,19 @@ const menuItems: MenuItem[] = [
         {
           title: 'Company',
           items: [
-            { label: 'About EPAG', href: '/about' },
+            { label: 'About epag', href: '/about' },
+            { label: 'Customers', href: '/customers' },
             { label: 'Careers', href: '/careers' },
-            { label: 'Press & Media', href: '/press' },
-            { label: 'Partners', href: '/partners' },
           ],
         },
         {
           title: 'Resources',
           items: [
-            { label: 'Blog', href: '/blog' },
             { label: 'Documentation', href: '/docs' },
             { label: 'Help Center', href: '/help' },
-            { label: 'Status', href: '/status' },
           ],
         },
       ],
-      feature: {
-        title: 'EPAG Developer Hub',
-        description:
-          'Integrate our APIs quickly with full documentation, SDKs and sandbox environment.',
-        href: '/docs',
-      },
     },
   },
 ];
@@ -179,21 +137,30 @@ export default function Navbar() {
         <ul className="hidden items-center gap-9 lg:flex">
           {menuItems.map((item) => (
             <li key={item.label} className="relative">
-              <button
-                className="flex cursor-pointer items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
-                onMouseEnter={() => item.dropdown && setActiveMenu(item.label)}
-              >
-                <span>{item.label}</span>
-                {item.dropdown && (
-                  <Icon
-                    name="chevron-down"
-                    size={24}
-                    className={`transition-transform duration-200 ${
-                      activeMenu === item.label ? 'rotate-180' : ''
-                    }`}
-                  />
-                )}
-              </button>
+              {item.href && !item.dropdown ? (
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  className="flex cursor-pointer items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
+                  onMouseEnter={() => item.dropdown && setActiveMenu(item.label)}
+                >
+                  <span>{item.label}</span>
+                  {item.dropdown && (
+                    <Icon
+                      name="chevron-down"
+                      size={24}
+                      className={`transition-transform duration-200 ${
+                        activeMenu === item.label ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </button>
+              )}
 
               {/* Dropdown card — anchored to this <li> */}
               {activeMenu === item.label && item.dropdown && (
@@ -245,13 +212,23 @@ export default function Navbar() {
           <ul className="flex flex-col">
             {menuItems.map((item) => (
               <li key={item.label}>
-                <button
-                  className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>{item.label}</span>
-                  {item.dropdown && <Icon name="chevron-down" size={20} />}
-                </button>
+                {item.href && !item.dropdown ? (
+                  <Link
+                    href={item.href}
+                    className="flex w-full items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                    {item.dropdown && <Icon name="chevron-down" size={20} />}
+                  </button>
+                )}
               </li>
             ))}
           </ul>

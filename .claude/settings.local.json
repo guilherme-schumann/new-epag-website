@@ -7,7 +7,9 @@
       "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/12c2ccc8-f264-4072-9389-2123519ae80b\" -o \"c:/Users/B2ml/Desktop/b2ml/epag/new-epag-website/public/assets/images/contact-man.png\")",
       "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/1a866c4f-337b-4e3c-b2c3-ec338c430e4d\" -o \"c:/Users/B2ml/Desktop/b2ml/epag/new-epag-website/public/assets/images/contact-epag-symbol.png\")",
       "Bash(npx next:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:flagicons.lipis.dev)"
     ]
   }
 }

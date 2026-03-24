@@ -1,0 +1,68 @@
+'use client';
+
+import Link from 'next/link';
+import { motion } from 'motion/react';
+import { Button, Icon } from '@/components/ui';
+
+export default function CoverageBottomCTA() {
+  return (
+    <section className="bg-background">
+      <div className="page-section page-container">
+        <div className="rounded-[48px] bg-secondary-900 px-8 py-16 text-center lg:px-16">
+
+          <motion.p
+            className="mb-4 text-xs font-bold uppercase tracking-widest text-primary-500"
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            Get Started
+          </motion.p>
+
+          <motion.h2
+            className="mx-auto max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-secondary-100 sm:text-4xl lg:text-[2.75rem]"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            Ready to go live in LatAm?
+          </motion.h2>
+
+          <motion.p
+            className="mx-auto mt-6 max-w-xl text-base leading-7 text-secondary-100/70"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Talk to a LATAM expansion specialist and get your integration scoped in 48 hours.
+          </motion.p>
+
+          <motion.div
+            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
+            <Link href="/contact">
+              <Button variant="primary" size="md">
+                Contact Sales
+                <Icon name="arrow-right" size={16} className="ml-2" />
+              </Button>
+            </Link>
+            <a
+              href="/docs"
+              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
+            >
+              Read the docs →
+            </a>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}

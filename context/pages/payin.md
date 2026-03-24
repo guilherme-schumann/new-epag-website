@@ -1,10 +1,10 @@
-# **Direct Access to Latin America’s Payment Infrastructure**
+# **Direct Access to Latin America's Payment Infrastructure**
 
 Accept payments across Latin America through direct connections to domestic banking rails and local acquirers — without intermediaries or layered aggregation.
 
 epag enables global companies to operate inside the local financial ecosystem with a single integration.
 
-Primary CTA: Explore Our API  
+Primary CTA: Explore Our API
  Secondary CTA: Talk to a LATAM Expansion Specialist
 
 ---
@@ -15,13 +15,13 @@ Most cross-border providers rely on third-party processors and multi-layer routi
 
 epag connects directly to local payment rails such as PIX, SPEI, and PSE, as well as domestic card acquirers. This direct infrastructure model provides:
 
-* Greater control over approval logic  
-* Faster implementation of new payment methods  
-* Reduced dependency on external processing layers  
-* Higher operational transparency  
+* Greater control over approval logic
+* Faster implementation of new payment methods
+* Reduced dependency on external processing layers
+* Higher operational transparency
 * Improved performance consistency
 
-We do not rent infrastructure.  
+We do not rent infrastructure.
  We build and operate it.
 
 ---
@@ -38,7 +38,7 @@ Through epag, merchants access:
 
 * Domestic card acquiring
 
-* Installment payments (“parcelamento”)
+* Installment payments ("parcelamento")
 
 * Intelligent transaction routing
 
@@ -78,7 +78,7 @@ epag adapts integration logic country by country to ensure:
 
 * Seamless cross-border settlement
 
-Latin America is not a single market.  
+Latin America is not a single market.
  It is a collection of independent financial systems.
 
 Our infrastructure connects you properly to each one.
@@ -107,7 +107,7 @@ In Latin America, approval performance is a function of infrastructure design.
 
 # **6\. Designed for Your Business Model**
 
-epag does not deploy generic payment flows.  
+epag does not deploy generic payment flows.
  Our Pay-in architecture adapts to your revenue structure and operational complexity.
 
 ### **6.1 SaaS & Subscription Platforms**
@@ -130,7 +130,7 @@ Structured settlement logic and configurable split-payment architecture.
 
 # **7\. API-First. Developer-Driven.**
 
-epag’s Pay-in infrastructure is fully API-based and built for scalability.
+epag's Pay-in infrastructure is fully API-based and built for scalability.
 
 Technical capabilities include:
 
@@ -144,7 +144,7 @@ Technical capabilities include:
 
 * Accelerated implementation cycles
 
-Documentation is not an auxiliary resource.  
+Documentation is not an auxiliary resource.
  It is a core component of the product architecture.
 
 CTA: Access Developer Documentation
@@ -158,4 +158,3 @@ epag replaces fragmented integrations and approval uncertainty with direct, stru
 From zero to live in LATAM — faster, fully compliant, and aligned with local financial systems.
 
 Button: Build Your Pay-in Infrastructure
-

@@ -27,7 +27,9 @@ export default function PayinHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          EPAG PAY-IN
+          Direct Access to Latin America's
+          <br />
+          Payment Infrastructure
         </motion.h1>
 
         {/* Description */}

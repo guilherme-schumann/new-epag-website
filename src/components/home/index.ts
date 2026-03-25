@@ -1,0 +1,9 @@
+export { default as HeroSection } from './HeroSection';
+export { default as StatsBar } from './StatsBar';
+export { default as DifferentiatorsSection } from './DifferentiatorsSection';
+export { default as ProductsSection } from './ProductsSection';
+export { default as IndustriesSection } from './IndustriesSection';
+export { default as CoverageSection } from './CoverageSection';
+export { default as DeveloperSection } from './DeveloperSection';
+export { default as PricingTeaser } from './PricingTeaser';
+export { default as FooterCTA } from './FooterCTA';

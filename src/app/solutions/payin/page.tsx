@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/layout';
 import {
   PayinHero,
   PayinMerchants,
@@ -19,18 +18,15 @@ export const metadata: Metadata = {
 
 export default function PayinPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main>
-        <PayinHero />
-        <PayinMerchants />
-        <PayinRails />
-        <PayinMarkets />
-        <PayinConversion />
-        <PayinBusinessModels />
-        <PayinDeveloper />
-        <PayinCTA />
-      </main>
-    </div>
+    <main className="flex-1">
+      <PayinHero />
+      <PayinMerchants />
+      <PayinRails />
+      <PayinMarkets />
+      <PayinConversion />
+      <PayinBusinessModels />
+      <PayinDeveloper />
+      <PayinCTA />
+    </main>
   );
 }

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/layout';
 import {
   PricingHero,
   PricingPlans,
@@ -17,16 +16,13 @@ export const metadata: Metadata = {
 
 export default function PricingPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main>
-        <PricingHero />
-        <PricingPlans />
-        <PricingFeeTable />
-        <PricingDifferentiators />
-        <PricingPlatformHighlights />
-        <PricingBottomCTA />
-      </main>
-    </div>
+    <main className="flex-1">
+      <PricingHero />
+      <PricingPlans />
+      <PricingFeeTable />
+      <PricingDifferentiators />
+      <PricingPlatformHighlights />
+      <PricingBottomCTA />
+    </main>
   );
 }

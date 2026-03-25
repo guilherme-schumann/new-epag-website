@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/layout';
 import {
   CoverageHero,
   CoverageStatsBar,
@@ -16,15 +15,12 @@ export const metadata: Metadata = {
 
 export default function CoveragePage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main>
-        <CoverageHero />
-        <CoverageStatsBar />
-        <CoverageCountrySelector />
-        <CoverageProductsSection />
-        <CoverageBottomCTA />
-      </main>
-    </div>
+    <main className="flex-1">
+      <CoverageHero />
+      <CoverageStatsBar />
+      <CoverageCountrySelector />
+      <CoverageProductsSection />
+      <CoverageBottomCTA />
+    </main>
   );
 }

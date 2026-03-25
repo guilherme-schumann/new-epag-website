@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/layout';
 import {
   AboutHero,
   AboutMissionVision,
@@ -19,18 +18,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header />
-      <main>
-        <AboutHero />
-        <AboutMissionVision />
-        <AboutStory />
-        <AboutTeamStats />
-        <AboutFounders />
-        <AboutTechnology />
-        <AboutOffices />
-        <AboutBottomCTA />
-      </main>
-    </div>
+    <main className="flex-1">
+      <AboutHero />
+      <AboutMissionVision />
+      <AboutStory />
+      <AboutTeamStats />
+      <AboutFounders />
+      <AboutTechnology />
+      <AboutOffices />
+      <AboutBottomCTA />
+    </main>
   );
 }

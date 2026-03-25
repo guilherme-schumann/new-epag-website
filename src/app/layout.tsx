@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import 'flag-icons/css/flag-icons.min.css';
+import { Header, Footer } from '@/components/layout';
+import { LanguageProvider } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'EPAG — Cross-Border Online Payments for Latin America',
@@ -15,7 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased flex flex-col">
+        <LanguageProvider>
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

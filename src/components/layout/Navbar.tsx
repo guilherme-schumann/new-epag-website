@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Logo, Icon, Button } from '@/components/ui';
 import NavDropdown, { type DropdownData } from './NavDropdown';
+import { useLanguage, type Translations } from '@/lib/i18n';
 
 type MenuItem = {
   label: string;
@@ -11,119 +12,90 @@ type MenuItem = {
   dropdown?: DropdownData;
 };
 
-const menuItems: MenuItem[] = [
-  {
-    label: 'Payments',
-    dropdown: {
-      columns: [
-        {
-          title: 'Solutions & Features',
-          items: [
-            // ✅ Live
-            { label: 'Payin', href: '/solutions/payin', bold: true },
-            // Pending pages — routes reserved for future implementation
-            { label: 'Payout', href: '/solutions/payout', bold: true },
-            { label: 'Server-to-server', href: '/solutions/server-to-server' },
-            { label: 'Hosted Checkout', href: '/solutions/hosted-checkout' },
-            { label: 'Redirect Checkout', href: '/solutions/redirect-checkout' },
-            { label: 'ID Validation', href: '/solutions/id-validation' },
-            { label: 'Subscriptions', href: '/solutions/subscriptions' },
-          ],
-        },
-        {
-          title: 'Payment Methods',
-          items: [
-            { label: 'PIX', href: '/payment-methods/pix' },
-            { label: 'OXXO', href: '/payment-methods/oxxo' },
-            { label: 'Credit / Debit Card', href: '/payment-methods/cards' },
-            { label: 'Boleto', href: '/payment-methods/boleto' },
-            { label: 'Wallets', href: '/payment-methods/wallets' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    label: 'Markets',
-    dropdown: {
-      columns: [
-        {
-          title: 'Coverage',
-          items: [
-            { label: 'Brazil', href: '/coverage/brazil', bold: true },
-            { label: 'Mexico', href: '/coverage/mexico', bold: true },
-            { label: 'Colombia', href: '/coverage/colombia' },
-            { label: 'Peru', href: '/coverage/peru' },
-            { label: 'Ecuador', href: '/coverage/ecuador' },
-            { label: 'Chile', href: '/coverage/chile' },
-            { label: 'Costa Rica', href: '/coverage/costa-rica' },
-            { label: 'Guatemala', href: '/coverage/guatemala' },
-            { label: 'Panama', href: '/coverage/panama' },
-            { label: 'Honduras', href: '/coverage/honduras' },
-            { label: 'Dominican Republic', href: '/coverage/dominican-republic' },
-            { label: 'El Salvador', href: '/coverage/el-salvador' },
-          ],
-        },
-      ],
-      feature: {
-        title: 'Full Coverage Map',
-        description:
-          '670M+ individuals reachable across 12 countries with 140+ payment partners.',
-        href: '/coverage',
+function buildMenuItems(nav: Translations['nav']): MenuItem[] {
+  return [
+    {
+      label: nav.payments,
+      dropdown: {
+        columns: [
+          {
+            title: nav.solutionsAndFeatures,
+            items: [
+              { label: nav.payin, href: '/solutions/payin', bold: true },
+            ],
+          },
+        ],
       },
     },
-  },
-  {
-    label: 'Pricing',
-    href: '/pricing',
-  },
-  {
-    label: 'Institucional',
-    dropdown: {
-      columns: [
-        {
-          title: 'Company',
-          items: [
-            { label: 'About epag', href: '/about' },
-            { label: 'Customers', href: '/customers' },
-            { label: 'Careers', href: '/careers' },
-          ],
+    {
+      label: nav.markets,
+      dropdown: {
+        columns: [],
+        feature: {
+          title: nav.fullCoverageMap,
+          description: nav.coverageDescription,
+          href: '/coverage',
         },
-        {
-          title: 'Resources',
-          items: [
-            { label: 'Documentation', href: '/docs' },
-            { label: 'Help Center', href: '/help' },
-          ],
-        },
-      ],
+      },
     },
-  },
-];
-
-const topLinks = [
-  { label: 'Login Admin', href: '/admin' },
-  { label: 'Help Center', href: '/help' },
-];
+    {
+      label: nav.pricing,
+      href: '/pricing',
+    },
+    {
+      label: nav.institutional,
+      dropdown: {
+        columns: [
+          {
+            title: nav.company,
+            items: [{ label: nav.aboutEpag, href: '/about' }],
+          },
+          {
+            title: nav.resources,
+            items: [{ label: nav.documentation, href: 'https://developer.epag.com' }],
+          },
+        ],
+      },
+    },
+  ];
+}
 
 export default function Navbar() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
 
-  // Close dropdown on click outside
+  const menuItems = buildMenuItems(t.nav);
+
+  // Close desktop dropdown on click outside
   useEffect(() => {
     if (!activeMenu) return;
-
     function handleClickOutside(e: MouseEvent) {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setActiveMenu(null);
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeMenu]);
+
+  // Close mobile drawer on resize to desktop
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false);
+        setActiveMobileMenu(null);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  function toggleMobileMenu(label: string) {
+    setActiveMobileMenu((prev) => (prev === label ? null : label));
+  }
 
   return (
     <>
@@ -175,7 +147,7 @@ export default function Navbar() {
         <div className="hidden lg:block">
           <Link href="/contact">
             <Button variant="primary" size="md">
-              Contact Us
+              {t.nav.contactUs}
             </Button>
           </Link>
         </div>
@@ -183,8 +155,8 @@ export default function Navbar() {
         {/* Hamburger button */}
         <button
           className="flex cursor-pointer items-center justify-center text-secondary-900 lg:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => { setIsOpen(!isOpen); setActiveMobileMenu(null); }}
+          aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={isOpen}
         >
           <Icon name={isOpen ? 'x' : 'menu'} size={28} />
@@ -193,19 +165,16 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {isOpen && (
-        <div className="absolute left-0 right-0 z-50 bg-light shadow-lg lg:hidden">
+        <div className="absolute left-0 right-0 z-50 max-h-[calc(100vh-120px)] overflow-y-auto bg-light shadow-lg lg:hidden">
           {/* TopBar links on mobile */}
           <div className="flex items-center gap-4 border-b border-secondary-100 bg-secondary-900 px-6 py-3">
-            {topLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+            <a
+              href="https://adm.epag.io/login"
+              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
+              onClick={() => setIsOpen(false)}
+            >
+              {t.topBar.loginAdmin}
+            </a>
           </div>
 
           {/* Nav items */}
@@ -215,19 +184,78 @@ export default function Navbar() {
                 {item.href && !item.dropdown ? (
                   <Link
                     href={item.href}
-                    className="flex w-full items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
+                    className="flex w-full items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-100/40"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.label}
                   </Link>
                 ) : (
-                  <button
-                    className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span>{item.label}</span>
-                    {item.dropdown && <Icon name="chevron-down" size={20} />}
-                  </button>
+                  <>
+                    <button
+                      className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-100/40"
+                      onClick={() => toggleMobileMenu(item.label)}
+                      aria-expanded={activeMobileMenu === item.label}
+                    >
+                      <span>{item.label}</span>
+                      {item.dropdown && (
+                        <Icon
+                          name="chevron-down"
+                          size={20}
+                          className={`transition-transform duration-200 ${
+                            activeMobileMenu === item.label ? 'rotate-180' : ''
+                          }`}
+                        />
+                      )}
+                    </button>
+
+                    {/* Inline accordion dropdown */}
+                    {activeMobileMenu === item.label && item.dropdown && (
+                      <div className="border-b border-secondary-100 bg-secondary-100/30 px-6 py-4">
+                        <div className="flex flex-col gap-5">
+                          {item.dropdown.columns.map((col) => (
+                            <div key={col.title}>
+                              <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-theme-secondary">
+                                <span className="inline-block h-3 w-3 rounded bg-theme-secondary/10 ring-1 ring-theme-secondary/20" />
+                                {col.title}
+                              </p>
+                              <ul className="flex flex-col gap-1 pl-5">
+                                {col.items.map((colItem) => (
+                                  <li key={colItem.label}>
+                                    <Link
+                                      href={colItem.href}
+                                      className={`text-sm leading-7 text-dark-gray transition-colors hover:text-theme-secondary ${
+                                        colItem.bold ? 'font-semibold' : 'font-normal'
+                                      }`}
+                                      onClick={() => setIsOpen(false)}
+                                    >
+                                      {colItem.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+
+                          {item.dropdown.feature && (
+                            <div className="border-t border-secondary-100 pt-3">
+                              <Link
+                                href={item.dropdown.feature.href}
+                                className="flex flex-col gap-0.5"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                <span className="text-sm font-bold text-theme-secondary">
+                                  {item.dropdown.feature.title}
+                                </span>
+                                <span className="text-sm text-dark-gray">
+                                  {item.dropdown.feature.description}
+                                </span>
+                              </Link>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </li>
             ))}
@@ -237,7 +265,7 @@ export default function Navbar() {
           <div className="px-6 py-5">
             <Link href="/contact" onClick={() => setIsOpen(false)}>
               <Button variant="primary" size="md" className="w-full justify-center">
-                Contact Us
+                {t.nav.contactUs}
               </Button>
             </Link>
           </div>

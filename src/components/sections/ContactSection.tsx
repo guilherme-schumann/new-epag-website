@@ -20,6 +20,7 @@ export default function ContactSection() {
           alt=""
           width={800}
           height={600}
+          style={{ height: 'auto' }}
           className="object-contain object-bottom-right"
         />
       </div>

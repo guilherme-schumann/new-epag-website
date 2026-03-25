@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Icon } from '@/components/ui';
+import { withBasePath } from '@/lib/base-path';
 
 type ContactTab = 'sales' | 'merchant';
 
@@ -15,7 +16,7 @@ export default function ContactSection() {
       {/* ── Decorative right panel ── */}
       <div className="pointer-events-none absolute bottom-0 right-0 hidden lg:block">
         <Image
-          src="/assets/images/background-contact-sales.png"
+          src={withBasePath('/assets/images/background-contact-sales.png')}
           alt=""
           width={800}
           height={600}

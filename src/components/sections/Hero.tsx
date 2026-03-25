@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button, Icon } from '@/components/ui';
+import { withBasePath } from '@/lib/base-path';
 
 export default function Hero() {
   return (
@@ -44,7 +45,7 @@ export default function Hero() {
         {/* Mobile: full-width below text */}
         <div className="page-x pb-12 lg:hidden">
           <Image
-            src="/assets/images/mockup-epag-dashboard.png"
+            src={withBasePath('/assets/images/mockup-epag-dashboard.png')}
             alt="EPAG Dashboard"
             width={700}
             height={460}
@@ -56,7 +57,7 @@ export default function Hero() {
         {/* Desktop: flush to the right edge */}
         <div className="absolute right-0 top-1/2 hidden -translate-y-1/2 lg:flex lg:w-[56%] lg:justify-end xl:w-[58%]">
           <Image
-            src="/assets/images/mockup-epag-dashboard.png"
+            src={withBasePath('/assets/images/mockup-epag-dashboard.png')}
             alt="EPAG Dashboard showing balances, transactions and revenue charts"
             width={1000}
             height={650}

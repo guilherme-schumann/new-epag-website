@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
+import { withBasePath } from '@/lib/base-path';
 
 type Method = {
   label: string;
@@ -183,7 +184,7 @@ export default function CoverageCountrySelector() {
               >
                 {method.icon ? (
                   <Image
-                    src={method.icon}
+                    src={withBasePath(method.icon)}
                     alt={method.label}
                     width={36}
                     height={36}

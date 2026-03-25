@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import * as motion from 'motion/react-client';
 import type { Variants } from 'motion/react';
+import { withBasePath } from '@/lib/base-path';
 
 const founders = [
   {
@@ -96,7 +97,7 @@ export default function AboutFounders() {
                 >
                   <div className="relative aspect-[3/4] w-full">
                     <Image
-                      src={founder.photo}
+                      src={withBasePath(founder.photo)}
                       alt={founder.name}
                       fill
                       className="object-cover object-top"

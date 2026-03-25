@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { withBasePath } from '@/lib/base-path';
 
 export default function PayinHero() {
   return (
@@ -71,7 +72,7 @@ export default function PayinHero() {
           transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
         >
           <Image
-            src="/assets/images/mockup-epag-dashboard.png"
+            src={withBasePath('/assets/images/mockup-epag-dashboard.png')}
             alt="EPAG Pay-in dashboard"
             width={1200}
             height={600}

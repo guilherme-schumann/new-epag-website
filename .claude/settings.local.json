@@ -9,7 +9,9 @@
       "Bash(npx next:*)",
       "Bash(npm install:*)",
       "Bash(npx tsc:*)",
-      "WebFetch(domain:flagicons.lipis.dev)"
+      "WebFetch(domain:flagicons.lipis.dev)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

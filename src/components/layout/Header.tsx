@@ -4,8 +4,8 @@ import Navbar from './Navbar';
 
 export default function Header() {
   return (
-    <header className="relative w-full">
-      <NewsBanner message="This place was separated to share new features in our system!" />
+    <header className="sticky top-0 z-50 w-full">
+      <NewsBanner />
       <TopBar />
       <Navbar />
     </header>

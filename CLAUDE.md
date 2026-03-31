@@ -1,4 +1,5 @@
 @AGENTS.md
+@PRODUCT.md
 
 # epag Website
 
@@ -6,11 +7,14 @@ B2B fintech providing **direct payment infrastructure across Latin America** (Br
 
 ## Context Documents
 
-Product copy and design briefs live in `context/`. **Always read the relevant file before implementing a new page or section.**
+Product copy per page lives in `context/pages/`. **Always read the relevant file before implementing a new page or section.**
+For product context, copy rules, token mapping and roadmap, read `PRODUCT.md` (loaded above via `@PRODUCT.md`).
 
-| File | Covers |
-|------|--------|
-| `context/Payin.md` | Pay-in / Pay-out product page copy and CTAs |
+| File | Route |
+|------|-------|
+| `context/pages/payin.md` | `/solutions/payin` |
+
+> When implementing a new page: (1) check `PRODUCT.md` Section 6 for the relevant `context/pages/` file, (2) create the `.md` if it doesn't exist yet using `context/guide/` as reference, (3) scaffold the page with `/new-page <route>`.
 
 ## Quick Reference
 

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Header } from '@/components/layout';
 import { ContactSection } from '@/components/sections';
 
 export const metadata: Metadata = {
@@ -10,9 +9,8 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Header />
+    <main className="flex-1 bg-background">
       <ContactSection />
-    </div>
+    </main>
   );
 }

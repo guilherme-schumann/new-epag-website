@@ -5,7 +5,8 @@ export type IconName =
   | 'x'
   | 'globe'
   | 'arrow-right'
-  | 'menu';
+  | 'menu'
+  | 'check';
 
 interface IconProps extends SVGProps<SVGSVGElement> {
   name: IconName;
@@ -42,6 +43,11 @@ const icons: Record<IconName, (props: SVGProps<SVGSVGElement>) => ReactElement> 
       <line x1="3" y1="6" x2="21" y2="6" />
       <line x1="3" y1="12" x2="21" y2="12" />
       <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  ),
+  check: (props) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <polyline points="20 6 9 17 4 12" />
     </svg>
   ),
 };

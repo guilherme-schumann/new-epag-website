@@ -4,168 +4,98 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Logo, Icon, Button } from '@/components/ui';
 import NavDropdown, { type DropdownData } from './NavDropdown';
+import { useLanguage, type Translations } from '@/lib/i18n';
 
 type MenuItem = {
   label: string;
+  href?: string;
   dropdown?: DropdownData;
 };
 
-const menuItems: MenuItem[] = [
-  {
-    label: 'Solutions & Features',
-    dropdown: {
-      columns: [
-        {
-          title: 'Pay-in Solutions',
-          items: [
-            { label: 'Pay-in & Payout', href: '/solutions/pay-in-payout', bold: true },
-            { label: 'PIX', href: '/solutions/pix' },
-            { label: 'Boleto', href: '/solutions/boleto' },
-            { label: 'OXXO', href: '/solutions/oxxo' },
-            { label: 'SPEI', href: '/solutions/spei' },
-            { label: 'Credit & Debit Cards', href: '/solutions/cards' },
-          ],
-        },
-        {
-          title: 'Payout & B2B',
-          items: [
-            { label: 'Mass Payouts', href: '/solutions/mass-payouts', bold: true },
-            { label: 'B2B Payments', href: '/solutions/b2b', bold: true },
-            { label: 'Recurrence', href: '/solutions/recurrence' },
-            { label: 'High Order Value', href: '/solutions/high-order-value' },
-            { label: 'Single Transaction', href: '/solutions/single-transaction' },
-          ],
-        },
-        {
-          title: 'Value-Added Services',
-          items: [
-            { label: 'Fraud & Risk Management', href: '/solutions/fraud-risk', bold: true },
-            { label: 'Invoice Management', href: '/solutions/invoice' },
-            { label: 'Performance Optimization', href: '/solutions/performance' },
-            { label: 'Anti Fraud', href: '/solutions/anti-fraud' },
-          ],
-        },
-      ],
-      feature: {
-        title: 'Why EPAG',
-        description:
-          'Understand how EPAG connects global brands to payment solutions across Latin America.',
-        href: '/why-epag',
+function buildMenuItems(nav: Translations['nav']): MenuItem[] {
+  return [
+    {
+      label: nav.payments,
+      dropdown: {
+        columns: [
+          {
+            title: nav.solutionsAndFeatures,
+            items: [
+              { label: nav.payin, href: '/solutions/payin', bold: true },
+            ],
+          },
+        ],
       },
     },
-  },
-  {
-    label: 'Coverage',
-    dropdown: {
-      columns: [
-        {
-          title: 'Countries',
-          items: [
-            { label: 'Brazil', href: '/coverage/brazil', bold: true },
-            { label: 'Mexico', href: '/coverage/mexico', bold: true },
-            { label: 'Colombia', href: '/coverage/colombia' },
-            { label: 'Chile', href: '/coverage/chile' },
-            { label: 'Argentina', href: '/coverage/argentina' },
-            { label: 'Peru', href: '/coverage/peru' },
-          ],
+    {
+      label: nav.markets,
+      dropdown: {
+        columns: [],
+        feature: {
+          title: nav.fullCoverageMap,
+          description: nav.coverageDescription,
+          href: '/coverage',
         },
-        {
-          title: 'Payment Methods',
-          items: [
-            { label: 'Local Credit Cards', href: '/coverage/local-cards' },
-            { label: 'Digital Wallets', href: '/coverage/wallets' },
-            { label: 'Bank Transfers', href: '/coverage/bank-transfer' },
-            { label: 'Cash Vouchers', href: '/coverage/cash' },
-            { label: 'Instant Payments', href: '/coverage/instant' },
-          ],
-        },
-      ],
-      feature: {
-        title: 'Full Coverage Map',
-        description: 'Explore all supported countries, currencies, and payment methods at a glance.',
-        href: '/coverage',
       },
     },
-  },
-  {
-    label: 'Pricing',
-    dropdown: {
-      columns: [
-        {
-          title: 'Plans',
-          items: [
-            { label: 'Starter', href: '/pricing/starter' },
-            { label: 'Growth', href: '/pricing/growth' },
-            { label: 'Enterprise', href: '/pricing/enterprise' },
-          ],
-        },
-        {
-          title: 'Resources',
-          items: [
-            { label: 'Fee Calculator', href: '/pricing/calculator' },
-            { label: 'Compare Plans', href: '/pricing/compare' },
-            { label: 'Custom Quote', href: '/contact' },
-          ],
-        },
-      ],
+    {
+      label: nav.pricing,
+      href: '/pricing',
     },
-  },
-  {
-    label: 'Institucional',
-    dropdown: {
-      columns: [
-        {
-          title: 'Company',
-          items: [
-            { label: 'About EPAG', href: '/about' },
-            { label: 'Careers', href: '/careers' },
-            { label: 'Press & Media', href: '/press' },
-            { label: 'Partners', href: '/partners' },
-          ],
-        },
-        {
-          title: 'Resources',
-          items: [
-            { label: 'Blog', href: '/blog' },
-            { label: 'Documentation', href: '/docs' },
-            { label: 'Help Center', href: '/help' },
-            { label: 'Status', href: '/status' },
-          ],
-        },
-      ],
-      feature: {
-        title: 'EPAG Developer Hub',
-        description:
-          'Integrate our APIs quickly with full documentation, SDKs and sandbox environment.',
-        href: '/docs',
+    {
+      label: nav.institutional,
+      dropdown: {
+        columns: [
+          {
+            title: nav.company,
+            items: [{ label: nav.aboutEpag, href: '/about' }],
+          },
+          {
+            title: nav.resources,
+            items: [{ label: nav.documentation, href: 'https://developer.epag.com' }],
+          },
+        ],
       },
     },
-  },
-];
-
-const topLinks = [
-  { label: 'Login Admin', href: '/admin' },
-  { label: 'Help Center', href: '/help' },
-];
+  ];
+}
 
 export default function Navbar() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
 
-  // Close dropdown on click outside
+  const menuItems = buildMenuItems(t.nav);
+
+  // Close desktop dropdown on click outside
   useEffect(() => {
     if (!activeMenu) return;
-
     function handleClickOutside(e: MouseEvent) {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setActiveMenu(null);
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeMenu]);
+
+  // Close mobile drawer on resize to desktop
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false);
+        setActiveMobileMenu(null);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  function toggleMobileMenu(label: string) {
+    setActiveMobileMenu((prev) => (prev === label ? null : label));
+  }
 
   return (
     <>
@@ -179,21 +109,30 @@ export default function Navbar() {
         <ul className="hidden items-center gap-9 lg:flex">
           {menuItems.map((item) => (
             <li key={item.label} className="relative">
-              <button
-                className="flex cursor-pointer items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
-                onMouseEnter={() => item.dropdown && setActiveMenu(item.label)}
-              >
-                <span>{item.label}</span>
-                {item.dropdown && (
-                  <Icon
-                    name="chevron-down"
-                    size={24}
-                    className={`transition-transform duration-200 ${
-                      activeMenu === item.label ? 'rotate-180' : ''
-                    }`}
-                  />
-                )}
-              </button>
+              {item.href && !item.dropdown ? (
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  className="flex cursor-pointer items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
+                  onMouseEnter={() => item.dropdown && setActiveMenu(item.label)}
+                >
+                  <span>{item.label}</span>
+                  {item.dropdown && (
+                    <Icon
+                      name="chevron-down"
+                      size={24}
+                      className={`transition-transform duration-200 ${
+                        activeMenu === item.label ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </button>
+              )}
 
               {/* Dropdown card — anchored to this <li> */}
               {activeMenu === item.label && item.dropdown && (
@@ -208,7 +147,7 @@ export default function Navbar() {
         <div className="hidden lg:block">
           <Link href="/contact">
             <Button variant="primary" size="md">
-              Contact Us
+              {t.nav.contactUs}
             </Button>
           </Link>
         </div>
@@ -216,8 +155,8 @@ export default function Navbar() {
         {/* Hamburger button */}
         <button
           className="flex cursor-pointer items-center justify-center text-secondary-900 lg:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => { setIsOpen(!isOpen); setActiveMobileMenu(null); }}
+          aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={isOpen}
         >
           <Icon name={isOpen ? 'x' : 'menu'} size={28} />
@@ -226,32 +165,98 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {isOpen && (
-        <div className="absolute left-0 right-0 z-50 bg-light shadow-lg lg:hidden">
+        <div className="absolute left-0 right-0 z-50 max-h-[calc(100vh-120px)] overflow-y-auto bg-light shadow-lg lg:hidden">
           {/* TopBar links on mobile */}
           <div className="flex items-center gap-4 border-b border-secondary-100 bg-secondary-900 px-6 py-3">
-            {topLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+            <a
+              href="https://adm.epag.io/login"
+              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
+              onClick={() => setIsOpen(false)}
+            >
+              {t.topBar.loginAdmin}
+            </a>
           </div>
 
           {/* Nav items */}
           <ul className="flex flex-col">
             {menuItems.map((item) => (
               <li key={item.label}>
-                <button
-                  className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-50"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>{item.label}</span>
-                  {item.dropdown && <Icon name="chevron-down" size={20} />}
-                </button>
+                {item.href && !item.dropdown ? (
+                  <Link
+                    href={item.href}
+                    className="flex w-full items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-100/40"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <>
+                    <button
+                      className="flex w-full cursor-pointer items-center justify-between border-b border-secondary-100 px-6 py-4 text-base font-semibold text-theme-secondary transition-colors hover:bg-secondary-100/40"
+                      onClick={() => toggleMobileMenu(item.label)}
+                      aria-expanded={activeMobileMenu === item.label}
+                    >
+                      <span>{item.label}</span>
+                      {item.dropdown && (
+                        <Icon
+                          name="chevron-down"
+                          size={20}
+                          className={`transition-transform duration-200 ${
+                            activeMobileMenu === item.label ? 'rotate-180' : ''
+                          }`}
+                        />
+                      )}
+                    </button>
+
+                    {/* Inline accordion dropdown */}
+                    {activeMobileMenu === item.label && item.dropdown && (
+                      <div className="border-b border-secondary-100 bg-secondary-100/30 px-6 py-4">
+                        <div className="flex flex-col gap-5">
+                          {item.dropdown.columns.map((col) => (
+                            <div key={col.title}>
+                              <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-theme-secondary">
+                                <span className="inline-block h-3 w-3 rounded bg-theme-secondary/10 ring-1 ring-theme-secondary/20" />
+                                {col.title}
+                              </p>
+                              <ul className="flex flex-col gap-1 pl-5">
+                                {col.items.map((colItem) => (
+                                  <li key={colItem.label}>
+                                    <Link
+                                      href={colItem.href}
+                                      className={`text-sm leading-7 text-dark-gray transition-colors hover:text-theme-secondary ${
+                                        colItem.bold ? 'font-semibold' : 'font-normal'
+                                      }`}
+                                      onClick={() => setIsOpen(false)}
+                                    >
+                                      {colItem.label}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+
+                          {item.dropdown.feature && (
+                            <div className="border-t border-secondary-100 pt-3">
+                              <Link
+                                href={item.dropdown.feature.href}
+                                className="flex flex-col gap-0.5"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                <span className="text-sm font-bold text-theme-secondary">
+                                  {item.dropdown.feature.title}
+                                </span>
+                                <span className="text-sm text-dark-gray">
+                                  {item.dropdown.feature.description}
+                                </span>
+                              </Link>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </li>
             ))}
           </ul>
@@ -260,7 +265,7 @@ export default function Navbar() {
           <div className="px-6 py-5">
             <Link href="/contact" onClick={() => setIsOpen(false)}>
               <Button variant="primary" size="md" className="w-full justify-center">
-                Contact Us
+                {t.nav.contactUs}
               </Button>
             </Link>
           </div>

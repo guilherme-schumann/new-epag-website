@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { coverageContent } from '@/content';
 
 export default function CoverageHero() {
+  const c = useContent(coverageContent).hero;
+
   return (
     <section className="bg-secondary-900 rounded-b-[48px] overflow-hidden">
       <div className="page-section page-container text-center">
@@ -15,7 +19,7 @@ export default function CoverageHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          Markets
+          {c.eyebrow}
         </motion.p>
 
         <motion.h1
@@ -24,9 +28,9 @@ export default function CoverageHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          12 Countries. One Integration.
+          {c.headline}
           <br />
-          <span className="text-primary-500">Direct Access.</span>
+          <span className="text-primary-500">{c.headlineHighlight}</span>
         </motion.h1>
 
         <motion.p
@@ -35,8 +39,7 @@ export default function CoverageHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Accept local payments across 12 countries through direct connections to domestic banking
-          rails and local acquirers — without intermediaries, without a local entity.
+          {c.subheadline}
         </motion.p>
 
         <motion.div
@@ -47,15 +50,12 @@ export default function CoverageHero() {
         >
           <Link href="/contact">
             <Button variant="primary" size="md">
-              Contact Sales
+              {c.cta.primary}
               <Icon name="arrow-right" size={16} className="ml-2" />
             </Button>
           </Link>
-          <a
-            href="/docs"
-            className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
-          >
-            Explore the docs →
+          <a href="/docs" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+            {c.cta.secondary}
           </a>
         </motion.div>
 

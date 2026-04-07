@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Logo, Icon, Button } from '@/components/ui';
-import NavDropdown, { type DropdownData } from './NavDropdown';
+import NavDropdown, { type DropdownData, type DropdownItem } from './NavDropdown';
 import { useLanguage, type Translations } from '@/lib/i18n';
 
 type MenuItem = {
@@ -11,6 +11,48 @@ type MenuItem = {
   href?: string;
   dropdown?: DropdownData;
 };
+
+function MobileExpandableItem({
+  item,
+  onNavigate,
+}: {
+  item: DropdownItem;
+  onNavigate: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className={`flex w-full cursor-pointer items-center justify-between gap-2 text-sm leading-7 text-dark-gray transition-colors hover:text-theme-secondary ${
+          item.bold ? 'font-semibold' : 'font-normal'
+        }`}
+      >
+        <span>{item.label}</span>
+        <Icon
+          name="chevron-down"
+          size={16}
+          className={`shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {open && (
+        <ul className="mt-1 flex flex-col gap-1 border-l-2 border-theme-middle-blue/30 pl-3">
+          {item.children?.map((child) => (
+            <li key={child.label}>
+              <Link
+                href={child.href ?? '#'}
+                className="text-sm font-semibold leading-7 text-dark-gray transition-colors hover:text-theme-secondary"
+                onClick={onNavigate}
+              >
+                {child.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 function buildMenuItems(nav: Translations['nav']): MenuItem[] {
   return [
@@ -22,6 +64,15 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
             title: nav.solutionsAndFeatures,
             items: [
               { label: nav.payin, href: '/solutions/payin', bold: true },
+              {
+                label: nav.checkout,
+                bold: true,
+                children: [
+                  { label: nav.hostedCheckout, href: '/solutions/checkout/hosted' },
+                  { label: nav.redirectCheckout, href: '/solutions/checkout/redirect' },
+                  { label: nav.embedCheckout, href: '/solutions/checkout/embed' },
+                ],
+              },
             ],
           },
         ],
@@ -65,9 +116,23 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
+  const [dropdownLeft, setDropdownLeft] = useState<number>(0);
   const navRef = useRef<HTMLElement>(null);
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const menuItems = buildMenuItems(t.nav);
+
+  function handleMenuEnter(label: string) {
+    const btn = buttonRefs.current[label];
+    const nav = navRef.current;
+    if (btn && nav) {
+      const btnRect = btn.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
+      // center of button relative to nav left edge
+      setDropdownLeft(btnRect.left - navRect.left + btnRect.width / 2);
+    }
+    setActiveMenu(label);
+  }
 
   // Close desktop dropdown on click outside
   useEffect(() => {
@@ -101,7 +166,7 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="page-x relative flex items-center justify-between bg-light py-4 shadow-navbar"
+        className="page-x relative z-50 flex items-center justify-between bg-light py-4 shadow-navbar"
       >
         <Logo variant="dark" width={92} height={40} />
 
@@ -118,8 +183,9 @@ export default function Navbar() {
                 </Link>
               ) : (
                 <button
+                  ref={(el) => { buttonRefs.current[item.label] = el; }}
                   className="flex cursor-pointer items-center gap-1 text-base font-semibold leading-6 text-theme-secondary transition-colors hover:text-secondary-500"
-                  onMouseEnter={() => item.dropdown && setActiveMenu(item.label)}
+                  onMouseEnter={() => item.dropdown && handleMenuEnter(item.label)}
                 >
                   <span>{item.label}</span>
                   {item.dropdown && (
@@ -133,16 +199,23 @@ export default function Navbar() {
                   )}
                 </button>
               )}
-
-              {/* Dropdown card — anchored to this <li> */}
-              {activeMenu === item.label && item.dropdown && (
-                <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3">
-                  <NavDropdown data={item.dropdown} />
-                </div>
-              )}
             </li>
           ))}
         </ul>
+
+        {/* Dropdown — anchored to nav bottom, centered on active button */}
+        {activeMenu && (
+          <div
+            className="absolute top-full z-50 pt-2"
+            style={{ left: dropdownLeft, transform: 'translateX(-50%)' }}
+          >
+            {menuItems.map((item) =>
+              item.label === activeMenu && item.dropdown ? (
+                <NavDropdown key={item.label} data={item.dropdown} />
+              ) : null
+            )}
+          </div>
+        )}
 
         <div className="hidden lg:block">
           <Link href="/contact">
@@ -221,15 +294,22 @@ export default function Navbar() {
                               <ul className="flex flex-col gap-1 pl-5">
                                 {col.items.map((colItem) => (
                                   <li key={colItem.label}>
-                                    <Link
-                                      href={colItem.href}
-                                      className={`text-sm leading-7 text-dark-gray transition-colors hover:text-theme-secondary ${
-                                        colItem.bold ? 'font-semibold' : 'font-normal'
-                                      }`}
-                                      onClick={() => setIsOpen(false)}
-                                    >
-                                      {colItem.label}
-                                    </Link>
+                                    {colItem.children?.length ? (
+                                      <MobileExpandableItem
+                                        item={colItem}
+                                        onNavigate={() => setIsOpen(false)}
+                                      />
+                                    ) : (
+                                      <Link
+                                        href={colItem.href ?? '#'}
+                                        className={`text-sm leading-7 text-dark-gray transition-colors hover:text-theme-secondary ${
+                                          colItem.bold ? 'font-semibold' : 'font-normal'
+                                        }`}
+                                        onClick={() => setIsOpen(false)}
+                                      >
+                                        {colItem.label}
+                                      </Link>
+                                    )}
                                   </li>
                                 ))}
                               </ul>

@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { pricingContent } from '@/content';
 
 export default function PricingBottomCTA() {
+  const c = useContent(pricingContent).bottomCTA;
+
   return (
     <section className="page-section bg-background">
       <div className="page-x page-container">
@@ -22,7 +26,7 @@ export default function PricingBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
-            Enterprise
+            {c.eyebrow}
           </motion.p>
 
           <motion.h2
@@ -32,7 +36,7 @@ export default function PricingBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.2, ease: 'easeOut' }}
           >
-            Volume pricing available for enterprise scale.
+            {c.headline}
           </motion.h2>
 
           <motion.p
@@ -42,8 +46,7 @@ export default function PricingBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Processing more than $50K/month? Talk to our sales team about custom rates, dedicated
-            support, and SLA guarantees.
+            {c.subheadline}
           </motion.p>
 
           <motion.div
@@ -55,17 +58,12 @@ export default function PricingBottomCTA() {
           >
             <Link href="/contact">
               <Button variant="primary" size="md">
-                Contact Sales
+                {c.cta.primary}
                 <Icon name="arrow-right" size={16} className="ml-2" />
               </Button>
             </Link>
-            <a
-              href="https://docs.epag.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
-            >
-              Read the docs →
+            <a href="https://docs.epag.io/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+              {c.cta.secondary}
             </a>
           </motion.div>
         </motion.div>

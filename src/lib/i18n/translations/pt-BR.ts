@@ -12,6 +12,10 @@ const ptBR: Translations = {
     payments: 'Pagamentos',
     solutionsAndFeatures: 'Soluções e Funcionalidades',
     payin: 'Recebimento',
+    checkout: 'Checkout',
+    hostedCheckout: 'Checkout Hospedado',
+    redirectCheckout: 'Checkout por Redirecionamento',
+    embedCheckout: 'Checkout Incorporado',
     markets: 'Mercados',
     fullCoverageMap: 'Mapa de Cobertura Completo',
     coverageDescription:

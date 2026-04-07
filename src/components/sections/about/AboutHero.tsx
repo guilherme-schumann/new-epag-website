@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { aboutContent } from '@/content';
 
 export default function AboutHero() {
+  const c = useContent(aboutContent).hero;
+
   return (
     <section className="bg-secondary-900 rounded-b-[48px] overflow-hidden">
       <div className="page-section page-container text-center">
@@ -15,7 +19,7 @@ export default function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          About epag
+          {c.eyebrow}
         </motion.p>
 
         <motion.h1
@@ -24,9 +28,9 @@ export default function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.1 }}
         >
-          We didn&apos;t just study Latin America.
+          {c.headline}
           <br />
-          <span className="text-primary-500">We built its payment infrastructure.</span>
+          <span className="text-primary-500">{c.headlineHighlight}</span>
         </motion.h1>
 
         <motion.p
@@ -35,9 +39,7 @@ export default function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
         >
-          epag&apos;s founding team helped scale PagSeguro (NYSE: PAGS) and MercadoPago (NASDAQ: MELI)
-          — two of the region&apos;s defining payment platforms. We built epag to give international
-          companies the same direct access to LatAm&apos;s financial rails.
+          {c.subheadline}
         </motion.p>
 
         <motion.div
@@ -48,15 +50,12 @@ export default function AboutHero() {
         >
           <Link href="/contact">
             <Button variant="primary" size="md">
-              Contact Sales
+              {c.cta.primary}
               <Icon name="arrow-right" size={16} className="ml-2" />
             </Button>
           </Link>
-          <a
-            href="/docs"
-            className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
-          >
-            Explore our API →
+          <a href="/docs" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+            {c.cta.secondary}
           </a>
         </motion.div>
 

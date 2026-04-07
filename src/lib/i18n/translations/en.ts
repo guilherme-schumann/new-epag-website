@@ -11,6 +11,10 @@ const en: Translations = {
     payments: 'Payments',
     solutionsAndFeatures: 'Solutions & Features',
     payin: 'Payin',
+    checkout: 'Checkout',
+    hostedCheckout: 'Hosted Checkout',
+    redirectCheckout: 'Redirect Checkout',
+    embedCheckout: 'Embed Checkout',
     markets: 'Markets',
     fullCoverageMap: 'Full Coverage Map',
     coverageDescription:

@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { pricingContent } from '@/content';
 
 export default function PricingHero() {
+  const c = useContent(pricingContent).hero;
+
   return (
     <section className="bg-secondary-900 rounded-b-[48px] overflow-hidden">
       <div className="page-section page-container text-center">
@@ -15,7 +19,7 @@ export default function PricingHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          Pricing
+          {c.eyebrow}
         </motion.p>
 
         <motion.h1
@@ -24,7 +28,7 @@ export default function PricingHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.1 }}
         >
-          <span className="text-primary-500">3.9% + ¢29.</span> That&apos;s it.
+          <span className="text-primary-500">{c.headline}</span> {c.headlineSuffix}
         </motion.h1>
 
         <motion.p
@@ -33,9 +37,7 @@ export default function PricingHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
         >
-          No setup fees. No monthly fees. No hidden costs. One flat rate covers all 12 countries,
-          all payment methods, and the full epag infrastructure — from PIX to OXXO to local card
-          acquiring.
+          {c.subheadline}
         </motion.p>
 
         <motion.div
@@ -46,7 +48,7 @@ export default function PricingHero() {
         >
           <Link href="/contact">
             <Button variant="primary" size="md">
-              Contact Sales
+              {c.cta.primary}
               <Icon name="arrow-right" size={16} className="ml-2" />
             </Button>
           </Link>
@@ -56,7 +58,7 @@ export default function PricingHero() {
             rel="noopener noreferrer"
             className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
           >
-            Read the docs →
+            {c.cta.secondary}
           </a>
         </motion.div>
 

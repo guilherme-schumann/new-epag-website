@@ -2,8 +2,12 @@
 
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { payinContent } from '@/content';
 
 export default function PayinCTA() {
+  const c = useContent(payinContent).cta;
+
   return (
     <section className="bg-secondary-900">
       <div className="page-section page-container text-center">
@@ -15,7 +19,7 @@ export default function PayinCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
         >
-          Get Started
+          {c.eyebrow}
         </motion.p>
 
         <motion.h2
@@ -25,8 +29,8 @@ export default function PayinCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          Accept Payments Like a Local.{' '}
-          <span className="text-primary-500">Operate Like a Global Company.</span>
+          {c.headline}{' '}
+          <span className="text-primary-500">{c.headlineHighlight}</span>
         </motion.h2>
 
         <motion.p
@@ -36,9 +40,7 @@ export default function PayinCTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          epag replaces fragmented integrations and approval uncertainty with direct, structured
-          payment infrastructure. From zero to live in LATAM — faster, fully compliant, and aligned
-          with local financial systems.
+          {c.body}
         </motion.p>
 
         <motion.div
@@ -49,7 +51,7 @@ export default function PayinCTA() {
           transition={{ duration: 0.4, delay: 0.3 }}
         >
           <Button variant="primary" size="md">
-            Build Your Pay-in Infrastructure
+            {c.cta}
             <Icon name="arrow-right" size={16} className="ml-2" />
           </Button>
         </motion.div>

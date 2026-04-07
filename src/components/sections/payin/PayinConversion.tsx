@@ -1,37 +1,17 @@
 'use client';
 
 import { motion } from 'motion/react';
-
-const capabilities = [
-  {
-    label: 'Smart Routing',
-    description: 'Smart routing to top-performing domestic acquirers',
-  },
-  {
-    label: 'Installment Optimization',
-    description: 'Localized installment optimization',
-  },
-  {
-    label: 'Adaptive Retry Logic',
-    description: 'Adaptive retry logic',
-  },
-  {
-    label: 'Real-Time Monitoring',
-    description: 'Real-time transaction monitoring',
-  },
-  {
-    label: 'Fraud Prevention',
-    description: 'Behavior-calibrated fraud prevention',
-  },
-];
+import { useContent } from '@/hooks/useContent';
+import { payinContent } from '@/content';
 
 export default function PayinConversion() {
+  const c = useContent(payinContent).conversion;
+
   return (
     <section className="bg-background">
       <div className="page-section page-container">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-20">
 
-          {/* Left — headline */}
           <div className="lg:w-[45%]">
             <motion.p
               className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"
@@ -40,7 +20,7 @@ export default function PayinConversion() {
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
-              Performance
+              {c.eyebrow}
             </motion.p>
 
             <motion.h2
@@ -50,9 +30,9 @@ export default function PayinConversion() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Conversion Is
+              {c.headline}
               <br />
-              <span className="text-theme-secondary">Architecture</span>
+              <span className="text-theme-secondary">{c.headlineHighlight}</span>
             </motion.h2>
 
             <motion.p
@@ -62,7 +42,7 @@ export default function PayinConversion() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              High approval rates in Latin America are engineered — not assumed.
+              {c.body}
             </motion.p>
 
             <motion.p
@@ -72,13 +52,12 @@ export default function PayinConversion() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.35 }}
             >
-              In Latin America, approval performance is a function of infrastructure design.
+              {c.footer}
             </motion.p>
           </div>
 
-          {/* Right — capability cards */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-[55%]">
-            {capabilities.map((cap, i) => (
+            {c.capabilities.map((cap, i) => (
               <motion.div
                 key={cap.label}
                 className="rounded-xl border border-secondary-100 bg-light p-5"

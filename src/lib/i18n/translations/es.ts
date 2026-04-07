@@ -12,6 +12,10 @@ const es: Translations = {
     payments: 'Pagos',
     solutionsAndFeatures: 'Soluciones y Funcionalidades',
     payin: 'Cobro',
+    checkout: 'Checkout',
+    hostedCheckout: 'Checkout Alojado',
+    redirectCheckout: 'Checkout por Redirección',
+    embedCheckout: 'Checkout Embebido',
     markets: 'Mercados',
     fullCoverageMap: 'Mapa de Cobertura Completo',
     coverageDescription:

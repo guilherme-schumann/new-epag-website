@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { aboutContent } from '@/content';
 
 export default function AboutBottomCTA() {
+  const c = useContent(aboutContent).bottomCTA;
+
   return (
     <section className="page-section bg-background">
       <div className="page-x page-container">
@@ -22,7 +26,7 @@ export default function AboutBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
-            Get Started
+            {c.eyebrow}
           </motion.p>
 
           <motion.h2
@@ -32,7 +36,7 @@ export default function AboutBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.2, ease: 'easeOut' }}
           >
-            Ready to expand to Latin America?
+            {c.headline}
           </motion.h2>
 
           <motion.p
@@ -42,7 +46,7 @@ export default function AboutBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Talk to an expansion specialist. We&apos;ll scope your integration in 48 hours.
+            {c.subheadline}
           </motion.p>
 
           <motion.div
@@ -54,15 +58,12 @@ export default function AboutBottomCTA() {
           >
             <Link href="/contact">
               <Button variant="primary" size="md">
-                Contact Sales
+                {c.cta.primary}
                 <Icon name="arrow-right" size={16} className="ml-2" />
               </Button>
             </Link>
-            <a
-              href="/docs"
-              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
-            >
-              Explore our API →
+            <a href="/docs" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+              {c.cta.secondary}
             </a>
           </motion.div>
         </motion.div>

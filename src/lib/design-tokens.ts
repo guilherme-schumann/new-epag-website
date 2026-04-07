@@ -31,6 +31,18 @@ export const colors = {
     lightGray: '#999999',
     background: '#F2F2F2',
   },
+  /** Navigation-specific palette — maps to --color-menu-* in globals.css */
+  menu: {
+    bg: '#016197',
+    selected: '#019FD1',
+    hover: '#6ACDF6',
+    default: '#FFFFFF',
+  },
+} as const;
+
+export const shadows = {
+  card: '10px 20px 40px 0px rgba(0, 0, 0, 0.05)',
+  navbar: '10px 20px 40px 0px rgba(0, 0, 0, 0.05)',
 } as const;
 
 /**

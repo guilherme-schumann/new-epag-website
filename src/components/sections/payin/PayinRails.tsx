@@ -1,22 +1,17 @@
 'use client';
 
 import { motion } from 'motion/react';
-
-const benefits = [
-  'Greater control over approval logic',
-  'Faster implementation of new payment methods',
-  'Reduced dependency on external processing layers',
-  'Higher operational transparency',
-  'Improved performance consistency',
-];
+import { useContent } from '@/hooks/useContent';
+import { payinContent } from '@/content';
 
 export default function PayinRails() {
+  const c = useContent(payinContent).rails;
+
   return (
     <section className="bg-background">
       <div className="page-section page-container">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20">
 
-          {/* Left — copy */}
           <div className="lg:w-1/2">
             <motion.p
               className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"
@@ -25,7 +20,7 @@ export default function PayinRails() {
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
-              Infrastructure
+              {c.eyebrow}
             </motion.p>
 
             <motion.h2
@@ -35,9 +30,9 @@ export default function PayinRails() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Built on Direct Rails.
+              {c.headline}
               <br />
-              <span className="text-theme-secondary">Not on Layers.</span>
+              <span className="text-theme-secondary">{c.headlineHighlight}</span>
             </motion.h2>
 
             <motion.p
@@ -47,16 +42,13 @@ export default function PayinRails() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Most cross-border providers rely on third-party processors and multi-layer routing
-              structures. epag connects directly to local payment rails such as PIX, SPEI, and PSE,
-              as well as domestic card acquirers. This direct infrastructure model provides:
+              {c.body}
             </motion.p>
           </div>
 
-          {/* Right — benefits list */}
           <div className="lg:w-1/2">
             <ul className="flex flex-col gap-4">
-              {benefits.map((item, i) => (
+              {c.benefits.map((item, i) => (
                 <motion.li
                   key={item}
                   className="flex items-start gap-3 text-sm leading-relaxed text-dark-gray"
@@ -78,12 +70,8 @@ export default function PayinRails() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <p className="text-sm font-semibold text-secondary-900">
-                We do not rent infrastructure.
-              </p>
-              <p className="text-sm font-semibold text-theme-secondary">
-                We build and operate it.
-              </p>
+              <p className="text-sm font-semibold text-secondary-900">{c.footer.line1}</p>
+              <p className="text-sm font-semibold text-theme-secondary">{c.footer.line2}</p>
             </motion.div>
           </div>
 

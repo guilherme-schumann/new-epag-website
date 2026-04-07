@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full">
+    <header className="sticky top-0 z-40 w-full">
       <NewsBanner />
       <TopBar />
       <Navbar />

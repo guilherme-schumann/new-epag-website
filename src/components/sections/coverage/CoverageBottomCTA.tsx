@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
+import { useContent } from '@/hooks/useContent';
+import { coverageContent } from '@/content';
 
 export default function CoverageBottomCTA() {
+  const c = useContent(coverageContent).bottomCTA;
+
   return (
     <section className="bg-background">
       <div className="page-section page-container">
@@ -17,7 +21,7 @@ export default function CoverageBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            Get Started
+            {c.eyebrow}
           </motion.p>
 
           <motion.h2
@@ -27,7 +31,7 @@ export default function CoverageBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            Ready to go live in LatAm?
+            {c.headline}
           </motion.h2>
 
           <motion.p
@@ -37,7 +41,7 @@ export default function CoverageBottomCTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Talk to a LATAM expansion specialist and get your integration scoped in 48 hours.
+            {c.subheadline}
           </motion.p>
 
           <motion.div
@@ -49,15 +53,12 @@ export default function CoverageBottomCTA() {
           >
             <Link href="/contact">
               <Button variant="primary" size="md">
-                Contact Sales
+                {c.cta.primary}
                 <Icon name="arrow-right" size={16} className="ml-2" />
               </Button>
             </Link>
-            <a
-              href="/docs"
-              className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"
-            >
-              Read the docs →
+            <a href="/docs" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+              {c.cta.secondary}
             </a>
           </motion.div>
 

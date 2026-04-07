@@ -1,27 +1,12 @@
 'use client';
 
 import { motion } from 'motion/react';
-
-const points = [
-  {
-    label: 'No FX spread games',
-    body: "We don't pad margins into the exchange rate. Settlement happens at the published rate.",
-  },
-  {
-    label: 'No volume minimums',
-    body: 'Pay as you go from transaction one. Scale without renegotiating contracts.',
-  },
-  {
-    label: 'No setup surprises',
-    body: 'Zero onboarding fees. Zero monthly platform fees. You pay when you process.',
-  },
-  {
-    label: 'No local entity costs',
-    body: 'Operating in LatAm through epag means no company registration, no local bank account, no local compliance overhead.',
-  },
-];
+import { useContent } from '@/hooks/useContent';
+import { pricingContent } from '@/content';
 
 export default function PricingDifferentiators() {
+  const c = useContent(pricingContent).differentiators;
+
   return (
     <section className="page-section bg-secondary-100">
       <div className="page-container">
@@ -33,18 +18,16 @@ export default function PricingDifferentiators() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">
-            Transparency
-          </p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
           <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">
-            Most providers hide fees.
+            {c.headline}
             <br />
-            <span className="text-theme-secondary">We publish ours.</span>
+            <span className="text-theme-secondary">{c.headlineHighlight}</span>
           </h2>
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {points.map((point, i) => (
+          {c.points.map((point, i) => (
             <motion.div
               key={point.label}
               className="flex gap-4"
@@ -53,9 +36,7 @@ export default function PricingDifferentiators() {
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.45, delay: i * 0.1 }}
             >
-              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500 text-xs font-bold text-secondary-900">
-                ✓
-              </span>
+              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-500 text-xs font-bold text-secondary-900">✓</span>
               <div>
                 <p className="text-sm font-semibold text-theme-secondary">{point.label}</p>
                 <p className="mt-1 text-sm leading-6 text-dark-gray">{point.body}</p>

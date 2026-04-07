@@ -1,22 +1,17 @@
 'use client';
 
 import { motion } from 'motion/react';
-
-const highlights = [
-  'Direct connections to PIX, SPEI, PSE, and local card acquirers',
-  'No legacy systems, no aggregator layers',
-  "Full flexibility to adapt to each partner's specific needs",
-  "Partners never inherit someone else's limitations",
-  'PCI DSS certified infrastructure',
-];
+import { useContent } from '@/hooks/useContent';
+import { aboutContent } from '@/content';
 
 export default function AboutTechnology() {
+  const c = useContent(aboutContent).technology;
+
   return (
     <section className="page-section bg-background">
       <div className="page-container">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20">
 
-          {/* Left — copy */}
           <div className="lg:w-1/2">
             <motion.p
               className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"
@@ -25,7 +20,7 @@ export default function AboutTechnology() {
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
             >
-              Technology
+              {c.eyebrow}
             </motion.p>
 
             <motion.h2
@@ -35,9 +30,9 @@ export default function AboutTechnology() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
             >
-              100% proprietary technology.
+              {c.headline}
               <br />
-              No third-party dependencies.
+              {c.headlineLine2}
             </motion.h2>
 
             <motion.p
@@ -47,9 +42,7 @@ export default function AboutTechnology() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              All payment infrastructure is built 100% in-house. No legacy systems. No aggregator
-              layers. This gives us full flexibility to adapt to each partner&apos;s specific needs
-              — and means our partners never inherit someone else&apos;s limitations.
+              {c.body}
             </motion.p>
 
             <motion.a
@@ -62,14 +55,13 @@ export default function AboutTechnology() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.35 }}
             >
-              Read the docs →
+              {c.docsLink}
             </motion.a>
           </div>
 
-          {/* Right — highlights */}
           <div className="lg:w-1/2">
             <ul className="flex flex-col gap-4">
-              {highlights.map((item, i) => (
+              {c.highlights.map((item, i) => (
                 <motion.li
                   key={item}
                   className="flex items-start gap-3 text-sm leading-relaxed text-dark-gray"

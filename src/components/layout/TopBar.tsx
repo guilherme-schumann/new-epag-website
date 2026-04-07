@@ -62,7 +62,7 @@ export default function TopBar() {
             <ul
               role="listbox"
               aria-label="Select language"
-              className="absolute right-0 top-full mt-2 w-44 overflow-hidden rounded-xl border border-secondary-100/10 bg-secondary-900 shadow-lg ring-1 ring-black/5"
+              className="absolute right-0 top-full mt-2 w-44 overflow-hidden rounded-xl border border-secondary-100/10 bg-secondary-900 shadow-lg ring-1 ring-dark-gray/5"
             >
               {locales.map((loc) => (
                 <li key={loc.code} role="option" aria-selected={loc.code === locale}>

@@ -27,6 +27,10 @@ export interface Translations {
     payments: string;
     solutionsAndFeatures: string;
     payin: string;
+    checkout: string;
+    hostedCheckout: string;
+    redirectCheckout: string;
+    embedCheckout: string;
     markets: string;
     fullCoverageMap: string;
     coverageDescription: string;

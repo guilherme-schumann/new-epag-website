@@ -3,29 +3,16 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
-
-const paygoHighlights = [
-  'No setup fee',
-  'No monthly fee',
-  'No local entity required',
-  'Covers all 12 countries',
-  'All payment methods included',
-];
-
-const enterpriseHighlights = [
-  'Volume discounts',
-  'Custom business models',
-  'Charity & non-profit rates',
-  'Enterprise-scale infrastructure',
-  'Dedicated account manager',
-];
+import { useContent } from '@/hooks/useContent';
+import { homeContent } from '@/content';
 
 export default function PricingTeaser() {
+  const c = useContent(homeContent).pricingTeaser;
+
   return (
     <section className="page-section">
       <div className="page-container">
 
-        {/* Header */}
         <motion.div
           className="mb-12 text-center"
           initial={{ opacity: 0, y: 24 }}
@@ -33,23 +20,16 @@ export default function PricingTeaser() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">
-            Pricing
-          </p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
           <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">
-            Simple, transparent pricing.{' '}
-            <span className="text-primary-500">No surprises.</span>
+            {c.headline}{' '}
+            <span className="text-primary-500">{c.headlineHighlight}</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-dark-gray">
-            One flat rate covers all 12 countries and every payment method.
-            No FX spreads, no monthly minimums, no hidden settlement fees.
-          </p>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
         </motion.div>
 
-        {/* Plan cards */}
         <div className="mx-auto grid max-w-3xl gap-6 lg:grid-cols-2">
 
-          {/* Pay as you go */}
           <motion.div
             className="relative flex flex-col rounded-2xl border-2 border-primary-500 bg-light p-8 shadow-card"
             initial={{ opacity: 0, x: -40 }}
@@ -58,16 +38,16 @@ export default function PricingTeaser() {
             transition={{ duration: 0.55, ease: 'easeOut' }}
           >
             <span className="absolute -top-3 left-8 rounded-full bg-primary-500 px-3 py-1 text-xs font-semibold text-secondary-900">
-              Most popular
+              {c.paygo.badge}
             </span>
-            <p className="mb-1 text-sm font-semibold text-dark-gray">Pay as you go</p>
+            <p className="mb-1 text-sm font-semibold text-dark-gray">{c.paygo.name}</p>
             <div className="mb-1 flex items-baseline gap-1">
-              <span className="text-5xl font-extrabold text-theme-secondary">3.9%</span>
-              <span className="text-2xl font-extrabold text-theme-secondary">+ ¢29</span>
+              <span className="text-5xl font-extrabold text-theme-secondary">{c.paygo.price}</span>
+              <span className="text-2xl font-extrabold text-theme-secondary">{c.paygo.priceSuffix}</span>
             </div>
-            <p className="mb-6 text-sm text-light-gray">per transaction</p>
+            <p className="mb-6 text-sm text-light-gray">{c.paygo.period}</p>
             <ul className="mb-8 flex flex-col gap-3">
-              {paygoHighlights.map((item, i) => (
+              {c.paygo.highlights.map((item, i) => (
                 <motion.li
                   key={item}
                   className="flex items-center gap-3 text-sm text-dark-gray"
@@ -82,13 +62,10 @@ export default function PricingTeaser() {
               ))}
             </ul>
             <Link href="/contact" className="mt-auto">
-              <Button variant="primary" size="md" className="w-full justify-center">
-                Get Started
-              </Button>
+              <Button variant="primary" size="md" className="w-full justify-center">{c.paygo.cta}</Button>
             </Link>
           </motion.div>
 
-          {/* Enterprise */}
           <motion.div
             className="flex flex-col rounded-2xl border border-secondary-100 bg-light p-8 shadow-card"
             initial={{ opacity: 0, x: 40 }}
@@ -96,13 +73,13 @@ export default function PricingTeaser() {
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
           >
-            <p className="mb-1 text-sm font-semibold text-dark-gray">Enterprise</p>
+            <p className="mb-1 text-sm font-semibold text-dark-gray">{c.enterprise.name}</p>
             <div className="mb-1">
-              <span className="text-5xl font-extrabold text-theme-secondary">Custom</span>
+              <span className="text-5xl font-extrabold text-theme-secondary">{c.enterprise.price}</span>
             </div>
-            <p className="mb-6 text-sm text-light-gray">talk to our team</p>
+            <p className="mb-6 text-sm text-light-gray">{c.enterprise.period}</p>
             <ul className="mb-8 flex flex-col gap-3">
-              {enterpriseHighlights.map((item, i) => (
+              {c.enterprise.highlights.map((item, i) => (
                 <motion.li
                   key={item}
                   className="flex items-center gap-3 text-sm text-dark-gray"
@@ -117,15 +94,12 @@ export default function PricingTeaser() {
               ))}
             </ul>
             <Link href="/contact" className="mt-auto">
-              <Button variant="outline" size="md" className="w-full justify-center">
-                Contact Sales
-              </Button>
+              <Button variant="outline" size="md" className="w-full justify-center">{c.enterprise.cta}</Button>
             </Link>
           </motion.div>
 
         </div>
 
-        {/* Footer link */}
         <motion.div
           className="mt-10 text-center"
           initial={{ opacity: 0, y: 12 }}
@@ -133,11 +107,8 @@ export default function PricingTeaser() {
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.3 }}
         >
-          <Link
-            href="/pricing"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500"
-          >
-            See full pricing details, fee table and settlement info
+          <Link href="/pricing" className="inline-flex items-center gap-1.5 text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
+            {c.viewAll}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
               <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />
             </svg>

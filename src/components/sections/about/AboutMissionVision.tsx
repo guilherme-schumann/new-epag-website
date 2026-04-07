@@ -1,8 +1,12 @@
 'use client';
 
 import { motion } from 'motion/react';
+import { useContent } from '@/hooks/useContent';
+import { aboutContent } from '@/content';
 
 export default function AboutMissionVision() {
+  const c = useContent(aboutContent).missionVision;
+
   return (
     <section className="page-section bg-secondary-100">
       <div className="page-container grid gap-6 lg:grid-cols-2">
@@ -14,13 +18,8 @@ export default function AboutMissionVision() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.55, ease: 'easeOut' }}
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary-500">
-            Mission
-          </p>
-          <p className="text-base leading-7 text-dark-gray">
-            Helping international companies expand and operate across Latin America — without
-            friction, without a local entity, and without compromise.
-          </p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary-500">{c.mission.label}</p>
+          <p className="text-base leading-7 text-dark-gray">{c.mission.body}</p>
         </motion.div>
 
         <motion.div
@@ -30,13 +29,8 @@ export default function AboutMissionVision() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary-500">
-            Vision
-          </p>
-          <p className="text-base leading-7 text-dark-gray">
-            We believe in truly open markets. Any company, anywhere in the world, should be able to
-            sell to any person in Latin America with the same ease as selling locally.
-          </p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary-500">{c.vision.label}</p>
+          <p className="text-base leading-7 text-dark-gray">{c.vision.body}</p>
         </motion.div>
 
       </div>

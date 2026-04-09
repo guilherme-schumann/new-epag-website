@@ -13,7 +13,7 @@ export default function PricingBottomCTA() {
     <section className="page-section bg-background">
       <div className="page-x page-container">
         <motion.div
-          className="rounded-[48px] bg-secondary-900 px-8 py-16 text-center lg:px-16"
+          className="rounded-hero bg-secondary-900 px-8 py-16 text-center lg:px-16"
           initial={{ opacity: 0, y: 40, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}

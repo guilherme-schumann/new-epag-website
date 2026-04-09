@@ -43,6 +43,28 @@ export const colors = {
 export const shadows = {
   card: '10px 20px 40px 0px rgba(0, 0, 0, 0.05)',
   navbar: '10px 20px 40px 0px rgba(0, 0, 0, 0.05)',
+  dropdown: '0 8px 32px rgba(0, 0, 0, 0.12)',
+} as const;
+
+export const sizing = {
+  xs:  '240px',
+  sm:  '320px',
+  md:  '420px',
+  lg:  '560px',
+  xl:  '720px',
+  '2xl': '960px',
+} as const;
+
+export const borderRadius = {
+  tab:   '5px',
+  card:  '32px',
+  hero:  '48px',
+  panel: '10px',
+  icon:  '12px',
+} as const;
+
+export const minHeight = {
+  hero: '520px',
 } as const;
 
 /**

@@ -2,15 +2,26 @@
   "mcpServers": {
     "context7": {
       "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
       "disabled": false,
-      "autoApprove": ["resolve-library-id", "get-library-docs"]
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs",
+        "query-docs"
+      ]
     },
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"],
+      "args": [
+        "mcp-server-fetch"
+      ],
       "disabled": false,
-      "autoApprove": ["fetch"]
+      "autoApprove": [
+        "fetch"
+      ]
     }
   }
 }

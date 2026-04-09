@@ -117,6 +117,11 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <p className="text-center text-xs text-secondary-100/40">
+          {t.footer.disclaimer}
+        </p>
+
         {/* Divider */}
         <hr className="my-8 border-light/10" />
 

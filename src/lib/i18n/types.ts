@@ -33,6 +33,7 @@ export interface Translations {
     embedCheckout: string;
     markets: string;
     fullCoverageMap: string;
+    coverageHighlight: string;
     coverageDescription: string;
     pricing: string;
     institutional: string;
@@ -43,6 +44,33 @@ export interface Translations {
     contactUs: string;
     openMenu: string;
     closeMenu: string;
+    whyEpag: string;
+    whyEpagDescription: string;
+    recurrency: string;
+    pixAutomatico: string;
+    cards: string;
+    serverToServer: string;
+    idValidation: string;
+    paymentCategories: string;
+    cardPayments: string;
+    instantPayments: string;
+    bankTransfer: string;
+    cashVoucher: string;
+    digitalWallets: string;
+    marketCoverage: string;
+    industries: string;
+    allIndustries: string;
+    niches: string;
+    ecommerce: string;
+    saas: string;
+    about: string;
+    legal: string;
+    prohibited: string;
+    termsForUsers: string;
+    termsForMerchants: string;
+    imprint: string;
+    prohibitedList: string;
+    institutionalDisclaimer: string;
   };
   footer: {
     tagline: string;
@@ -73,5 +101,6 @@ export interface Translations {
       cookiePolicy: string;
     };
     allRightsReserved: string;
+    disclaimer: string;
   };
 }

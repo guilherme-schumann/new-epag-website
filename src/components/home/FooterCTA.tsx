@@ -10,7 +10,7 @@ export default function FooterCTA() {
   return (
     <section className="page-section">
       <div className="page-container">
-        <div className="rounded-[32px] bg-secondary-900 px-6 py-16 text-center sm:px-10 lg:px-16 xl:px-20">
+        <div className="rounded-card bg-secondary-900 px-6 py-16 text-center sm:px-10 lg:px-16 xl:px-20">
 
           <h2 className="mx-auto max-w-2xl text-3xl font-extrabold text-light sm:text-4xl">{c.headline}</h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-secondary-100/70">{c.subheadline}</p>

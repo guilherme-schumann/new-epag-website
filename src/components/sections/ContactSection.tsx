@@ -43,11 +43,11 @@ export default function ContactSection() {
 
           <p className="text-center text-lg font-semibold text-dark-gray lg:text-left">{c.chooseTopic}</p>
 
-          <div className="rounded-[10px] bg-light px-9 py-2 shadow-card">
+          <div className="rounded-panel bg-light px-9 py-2 shadow-card">
             <div className="flex gap-2">
               <button
                 onClick={() => setActiveTab('sales')}
-                className={`flex flex-1 cursor-pointer items-center justify-between rounded-[5px] p-4 transition-colors ${activeTab === 'sales' ? 'bg-secondary-100' : 'bg-light hover:bg-secondary-100/50'}`}
+                className={`flex flex-1 cursor-pointer items-center justify-between rounded-tab p-4 transition-colors ${activeTab === 'sales' ? 'bg-secondary-100' : 'bg-light hover:bg-secondary-100/50'}`}
               >
                 <span className={`text-lg font-semibold ${activeTab === 'sales' ? 'text-theme-secondary' : 'text-dark-gray font-normal'}`}>
                   {c.tabs.sales}
@@ -57,7 +57,7 @@ export default function ContactSection() {
 
               <button
                 onClick={() => setActiveTab('merchant')}
-                className={`flex flex-1 cursor-pointer items-center justify-between rounded-[5px] p-4 transition-colors ${activeTab === 'merchant' ? 'bg-secondary-100' : 'bg-light hover:bg-secondary-100/50'}`}
+                className={`flex flex-1 cursor-pointer items-center justify-between rounded-tab p-4 transition-colors ${activeTab === 'merchant' ? 'bg-secondary-100' : 'bg-light hover:bg-secondary-100/50'}`}
               >
                 <span className={`text-lg font-semibold ${activeTab === 'merchant' ? 'text-theme-secondary' : 'text-dark-gray font-normal'}`}>
                   {c.tabs.merchant}
@@ -67,10 +67,10 @@ export default function ContactSection() {
             </div>
           </div>
 
-          <div className="rounded-[10px] bg-light p-9 shadow-card">
+          <div className="rounded-panel bg-light p-9 shadow-card">
 
             <div className="mb-6 flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-[12px] bg-theme-secondary text-light">
+              <div className="flex h-12 w-12 items-center justify-center rounded-icon bg-theme-secondary text-light">
                 {activeTab === 'sales' ? (
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                     <path d="M4 7h20v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
@@ -91,7 +91,7 @@ export default function ContactSection() {
 
             <p className="mb-6 text-base leading-relaxed text-dark-gray">{tabContent.description}</p>
 
-            <form className="flex flex-col gap-4 rounded-[10px] bg-background p-6">
+            <form className="flex flex-col gap-4 rounded-panel bg-background p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-semibold text-dark-gray">{c.form.firstName}</label>

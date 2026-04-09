@@ -73,20 +73,183 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
                   { label: nav.embedCheckout, href: '/solutions/checkout/embed' },
                 ],
               },
+              { label: nav.recurrency, bold: true, children: [
+                  { label: nav.pixAutomatico, href: '/solutions/recurrency/pix-automatico' },
+                  { label: nav.cards, href: '/solutions/recurrency/cards' },
+                ],
+              },
+              { label: nav.serverToServer, href: '/solutions/server-to-server', bold: true },
+              { label: nav.idValidation, href: '/solutions/id-validation', bold: true },
+            ],
+          },
+          {
+            title: nav.paymentCategories,
+            items: [
+              { label: nav.cardPayments, href: '/coverage', bold: true },
+              { label: nav.instantPayments, href: '/coverage', bold: true },
+              { label: nav.bankTransfer, href: '/coverage', bold: true },
+              { label: nav.cashVoucher, href: '/coverage', bold: true },
+              { label: nav.digitalWallets, href: '/coverage', bold: true },
+            ],
+          },
+          {
+            title: nav.paymentMethods,
+            items: [
+              {
+                label: 'Brazil',
+                bold: true,
+                children: [
+                  { label: 'Boleto', href: '/coverage' },
+                  { label: 'PIX', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'PicPay', href: '/coverage' },
+                  { label: 'Debit Card', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Mexico',
+                bold: true,
+                children: [
+                  { label: 'SPEI', href: '/coverage' },
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'Debit Card', href: '/coverage' },
+                  { label: 'Paynet', href: '/coverage' },
+                  { label: 'Tiendas Y Farmacias', href: '/coverage' },
+                  { label: 'OXXO', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Colombia',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'Debit Card', href: '/coverage' },
+                  { label: 'Bank Transfer', href: '/coverage' },
+                  { label: 'Nequi', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Ecuador',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'Bank Transfer', href: '/coverage' },
+                  { label: 'Deuna', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Peru',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'Debit Card', href: '/coverage' },
+                  { label: 'Bank Transfer', href: '/coverage' },
+                  { label: 'Pago Efectivo', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Chile',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Mach', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                  { label: 'Debit Card', href: '/coverage' },
+                  { label: 'Bank Transfer', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Honduras',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Dominican Republic',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'El Salvador',
+                bold: true,
+                children: [
+                  { label: 'Bank Transfer', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Guatemala',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Bank Transfer', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Panama',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                ],
+              },
+              {
+                label: 'Costa Rica',
+                bold: true,
+                children: [
+                  { label: 'Paycash', href: '/coverage' },
+                  { label: 'Credit Card', href: '/coverage' },
+                ],
+              },
             ],
           },
         ],
+        footer: {
+          title: nav.whyEpag,
+          description: nav.whyEpagDescription,
+        },
       },
     },
     {
       label: nav.markets,
       dropdown: {
-        columns: [],
-        feature: {
-          title: nav.fullCoverageMap,
+        columns: [
+          {
+            title: nav.marketCoverage,
+            items: [
+              { label: 'Coverage', href: '/coverage', bold: true },
+            ],
+          },
+        ],
+        footer: {
+          title: nav.coverageHighlight,
           description: nav.coverageDescription,
-          href: '/coverage',
         },
+      },
+    },
+    {
+      label: nav.industries,
+      dropdown: {
+        columns: [
+          {
+            title: nav.allIndustries,
+            items: [
+              {
+                label: nav.niches,
+                bold: true,
+                children: [
+                  { label: nav.ecommerce, href: '/industries/ecommerce' },
+                  { label: nav.saas, href: '/industries/saas' },
+                ],
+              },
+            ],
+          },
+        ],
       },
     },
     {
@@ -99,13 +262,37 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
         columns: [
           {
             title: nav.company,
-            items: [{ label: nav.aboutEpag, href: '/about' }],
+            items: [
+              { label: nav.aboutEpag, href: '/about', bold: true },
+            ],
           },
           {
-            title: nav.resources,
-            items: [{ label: nav.documentation, href: 'https://developer.epag.com' }],
+            title: nav.legal,
+            items: [
+              { label: nav.legal, href: '/legal', bold: true },
+              {
+                label: nav.prohibited,
+                bold: true,
+                children: [
+                  { label: nav.prohibitedList, href: '/legal/prohibited' },
+                ],
+              },
+              {
+                label: 'Terms',
+                bold: true,
+                children: [
+                  { label: nav.termsForUsers, href: '/legal/terms-users' },
+                  { label: nav.termsForMerchants, href: '/legal/terms-merchants' },
+                ],
+              },
+              { label: nav.imprint, href: '/legal/imprint', bold: true },
+            ],
           },
         ],
+        footer: {
+          title: 'Disclaimer',
+          description: nav.institutionalDisclaimer,
+        },
       },
     },
   ];

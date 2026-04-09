@@ -8,6 +8,7 @@ export type DropdownItem = {
   label: string;
   href?: string;
   bold?: boolean;
+  defaultOpen?: boolean;
   children?: Omit<DropdownItem, 'children'>[];
 };
 
@@ -25,6 +26,10 @@ export type DropdownFeature = {
 export type DropdownData = {
   columns: DropdownColumn[];
   feature?: DropdownFeature;
+  footer?: {
+    title: string;
+    description: string;
+  };
 };
 
 interface NavDropdownProps {
@@ -32,7 +37,7 @@ interface NavDropdownProps {
 }
 
 function ExpandableItem({ item }: { item: DropdownItem }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(item.defaultOpen ?? false);
 
   if (!item.children?.length) {
     return (
@@ -82,12 +87,21 @@ function ExpandableItem({ item }: { item: DropdownItem }) {
 }
 
 export default function NavDropdown({ data }: NavDropdownProps) {
+  const colWidth = 240;
+  const gap = 32;
+  const px = 64;
+  const cols = Math.max(data.columns.length, 1);
+  const totalWidth = cols * colWidth + (cols - 1) * gap + px;
+
   return (
-    <div className="w-max min-w-[420px] rounded-2xl border border-secondary-100 bg-light px-8 py-6 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+    <div
+      className="rounded-2xl border border-secondary-100 bg-light py-6 shadow-dropdown"
+      style={{ width: totalWidth, paddingInline: px / 2 }}
+    >
 
       <div
         className="grid gap-8"
-        style={{ gridTemplateColumns: `repeat(${data.columns.length}, minmax(0, 1fr))` }}
+        style={{ gridTemplateColumns: `repeat(${data.columns.length}, var(--size-xs))` }}
       >
         {data.columns.map((col) => (
           <div key={col.title}>
@@ -114,6 +128,13 @@ export default function NavDropdown({ data }: NavDropdownProps) {
             </span>
             <span className="text-sm text-dark-gray">{data.feature.description}</span>
           </Link>
+        </div>
+      )}
+
+      {data.footer && (
+        <div className="mt-6 border-t border-secondary-100 pt-5">
+          <p className="text-sm font-bold text-theme-secondary">{data.footer.title}</p>
+          <p className="mt-1 text-sm leading-relaxed text-light-gray">{data.footer.description}</p>
         </div>
       )}
 

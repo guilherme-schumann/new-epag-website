@@ -10,7 +10,7 @@ export default function AboutStory() {
   return (
     <section className="page-section bg-light">
       <div className="page-container">
-        <div className="mx-auto max-w-[720px]">
+        <div className="mx-auto max-w-(--size-xl)">
 
           <motion.p
             className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"

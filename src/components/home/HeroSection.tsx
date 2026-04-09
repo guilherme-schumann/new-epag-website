@@ -11,8 +11,8 @@ export default function HeroSection() {
   const c = useContent(homeContent).hero;
 
   return (
-    <section className="relative overflow-hidden bg-secondary-900 rounded-b-[48px]">
-      <div className="page-section page-container flex min-h-[520px] flex-col items-center justify-center text-center">
+    <section className="relative overflow-hidden bg-secondary-900 rounded-b-hero">
+      <div className="page-section page-container flex min-h-(--min-h-hero) flex-col items-center justify-center text-center">
 
         <motion.div
           initial={{ opacity: 0, y: -12 }}

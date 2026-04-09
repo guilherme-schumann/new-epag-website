@@ -18,7 +18,7 @@ export default function ProductsSection() {
   return (
     <section className="page-section">
       <div className="page-container">
-        <div className="rounded-[32px] bg-secondary-900 px-6 py-14 sm:px-10 lg:px-16 lg:py-16 xl:px-20 xl:py-20">
+        <div className="rounded-card bg-secondary-900 px-6 py-14 sm:px-10 lg:px-16 lg:py-16 xl:px-20 xl:py-20">
 
           <div className="mb-12 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-primary-500">{c.eyebrow}</p>

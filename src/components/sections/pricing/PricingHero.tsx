@@ -10,7 +10,7 @@ export default function PricingHero() {
   const c = useContent(pricingContent).hero;
 
   return (
-    <section className="bg-secondary-900 rounded-b-[48px] overflow-hidden">
+    <section className="bg-secondary-900 rounded-b-hero overflow-hidden">
       <div className="page-section page-container text-center">
 
         <motion.p

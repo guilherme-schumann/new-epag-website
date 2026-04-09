@@ -12,7 +12,7 @@ export default function CoverageBottomCTA() {
   return (
     <section className="bg-background">
       <div className="page-section page-container">
-        <div className="rounded-[48px] bg-secondary-900 px-8 py-16 text-center lg:px-16">
+        <div className="rounded-hero bg-secondary-900 px-8 py-16 text-center lg:px-16">
 
           <motion.p
             className="mb-4 text-xs font-bold uppercase tracking-widest text-primary-500"

@@ -35,6 +35,25 @@
   /* ── Shadows ── */
   --shadow-card: 10px 20px 40px 0px rgba(0, 0, 0, 0.05);
   --shadow-navbar: 10px 20px 40px 0px rgba(0, 0, 0, 0.05);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* ── Sizing ── */
+  --size-xs:  240px;
+  --size-sm:  320px;
+  --size-md:  420px;
+  --size-lg:  560px;
+  --size-xl:  720px;
+  --size-2xl: 960px;
+
+  /* ── Border Radius ── */
+  --radius-tab:    5px;
+  --radius-card:   32px;
+  --radius-hero:   48px;
+  --radius-panel:  10px;
+  --radius-icon:   12px;
+
+  /* ── Min Heights ── */
+  --min-h-hero: 520px;
 }
 
 /*

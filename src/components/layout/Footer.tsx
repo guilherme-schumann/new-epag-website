@@ -84,7 +84,7 @@ export default function Footer() {
     <footer className="bg-secondary-900">
       <div className="page-section page-container">
         {/* Top: logo + link columns */}
-        <div className="flex flex-col gap-10 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
           {/* Brand */}
           <div className="shrink-0">
             <Logo variant="light" width={92} height={40} />
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
             {footerLinks.map((col) => (
               <div key={col.heading}>
                 <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-light/50">
@@ -126,7 +126,7 @@ export default function Footer() {
         <hr className="my-8 border-light/10" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
           <span className="text-sm text-secondary-100/50">
             © {new Date().getFullYear()} epag. {t.footer.allRightsReserved}
           </span>

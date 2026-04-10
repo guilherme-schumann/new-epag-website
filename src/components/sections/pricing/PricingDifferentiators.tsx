@@ -19,14 +19,14 @@ export default function PricingDifferentiators() {
           transition={{ duration: 0.5 }}
         >
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">
             {c.headline}
             <br />
             <span className="text-theme-secondary">{c.headlineHighlight}</span>
           </h2>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {c.points.map((point, i) => (
             <motion.div
               key={point.label}

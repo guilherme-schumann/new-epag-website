@@ -39,7 +39,7 @@ export default function PayinFeatures() {
 
           <div className="lg:w-[38%] lg:pt-2">
             <motion.h2
-              className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl lg:text-[2.75rem]"
+              className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl xl:text-[2.75rem]"
               initial={{ opacity: 0, x: -32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

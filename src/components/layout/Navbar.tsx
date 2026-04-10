@@ -336,7 +336,7 @@ export default function Navbar() {
   // Close mobile drawer on resize to desktop
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 768) {
         setIsOpen(false);
         setActiveMobileMenu(null);
       }
@@ -393,8 +393,7 @@ export default function Navbar() {
         {/* Dropdown — anchored to nav bottom, centered on active button */}
         {activeMenu && (
           <div
-            className="absolute top-full z-50 pt-2"
-            style={{ left: dropdownLeft, transform: 'translateX(-50%)' }}
+            className="absolute top-full z-50 pt-2 left-1/2 -translate-x-1/2"
           >
             {menuItems.map((item) =>
               item.label === activeMenu && item.dropdown ? (

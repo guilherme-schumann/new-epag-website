@@ -10,7 +10,7 @@ export default function CoverageStatsBar() {
   return (
     <section className="bg-secondary-100">
       <div className="page-section page-container">
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {items.map((stat, i) => (
             <motion.div
               key={stat.value}

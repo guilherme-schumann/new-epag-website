@@ -19,7 +19,7 @@ export default function PayinBusinessModels() {
           transition={{ duration: 0.5 }}
         >
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl lg:text-[2.75rem]">
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 lg:text-4xl xl:text-[2.75rem]">
             {c.headline}
             <br />
             <span className="text-theme-secondary">{c.headlineHighlight}</span>
@@ -27,7 +27,7 @@ export default function PayinBusinessModels() {
           <p className="mt-5 text-base leading-7 text-dark-gray">{c.body}</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-4">
           {c.items.map((model, i) => (
             <motion.div
               key={model.title}

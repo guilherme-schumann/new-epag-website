@@ -32,11 +32,11 @@ export default function AboutFounders() {
   return (
     <section className="page-section bg-light overflow-hidden">
       <div className="page-container">
-        <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-20">
+        <div className="flex flex-col gap-16 xl:flex-row xl:items-center xl:gap-20">
 
-          <div className="lg:w-1/2">
+          <div className="xl:w-1/2">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">{c.headline}</h2>
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">{c.headline}</h2>
 
             <p className="mt-5 text-base leading-7 text-dark-gray">{c.body1}</p>
             <p className="mt-4 text-base leading-7 text-dark-gray">{c.body2}</p>
@@ -47,7 +47,7 @@ export default function AboutFounders() {
             </blockquote>
           </div>
 
-          <div className="lg:w-1/2">
+          <div className="xl:w-1/2">
             <div className="grid grid-cols-2 gap-6">
               {c.people.map((person, i) => (
                 <motion.div

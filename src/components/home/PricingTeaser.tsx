@@ -21,14 +21,14 @@ export default function PricingTeaser() {
           transition={{ duration: 0.5 }}
         >
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-secondary-900 lg:text-4xl">
             {c.headline}{' '}
             <span className="text-primary-500">{c.headlineHighlight}</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-3xl gap-6 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-3xl gap-6 xl:grid-cols-2">
 
           <motion.div
             className="relative flex flex-col rounded-2xl border-2 border-primary-500 bg-light p-8 shadow-card"

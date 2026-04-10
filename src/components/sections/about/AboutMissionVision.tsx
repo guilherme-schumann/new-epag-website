@@ -9,7 +9,7 @@ export default function AboutMissionVision() {
 
   return (
     <section className="page-section bg-secondary-100">
-      <div className="page-container grid gap-6 lg:grid-cols-2">
+      <div className="page-container grid gap-6 md:grid-cols-2">
 
         <motion.div
           className="rounded-2xl bg-light p-8 shadow-card"

@@ -14,7 +14,7 @@ export default function DeveloperSection() {
 
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-            <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">{c.headline}</h2>
+            <h2 className="text-3xl font-extrabold text-secondary-900 md:text-4xl">{c.headline}</h2>
             <p className="mt-4 text-base leading-7 text-dark-gray">{c.body}</p>
 
             <div className="mt-6 flex flex-wrap gap-2">

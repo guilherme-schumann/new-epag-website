@@ -22,11 +22,11 @@ export default function CoverageSection() {
 
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">{c.headline}</h2>
+          <h2 className="text-3xl font-extrabold text-secondary-900 md:text-4xl">{c.headline}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6">
           {c.countries.map((country) => (
             <Link
               key={country.flagCode}

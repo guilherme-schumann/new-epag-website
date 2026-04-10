@@ -23,7 +23,7 @@ export default function AboutStory() {
           </motion.p>
 
           <motion.h2
-            className="mb-8 text-3xl font-extrabold leading-tight tracking-tight text-theme-secondary sm:text-4xl"
+            className="mb-8 text-3xl font-extrabold leading-tight tracking-tight text-theme-secondary md:text-4xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

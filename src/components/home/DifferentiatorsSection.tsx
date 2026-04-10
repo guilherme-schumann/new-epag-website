@@ -20,11 +20,11 @@ export default function DifferentiatorsSection() {
       <div className="page-container">
         <div className="mb-12 text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">{c.headline}</h2>
+          <h2 className="text-3xl font-extrabold text-secondary-900 md:text-4xl">{c.headline}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {c.items.map((item, i) => (
             <div key={item.title} className="rounded-2xl bg-light p-6 shadow-card">
               <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500/10 text-primary-500">

@@ -54,13 +54,22 @@
 
   /* ── Min Heights ── */
   --min-h-hero: 520px;
+
+  /* ── Breakpoints ── */
+  --breakpoint-xs:  320px;
+  --breakpoint-sm:  375px;
+  --breakpoint-md:  425px;
+  --breakpoint-lg:  768px;
+  --breakpoint-xl:  1024px;
+  --breakpoint-2xl: 1280px;
+  --breakpoint-3xl: 1440px;
 }
 
 /*
  * ── Page layout utilities ──────────────────────────────────────────────────
  *
  * page-section   → padding padrão de todas as seções de página
- *                  mobile: px-6 py-14 | sm: px-10 | lg: px-16 py-16 | xl: px-[120px] py-20
+ *                  mobile: px-6 py-14 | lg(768): px-10 | xl(1024): px-16 py-16 | 2xl(1280): px-[120px] py-20
  *
  * page-x         → apenas padding horizontal (seção que gerencia o próprio ritmo vertical)
  *
@@ -70,25 +79,25 @@
   padding-inline: 1.5rem;   /* px-6  — 24px  */
   padding-block:  3.5rem;   /* py-14 — 56px  */
 
-  @media (min-width: 640px) {
-    padding-inline: 2.5rem; /* sm:px-10 — 40px */
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem; /* lg:px-10 — 40px */
   }
 
   @media (min-width: 1024px) {
-    padding-inline: 4rem;   /* lg:px-16 — 64px */
-    padding-block:  4rem;   /* lg:py-16 — 64px */
+    padding-inline: 4rem;   /* xl:px-16 — 64px */
+    padding-block:  4rem;   /* xl:py-16 — 64px */
   }
 
   @media (min-width: 1280px) {
-    padding-inline: 7.5rem; /* xl:px-[120px] */
-    padding-block:  5rem;   /* xl:py-20 — 80px */
+    padding-inline: 7.5rem; /* 2xl:px-[120px] */
+    padding-block:  5rem;   /* 2xl:py-20 — 80px */
   }
 }
 
 @utility page-x {
   padding-inline: 1.5rem;
 
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     padding-inline: 2.5rem;
   }
 
@@ -106,10 +115,50 @@
   margin-inline: auto;
 }
 
+/* ── Media query para telas baixas ────────────────────────────────────────── */
+@media (max-height: 800px) {
+  .short-screen\:py-8 {
+    padding-block: 2rem;
+  }
+  .short-screen\:text-\[2\.25rem\] {
+    font-size: 2.25rem;
+  }
+  .short-screen\:leading-tight {
+    line-height: 1.25;
+  }
+  .short-screen\:mt-4 {
+    margin-top: 1rem;
+  }
+  .short-screen\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .short-screen\:mt-5 {
+    margin-top: 1.25rem;
+  }
+  .short-screen\:max-w-2xl {
+    max-width: 42rem;
+  }
+  .short-screen\:pb-6 {
+    padding-bottom: 1.5rem;
+  }
+  .short-screen\:mt-8 {
+    margin-top: 2rem;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
   color: var(--color-dark-gray);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+
+@media (min-width: 1024px) and (max-width: 1367px) {
+  .hero-inner {
+    padding-top: 2rem;
+    padding-bottom: 0;
+  }
 }

@@ -11,7 +11,7 @@ export default function CoverageHero() {
 
   return (
     <section className="bg-secondary-900 rounded-b-hero overflow-hidden">
-      <div className="page-section page-container text-center">
+      <div className="page-section page-container text-center flex min-h-(--min-h-hero) flex-col items-center justify-center short-screen:py-8">
 
         <motion.p
           className="mb-3 text-xs font-bold uppercase tracking-widest text-primary-500"
@@ -23,7 +23,7 @@ export default function CoverageHero() {
         </motion.p>
 
         <motion.h1
-          className="text-4xl font-extrabold leading-tight tracking-tight text-secondary-100 sm:text-5xl lg:text-[4rem]"
+          className="text-4xl font-extrabold leading-tight tracking-tight text-secondary-100 md:text-5xl lg:text-[3.25rem] xl:text-[4rem] short-screen:text-[2.25rem] short-screen:leading-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -34,7 +34,7 @@ export default function CoverageHero() {
         </motion.h1>
 
         <motion.p
-          className="mx-auto mt-5 max-w-2xl text-base leading-7 text-secondary-100/80"
+          className="mx-auto mt-5 max-w-2xl text-base leading-7 text-secondary-100/80 md:text-lg short-screen:mt-4 short-screen:text-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -43,7 +43,7 @@ export default function CoverageHero() {
         </motion.p>
 
         <motion.div
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 flex flex-wrap items-center justify-center gap-4 short-screen:mt-5"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}

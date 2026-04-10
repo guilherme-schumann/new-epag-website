@@ -47,6 +47,7 @@ export interface Translations {
     whyEpag: string;
     whyEpagDescription: string;
     recurrency: string;
+    recurrencyShort: string;
     pixAutomatico: string;
     cards: string;
     serverToServer: string;
@@ -84,9 +85,9 @@ export interface Translations {
     };
     links: {
       payin: string;
-      payout: string;
-      hostedCheckout: string;
-      subscriptions: string;
+      checkout: string;
+      recurrency: string;
+      serverToServer: string;
       idValidation: string;
       brazil: string;
       mexico: string;
@@ -95,12 +96,11 @@ export interface Translations {
       viewAllCoverage: string;
       aboutEpag: string;
       pricing: string;
-      customers: string;
-      careers: string;
-      helpCenter: string;
-      privacyPolicy: string;
-      termsAndConditions: string;
-      cookiePolicy: string;
+      contactUs: string;
+      legal: string;
+      terms: string;
+      imprint: string;
+      prohibitedList: string;
     };
     allRightsReserved: string;
     disclaimer: string;

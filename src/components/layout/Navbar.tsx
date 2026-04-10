@@ -347,8 +347,9 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="page-x relative z-50 flex items-center justify-between bg-light py-4 shadow-navbar"
+        className="page-x relative z-50 bg-light py-4 shadow-navbar"
       >
+        <div className="page-container flex items-center justify-between">
         <Logo variant="dark" width={92} height={40} />
 
         {/* Desktop menu */}
@@ -414,6 +415,7 @@ export default function Navbar() {
         >
           <Icon name={isOpen ? 'x' : 'menu'} size={28} />
         </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}

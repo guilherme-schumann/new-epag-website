@@ -24,7 +24,7 @@ export default function PayinConversion() {
             </motion.p>
 
             <motion.h2
-              className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl lg:text-[2.75rem]"
+              className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl xl:text-[2.75rem]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -56,7 +56,7 @@ export default function PayinConversion() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-[55%]">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:w-[55%]">
             {c.capabilities.map((cap, i) => (
               <motion.div
                 key={cap.label}

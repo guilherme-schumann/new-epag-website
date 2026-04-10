@@ -26,11 +26,11 @@ export default function IndustriesSection() {
   return (
     <section className="page-section">
       <div className="page-container">
-        <div className="rounded-card bg-secondary-100 px-6 py-14 sm:px-10 lg:px-16 lg:py-16 xl:px-20 xl:py-20">
+        <div className="rounded-card bg-secondary-100 px-6 py-14 lg:px-10 xl:px-16 xl:py-16 2xl:px-20 2xl:py-20">
 
           <div className="mb-10 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-            <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">{c.headline}</h2>
+            <h2 className="text-3xl font-extrabold text-secondary-900 md:text-4xl">{c.headline}</h2>
             <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
           </div>
 

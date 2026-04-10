@@ -20,12 +20,12 @@ export default function PricingPlans() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">
             {c.headline}
           </h2>
         </motion.div>
 
-        <div className="mx-auto grid max-w-3xl gap-6 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
 
           <motion.div
             className="relative flex flex-col rounded-2xl border-2 border-primary-500 bg-light p-8 shadow-card"

@@ -10,9 +10,9 @@ export default function AboutTechnology() {
   return (
     <section className="page-section bg-background">
       <div className="page-container">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20">
+        <div className="flex flex-col gap-12 xl:flex-row xl:items-center xl:gap-20">
 
-          <div className="lg:w-1/2">
+          <div className="xl:w-1/2">
             <motion.p
               className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"
               initial={{ opacity: 0, y: -10 }}
@@ -24,7 +24,7 @@ export default function AboutTechnology() {
             </motion.p>
 
             <motion.h2
-              className="text-3xl font-extrabold leading-tight tracking-tight text-theme-secondary sm:text-4xl"
+              className="text-3xl font-extrabold leading-tight tracking-tight text-theme-secondary md:text-4xl"
               initial={{ opacity: 0, x: -32 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -59,7 +59,7 @@ export default function AboutTechnology() {
             </motion.a>
           </div>
 
-          <div className="lg:w-1/2">
+          <div className="xl:w-1/2">
             <ul className="flex flex-col gap-4">
               {c.highlights.map((item, i) => (
                 <motion.li

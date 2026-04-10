@@ -15,7 +15,7 @@ export default function Hero() {
 
         {/* ── Left: text content ── */}
         <div className="page-section flex flex-col justify-center lg:w-[48%]">
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-5xl lg:text-[3.5rem] xl:text-6xl">
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-secondary-900 lg:text-5xl xl:text-[3.5rem] 2xl:text-6xl">
             CROSS-BORDER
             <br />
             online payments

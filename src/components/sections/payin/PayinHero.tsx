@@ -13,7 +13,7 @@ export default function PayinHero() {
 
   return (
     <section className="relative overflow-hidden bg-background">
-      <div className="page-section page-container text-center">
+      <div className="page-section page-container text-center flex min-h-(--min-h-hero) flex-col items-center justify-center short-screen:py-8">
 
         <motion.p
           className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary"
@@ -25,7 +25,7 @@ export default function PayinHero() {
         </motion.p>
 
         <motion.h1
-          className="text-4xl font-extrabold leading-tight tracking-tight text-theme-secondary sm:text-5xl lg:text-[4rem]"
+          className="text-4xl font-extrabold leading-tight tracking-tight text-theme-secondary md:text-5xl lg:text-[3.25rem] xl:text-[4rem] short-screen:text-[2.25rem] short-screen:leading-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -34,7 +34,7 @@ export default function PayinHero() {
         </motion.h1>
 
         <motion.p
-          className="mx-auto mt-5 max-w-2xl text-base leading-7 text-dark-gray"
+          className="mx-auto mt-5 max-w-2xl text-base leading-7 text-dark-gray md:text-lg short-screen:mt-4 short-screen:text-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -43,7 +43,7 @@ export default function PayinHero() {
         </motion.p>
 
         <motion.div
-          className="mt-8 flex flex-wrap items-center justify-center gap-4"
+          className="mt-8 flex flex-wrap items-center justify-center gap-4 short-screen:mt-5"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -58,7 +58,7 @@ export default function PayinHero() {
         </motion.div>
 
         <motion.div
-          className="mt-12"
+          className="mt-12 short-screen:mt-8"
           initial={{ opacity: 0, y: 40, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}

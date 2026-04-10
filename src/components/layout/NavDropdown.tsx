@@ -95,23 +95,23 @@ export default function NavDropdown({ data }: NavDropdownProps) {
 
   return (
     <div
-      className="rounded-2xl border border-secondary-100 bg-light py-6 shadow-dropdown"
+      className="rounded-2xl border border-secondary-100 bg-light py-6 shadow-dropdown [@media(min-width:1024px)_and_(max-width:1366px)]:max-w-[900px]"
       style={{ width: totalWidth, paddingInline: px / 2 }}
     >
 
       <div
-        className="grid gap-8"
+        className="grid gap-8 [@media(min-width:1024px)_and_(max-width:1366px)]:gap-6"
         style={{ gridTemplateColumns: `repeat(${data.columns.length}, var(--size-xs))` }}
       >
-        {data.columns.map((col) => (
+        {data.columns.map((col, idx) => (
           <div key={col.title}>
             <p className="mb-4 flex items-center gap-2 text-sm font-bold text-theme-secondary">
               <span className="inline-block h-4 w-4 rounded bg-theme-secondary/10 ring-1 ring-theme-secondary/20" />
               {col.title}
             </p>
-            <ul className="flex flex-col gap-2">
+            <ul className={`flex flex-col gap-2 ${col.items.length > 6 ? '[@media(min-width:1024px)_and_(max-width:1366px)]:columns-2 [@media(min-width:1024px)_and_(max-width:1366px)]:gap-x-4' : ''}`}>
               {col.items.map((item) => (
-                <li key={item.label}>
+                <li key={item.label} className={col.items.length > 6 ? '[@media(min-width:1024px)_and_(max-width:1366px)]:break-inside-avoid' : ''}>
                   <ExpandableItem item={item} />
                 </li>
               ))}

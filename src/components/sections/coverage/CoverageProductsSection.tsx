@@ -14,10 +14,10 @@ export default function CoverageProductsSection() {
 
         <div className="mb-10 text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">{c.headline}</h2>
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">{c.headline}</h2>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {c.items.map((product, i) => (
             <motion.div
               key={product.label}

@@ -18,15 +18,15 @@ export default function ProductsSection() {
   return (
     <section className="page-section">
       <div className="page-container">
-        <div className="rounded-card bg-secondary-900 px-6 py-14 sm:px-10 lg:px-16 lg:py-16 xl:px-20 xl:py-20">
+        <div className="rounded-card bg-secondary-900 px-6 py-14 lg:px-10 xl:px-16 xl:py-16 2xl:px-20 2xl:py-20">
 
           <div className="mb-12 text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-primary-500">{c.eyebrow}</p>
-            <h2 className="text-3xl font-extrabold text-light sm:text-4xl">{c.headline}</h2>
+            <h2 className="text-3xl font-extrabold text-light md:text-4xl">{c.headline}</h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-secondary-100/70">{c.subheadline}</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {c.items.map((product, i) => (
               <div key={product.title} className="flex flex-col rounded-2xl bg-light/5 p-6 ring-1 ring-white/10">
                 <span className={`mb-4 inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold ${tagColors[i]}`}>

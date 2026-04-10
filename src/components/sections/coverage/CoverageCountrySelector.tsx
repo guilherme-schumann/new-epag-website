@@ -125,7 +125,7 @@ export default function CoverageCountrySelector() {
 
         <div className="mb-10 text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">{c.headline}</h2>
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">{c.headline}</h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-dark-gray">{c.subheadline}</p>
         </div>
 

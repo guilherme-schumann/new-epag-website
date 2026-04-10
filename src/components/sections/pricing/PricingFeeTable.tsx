@@ -19,7 +19,7 @@ export default function PricingFeeTable() {
           transition={{ duration: 0.5 }}
         >
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-theme-secondary">{c.eyebrow}</p>
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 sm:text-4xl">{c.headline}</h2>
+          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-secondary-900 md:text-4xl">{c.headline}</h2>
         </motion.div>
 
         <motion.div
@@ -32,7 +32,7 @@ export default function PricingFeeTable() {
           {c.rows.map((row, i) => (
             <motion.div
               key={row.service}
-              className={`grid gap-4 p-6 lg:grid-cols-3 ${i % 2 === 0 ? 'bg-light' : 'bg-secondary-100'} ${i < c.rows.length - 1 ? 'border-b border-secondary-100' : ''}`}
+              className={`grid gap-4 p-6 md:grid-cols-3 ${i % 2 === 0 ? 'bg-light' : 'bg-secondary-100'} ${i < c.rows.length - 1 ? 'border-b border-secondary-100' : ''}`}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

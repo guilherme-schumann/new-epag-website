@@ -78,10 +78,10 @@ export const minHeight = {
  */
 export const layout = {
   /** Responsive horizontal + vertical padding for page sections (Tailwind classes). */
-  pagePadding: 'px-6 py-14 sm:px-10 lg:px-16 lg:py-16 xl:px-[7.5rem] xl:py-20',
+  pagePadding: 'px-6 py-14 lg:px-10 xl:px-16 xl:py-16 2xl:px-[7.5rem] 2xl:py-20',
 
   /** Horizontal-only variant — useful for elements that manage their own vertical rhythm. */
-  pageX: 'px-6 sm:px-10 lg:px-16 xl:px-[7.5rem]',
+  pageX: 'px-6 lg:px-10 xl:px-16 2xl:px-[7.5rem]',
 
   /** Max-width cap aligned with the Figma canvas (1440px). Pair with `mx-auto`. */
   pageMaxWidth: 'max-w-[1440px] mx-auto',

@@ -10,11 +10,11 @@ export default function AboutTeamStats() {
   return (
     <section className="page-section bg-secondary-100">
       <div className="page-container">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {items.map((stat, i) => (
             <motion.div
               key={stat.value}
-              className={`flex flex-col items-center gap-2 text-center ${i < items.length - 1 ? 'sm:border-r sm:border-secondary-900/10 sm:pr-8' : ''}`}
+              className={`flex flex-col items-center gap-2 text-center ${i < items.length - 1 ? 'lg:border-r lg:border-secondary-900/10 lg:pr-8' : ''}`}
               initial={{ opacity: 0, scale: 0.75 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.5 }}

@@ -13,7 +13,7 @@ export default function StatsBar() {
     <div className="page-x pt-8">
       <div className="page-container">
         <div className="rounded-2xl bg-light shadow-card">
-          <div className="grid grid-cols-2 divide-x divide-y divide-secondary-100 lg:grid-cols-4 lg:divide-y-0">
+          <div className="grid grid-cols-2 divide-x divide-y divide-secondary-100 md:grid-cols-4 md:divide-y-0">
             {items.map((stat, i) => (
               <div
                 key={stat.label}

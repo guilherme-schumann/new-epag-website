@@ -92,7 +92,7 @@ export default function ContactSection() {
             <p className="mb-6 text-base leading-relaxed text-dark-gray">{tabContent.description}</p>
 
             <form className="flex flex-col gap-4 rounded-panel bg-background p-6">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-semibold text-dark-gray">{c.form.firstName}</label>
                   <input type="text" placeholder={c.form.firstNamePlaceholder} className="rounded-lg border border-light-gray/40 bg-light px-4 py-3 text-sm text-dark-gray placeholder-light-gray outline-none transition focus:border-theme-secondary focus:ring-2 focus:ring-theme-secondary/20" />
@@ -108,7 +108,7 @@ export default function ContactSection() {
                 <input type="email" placeholder={c.form.emailPlaceholder} className="rounded-lg border border-light-gray/40 bg-light px-4 py-3 text-sm text-dark-gray placeholder-light-gray outline-none transition focus:border-theme-secondary focus:ring-2 focus:ring-theme-secondary/20" />
               </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-semibold text-dark-gray">{c.form.company}</label>
                   <input type="text" placeholder={c.form.companyPlaceholder} className="rounded-lg border border-light-gray/40 bg-light px-4 py-3 text-sm text-dark-gray placeholder-light-gray outline-none transition focus:border-theme-secondary focus:ring-2 focus:ring-theme-secondary/20" />

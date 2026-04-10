@@ -51,6 +51,7 @@ export interface Translations {
     cards: string;
     serverToServer: string;
     idValidation: string;
+    paymentMethods: string;
     paymentCategories: string;
     cardPayments: string;
     instantPayments: string;

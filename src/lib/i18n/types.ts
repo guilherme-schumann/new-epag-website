@@ -67,6 +67,7 @@ export interface Translations {
     about: string;
     legal: string;
     prohibited: string;
+    terms: string;
     termsForUsers: string;
     termsForMerchants: string;
     imprint: string;

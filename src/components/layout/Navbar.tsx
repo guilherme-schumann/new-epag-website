@@ -271,14 +271,7 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
             items: [
               { label: nav.legal, href: '/legal', bold: true },
               {
-                label: nav.prohibited,
-                bold: true,
-                children: [
-                  { label: nav.prohibitedList, href: '/legal/prohibited' },
-                ],
-              },
-              {
-                label: 'Terms',
+                label: nav.terms,
                 bold: true,
                 children: [
                   { label: nav.termsForUsers, href: '/legal/terms-users' },
@@ -286,6 +279,7 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
                 ],
               },
               { label: nav.imprint, href: '/legal/imprint', bold: true },
+              { label: nav.prohibitedList, href: '/legal/prohibited', bold: true },
             ],
           },
         ],

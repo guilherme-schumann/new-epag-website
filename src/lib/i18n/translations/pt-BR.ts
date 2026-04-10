@@ -57,6 +57,7 @@ const ptBR: Translations = {
     terms: 'Termos',
     termsForUsers: 'Para Usuários',
     termsForMerchants: 'Para Merchants',
+    privacyPolicy: 'Política de Privacidade',
     imprint: 'Imprint',
     prohibitedList: 'Lista de Produtos e Serviços Proibidos e Restritos',
     institutionalDisclaimer: 'Não fornecemos aconselhamento financeiro ou de investimento.',

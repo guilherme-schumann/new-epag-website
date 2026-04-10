@@ -56,6 +56,7 @@ const en: Translations = {
     terms: 'Terms',
     termsForUsers: 'For Users',
     termsForMerchants: 'For Merchants',
+    privacyPolicy: 'Privacy Policy',
     imprint: 'Imprint',
     prohibitedList: 'Prohibited and Restricted Products and Services List',
     institutionalDisclaimer: 'We do not provide financial or investment advice.',

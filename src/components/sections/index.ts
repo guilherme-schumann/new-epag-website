@@ -1,2 +1,4 @@
-export { default as Hero } from './Hero';
-export { default as ContactSection } from './ContactSection';
+export { Hero } from './shared';
+export { ContactSection } from './contact';
+export { LegalHero, LegalLayout, LegalOverview } from './legal';
+export * from './home';

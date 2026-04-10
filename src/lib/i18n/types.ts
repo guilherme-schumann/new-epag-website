@@ -71,6 +71,7 @@ export interface Translations {
     terms: string;
     termsForUsers: string;
     termsForMerchants: string;
+    privacyPolicy: string;
     imprint: string;
     prohibitedList: string;
     institutionalDisclaimer: string;

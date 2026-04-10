@@ -153,11 +153,12 @@ export default function Footer() {
       items: [
         { label: nav.legal, href: '/legal' },
         { label: nav.terms, children: [
-          { label: nav.termsForUsers, href: '/legal/terms-users' },
-          { label: nav.termsForMerchants, href: '/legal/terms-merchants' },
+          { label: nav.termsForUsers, href: '/legal/terms-for-users' },
+          { label: nav.termsForMerchants, href: '/legal/terms-for-merchants' },
         ]},
+        { label: nav.privacyPolicy, href: '/legal/privacy-policy' },
         { label: nav.imprint, href: '/legal/imprint' },
-        { label: nav.prohibitedList, href: '/legal/prohibited' },
+        { label: nav.prohibitedList, href: '/legal/prohibited-products-and-services' },
       ],
     },
   ];

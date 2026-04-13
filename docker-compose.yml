@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - STRAPI_URL=${STRAPI_URL:-http://localhost:1337}
+      - STRAPI_API_TOKEN=${STRAPI_API_TOKEN:-}
+      - MOCK_DB=${MOCK_DB:-false}
+    restart: unless-stopped

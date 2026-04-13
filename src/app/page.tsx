@@ -9,7 +9,7 @@ import {
   DeveloperSection,
   PricingTeaser,
   FooterCTA,
-} from '@/components/home';
+} from '@/components/sections/home';
 
 export const metadata: Metadata = {
   title: "Direct Access to Latin America's Payment Infrastructure — epag",

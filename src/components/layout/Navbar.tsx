@@ -271,21 +271,16 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
             items: [
               { label: nav.legal, href: '/legal', bold: true },
               {
-                label: nav.prohibited,
+                label: nav.terms,
                 bold: true,
                 children: [
-                  { label: nav.prohibitedList, href: '/legal/prohibited' },
+                  { label: nav.termsForUsers, href: '/legal/terms-for-users' },
+                  { label: nav.termsForMerchants, href: '/legal/terms-for-merchants' },
                 ],
               },
-              {
-                label: 'Terms',
-                bold: true,
-                children: [
-                  { label: nav.termsForUsers, href: '/legal/terms-users' },
-                  { label: nav.termsForMerchants, href: '/legal/terms-merchants' },
-                ],
-              },
+              { label: nav.privacyPolicy, href: '/legal/privacy-policy', bold: true },
               { label: nav.imprint, href: '/legal/imprint', bold: true },
+              { label: nav.prohibitedList, href: '/legal/prohibited-products-and-services', bold: true },
             ],
           },
         ],
@@ -353,8 +348,9 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="page-x relative z-50 flex items-center justify-between bg-light py-4 shadow-navbar"
+        className="page-x relative z-50 bg-light py-4 shadow-navbar"
       >
+        <div className="page-container flex items-center justify-between">
         <Logo variant="dark" width={92} height={40} />
 
         {/* Desktop menu */}
@@ -420,6 +416,7 @@ export default function Navbar() {
         >
           <Icon name={isOpen ? 'x' : 'menu'} size={28} />
         </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}

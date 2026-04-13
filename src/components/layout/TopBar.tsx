@@ -58,8 +58,9 @@ export default function TopBar() {
   const currentLocale = locales.find((l) => l.code === locale) ?? locales[0];
 
   return (
-    <div data-topbar className="page-x hidden items-center justify-end bg-secondary-900 py-2.5 lg:flex">
-      <div className="flex items-center gap-3">
+    <div data-topbar className="page-x hidden bg-secondary-900 py-2.5 lg:flex">
+      <div className="page-container flex w-full items-center justify-end">
+        <div className="flex items-center gap-3">
         {/* Login Admin link */}
         <a
           href="https://adm.epag.io/login"
@@ -86,6 +87,7 @@ export default function TopBar() {
             className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           />
         </button>
+        </div>
       </div>
 
       {/* Dropdown rendered via fixed positioning to escape sticky header stacking context */}

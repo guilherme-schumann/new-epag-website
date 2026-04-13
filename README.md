@@ -13,11 +13,22 @@ B2B fintech website for **epag** — direct payment infrastructure across Latin 
 | Styling | Tailwind CSS v4 | 4 |
 | Animation | Motion | 12 |
 | Language | TypeScript | 5 (strict) |
-| ORM | Prisma | 7 |
-| Database | PostgreSQL | — |
+| CMS | Strapi | — |
 | Validation | Zod | 4 |
-| Rich Text | Tiptap | 3 |
-| Auth | Session-based (bcrypt + cookies) | — |
+
+---
+
+## Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   frontend      │────▶│     strapi      │────▶│   postgres      │
+│   Next.js       │     │   CMS + API     │     │   Database      │
+│   :3000         │     │   :1337         │     │   :5432         │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
+
+The Next.js frontend communicates with Strapi via REST API. The custom admin UI (under `/admin`) is part of the Next.js app and proxies all CMS operations to Strapi.
 
 ---
 
@@ -46,7 +57,7 @@ src/
 
     # ── Admin CMS ────────────────────────────
     admin/
-      login/page.tsx          # Login (no sidebar)
+      login/page.tsx          # Login
       (protected)/
         layout.tsx            # Auth guard + sidebar
         page.tsx              # Dashboard
@@ -55,12 +66,12 @@ src/
           new/page.tsx        # Create post
           [id]/page.tsx       # Edit post
 
-    # ── API ──────────────────────────────────
+    # ── API (Strapi proxy) ───────────────────
     api/
-      auth/login/route.ts
-      auth/logout/route.ts
-      posts/route.ts
-      posts/[id]/route.ts
+      auth/login/route.ts     # Authenticates via Strapi, sets JWT cookie
+      auth/logout/route.ts    # Clears session cookie
+      posts/route.ts          # GET / POST
+      posts/[id]/route.ts     # PUT / DELETE
 
   components/
     admin/                    # Admin-only components
@@ -70,44 +81,14 @@ src/
       RichTextEditor.tsx
     layout/                   # Shell: Header, Navbar, Footer
     sections/                 # Page sections grouped by feature
-      blog/
-      home/
-      about/
-      contact/
-      coverage/
-      legal/
-      payin/
-      pricing/
-      shared/
     ui/                       # Primitives: Button, Icon, Logo
 
   content/                    # i18n content (en, pt-BR, es-ES)
-    blog/
-    home/
-    about/
-    contact/
-    coverage/
-    legal/
-      shared.ts               # Hero, nav, overview
-      termsUsers.ts
-      termsMerchants.ts
-      privacy.ts
-      imprint.ts
-      prohibited.ts
-    payin/
-    pricing/
 
   lib/
-    auth/index.ts             # getSession, requireAuth, requireAdmin
-    db/index.ts               # Prisma client singleton
-    services/posts.ts         # CRUD + cache revalidation
-    validations/post.ts       # Zod schemas
+    strapi.ts                 # Strapi REST client + types + mock data
 
   middleware.ts               # Route protection for /admin/*
-
-prisma/
-  schema.prisma               # Models: User, Session, Post, Tag, LegalDocument
-  prisma.config.ts            # Database connection config
 ```
 
 ---
@@ -126,50 +107,46 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env`:
-
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/epag_cms"
-MOCK_DB="true"   # set to "false" when database is ready
+STRAPI_URL="http://localhost:1337"
+STRAPI_API_TOKEN=""       # leave empty in mock mode
+MOCK_DB="true"            # set to "false" when Strapi is running
 ```
 
-### 3. Generate Prisma client
-
-```bash
-npx prisma generate
-```
-
-### 4. Run development server
+### 3. Run development server
 
 ```bash
 npm run dev
 ```
 
----
-
-## Database Setup (when ready)
-
-```bash
-# Apply migrations
-npx prisma migrate dev --name init
-
-# Seed first admin user (run once)
-npx ts-node prisma/seed.ts
-```
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
 ## Mock Mode
 
-Set `MOCK_DB="true"` in `.env` to run without a database. All pages render with mock data — useful for UI development.
+Set `MOCK_DB="true"` to run without Strapi. Useful for frontend development.
 
 | What is mocked |
 |----------------|
-| Auth session (auto-logged in as admin) |
+| Auth session (auto-logged in, any credentials accepted) |
 | Blog posts (3 sample posts) |
-| Login endpoint (accepts any credentials) |
+| All Strapi API calls |
 
-Set `MOCK_DB="false"` to connect to a real PostgreSQL instance.
+Set `MOCK_DB="false"` and fill `STRAPI_API_TOKEN` to connect to a real Strapi instance.
+
+---
+
+## Docker
+
+The frontend is containerized using a multi-stage Dockerfile (deps → builder → runner).
+
+```bash
+# Build and run
+docker compose up --build
+```
+
+The container runs on port `3000`. Environment variables are passed via `docker-compose.yml` or a `.env` file.
 
 ---
 
@@ -206,7 +183,7 @@ Set `MOCK_DB="false"` to connect to a real PostgreSQL instance.
 
 | Method | Route | Description |
 |--------|-------|-------------|
-| `POST` | `/api/auth/login` | Login |
+| `POST` | `/api/auth/login` | Login via Strapi |
 | `POST` | `/api/auth/logout` | Logout |
 | `GET` | `/api/posts` | List posts |
 | `POST` | `/api/posts` | Create post |
@@ -219,15 +196,13 @@ Set `MOCK_DB="false"` to connect to a real PostgreSQL instance.
 
 Content is available in three locales: `en`, `pt-BR`, `es-ES`.
 
-All content lives in `src/content/` as TypeScript objects. Components use the `useContent()` hook to get the correct locale slice at runtime.
+All static content lives in `src/content/` as TypeScript objects. Components use the `useContent()` hook to get the correct locale at runtime.
 
 ---
 
 ## Design System
 
 Tokens are defined in `src/lib/design-tokens.ts` and `src/app/globals.css` (`@theme inline` block). Both files must be kept in sync.
-
-Layout utilities defined in `globals.css`:
 
 | Class | Effect |
 |-------|--------|
@@ -237,18 +212,10 @@ Layout utilities defined in `globals.css`:
 
 ---
 
-## Infrastructure Requirements
+## Environment Variables
 
-The application requires:
-
-- **Node.js** 20+
-- **PostgreSQL** 15+
-- Storage for media uploads (S3-compatible or filesystem)
-
-Environment variables needed in production:
-
-```env
-DATABASE_URL=
-NODE_ENV=production
-MOCK_DB=false
-```
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `STRAPI_URL` | Strapi instance URL | `http://localhost:1337` |
+| `STRAPI_API_TOKEN` | Strapi API token | — |
+| `MOCK_DB` | Enable mock mode | `false` |

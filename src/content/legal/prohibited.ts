@@ -90,7 +90,7 @@ export const prohibitedContent = {
       },
     ],
   },
-  'es-ES': {
+  'es': {
     title: 'Productos y Servicios Prohibidos',
     sections: [
       {
@@ -132,3 +132,4 @@ export const prohibitedContent = {
     ],
   },
 };
+

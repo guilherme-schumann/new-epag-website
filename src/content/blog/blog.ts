@@ -9,6 +9,13 @@ export type BlogContent = {
     readMore: string;
     noPosts: string;
     publishedOn: string;
+    allCategories: string;
+  };
+  post: {
+    backLabel: string;
+    contents: string;
+    followUs: string;
+    topArticles: string;
   };
 };
 
@@ -25,6 +32,13 @@ export const blogContent = {
       readMore: 'Read more',
       noPosts: 'No posts published yet.',
       publishedOn: 'Published on',
+      allCategories: 'All',
+    },
+    post: {
+      backLabel: 'Blog',
+      contents: 'Contents',
+      followUs: 'Follow us',
+      topArticles: 'Top Articles',
     },
   },
   'pt-BR': {
@@ -39,9 +53,16 @@ export const blogContent = {
       readMore: 'Ler mais',
       noPosts: 'Nenhum post publicado ainda.',
       publishedOn: 'Publicado em',
+      allCategories: 'Todos',
+    },
+    post: {
+      backLabel: 'Blog',
+      contents: 'Conteúdo',
+      followUs: 'Siga-nos',
+      topArticles: 'Artigos em Destaque',
     },
   },
-  'es-ES': {
+  'es': {
     hero: {
       eyebrow: 'Blog',
       headline: 'Insights sobre',
@@ -53,6 +74,13 @@ export const blogContent = {
       readMore: 'Leer más',
       noPosts: 'No hay publicaciones aún.',
       publishedOn: 'Publicado el',
+      allCategories: 'Todos',
+    },
+    post: {
+      backLabel: 'Blog',
+      contents: 'Contenido',
+      followUs: 'Síguenos',
+      topArticles: 'Artículos Destacados',
     },
   },
 };

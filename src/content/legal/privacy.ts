@@ -102,7 +102,7 @@ export const privacyContent = {
       },
     ],
   },
-  'es-ES': {
+  'es': {
     title: 'Política de Privacidad',
     sections: [
       {
@@ -150,3 +150,4 @@ export const privacyContent = {
     ],
   },
 };
+

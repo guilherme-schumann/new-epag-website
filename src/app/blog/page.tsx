@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { BlogHero, BlogList } from '@/components/sections/blog';
-import { getPosts } from '@/lib/strapi';
+import { getCategories, getPosts } from '@/lib/strapi';
 
 export const metadata: Metadata = {
   title: 'Blog — epag',
@@ -8,21 +8,35 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getPosts().catch(() => []);
+  const [posts, categories] = await Promise.all([
+    getPosts().catch(() => []),
+    getCategories().catch(() => []),
+  ]);
+
   const published = posts.filter((p) => p.status === 'published');
 
   return (
     <main className="flex-1 bg-background">
       <BlogHero />
-      <BlogList posts={published.map((p) => ({
-        id: String(p.id),
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt,
-        coverImage: p.coverImage,
-        publishedAt: p.publishedAt ? new Date(p.publishedAt) : null,
-        tags: [],
-      }))} />
+      <BlogList
+        posts={published.map((p) => ({
+          id: String(p.id),
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+          coverImage: p.coverImage,
+          publishedAt: p.publishedAt ? new Date(p.publishedAt) : null,
+          category: p.category
+            ? { id: String(p.category.id), slug: p.category.slug, label: p.category.label }
+            : null,
+          tags: p.tags.map((t) => ({ id: String(t.id), slug: t.slug, label: t.label })),
+        }))}
+        categories={categories.map((c) => ({
+          id: String(c.id),
+          slug: c.slug,
+          label: c.label,
+        }))}
+      />
     </main>
   );
 }

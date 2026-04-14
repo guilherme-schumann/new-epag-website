@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { MOCK_POSTS } from '@/lib/strapi';
+import { MOCK_TAGS } from '@/lib/strapi';
 
 const STRAPI_URL = process.env.STRAPI_URL ?? 'http://localhost:1337';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN ?? '';
 const USE_MOCK = process.env.MOCK_DB === 'true';
 
-async function getUserToken() {
-  const store = await cookies();
-  return store.get('session')?.value ?? '';
-}
-
 export async function GET() {
   if (USE_MOCK) {
-    return NextResponse.json({ data: MOCK_POSTS });
+    return NextResponse.json({ data: MOCK_TAGS });
   }
-  const res = await fetch(`${STRAPI_URL}/api/posts?populate=*&sort=createdAt:desc`, {
+  const res = await fetch(`${STRAPI_URL}/api/tags?sort=label:asc`, {
     headers: { Authorization: `Bearer ${STRAPI_API_TOKEN}` },
     cache: 'no-store',
   });
@@ -29,7 +23,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: { ...body, id: Date.now(), documentId: String(Date.now()) } }, { status: 201 });
   }
   const body = await req.json();
-  const res = await fetch(`${STRAPI_URL}/api/posts`, {
+  const res = await fetch(`${STRAPI_URL}/api/tags`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${STRAPI_API_TOKEN}` },
     body: JSON.stringify({ data: body }),

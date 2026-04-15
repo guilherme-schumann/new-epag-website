@@ -13,7 +13,7 @@ export async function strapiRequest<T>(
       Authorization: `Bearer ${STRAPI_API_TOKEN}`,
       ...options.headers,
     },
-    next: { revalidate: 60 },
+    next: { revalidate: 0 },
   });
 
   if (!res.ok) {

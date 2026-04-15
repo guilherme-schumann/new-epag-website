@@ -10,6 +10,8 @@ export type BlogContent = {
     noPosts: string;
     publishedOn: string;
     allCategories: string;
+    showMoreTags: string;
+    showLessTags: string;
   };
   post: {
     backLabel: string;
@@ -33,6 +35,8 @@ export const blogContent = {
       noPosts: 'No posts published yet.',
       publishedOn: 'Published on',
       allCategories: 'All',
+      showMoreTags: '...',
+      showLessTags: '−',
     },
     post: {
       backLabel: 'Blog',
@@ -54,6 +58,8 @@ export const blogContent = {
       noPosts: 'Nenhum post publicado ainda.',
       publishedOn: 'Publicado em',
       allCategories: 'Todos',
+      showMoreTags: '...',
+      showLessTags: '−',
     },
     post: {
       backLabel: 'Blog',
@@ -75,6 +81,8 @@ export const blogContent = {
       noPosts: 'No hay publicaciones aún.',
       publishedOn: 'Publicado el',
       allCategories: 'Todos',
+      showMoreTags: '...',
+      showLessTags: '−',
     },
     post: {
       backLabel: 'Blog',

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useContent } from '@/hooks/useContent';
 import { blogContent } from '@/content';
+import { useLanguage } from '@/lib/i18n';
 
 type Heading = { id: string; text: string };
 
@@ -50,9 +51,9 @@ type RelatedPost = { slug: string; title: string; coverImage: string | null };
 type Tag = { id: string; slug: string; label: Record<string, string> };
 
 type Props = {
-  title: string;
+  title: Record<string, string>;
   publishedAt: string | null;
-  content: string;
+  content: Record<string, string>;
   featuredImage?: string | null;
   relatedPosts?: RelatedPost[];
   backLabel?: string;
@@ -62,24 +63,29 @@ type Props = {
 export default function BlogPostLayout({ title, publishedAt, content, featuredImage, relatedPosts = [], backLabel, tags = [] }: Props) {
   const c = useContent(blogContent).post;
   const back = backLabel ?? c.backLabel;
+  const { locale } = useLanguage();
+
+  const localeKey = locale === 'es' ? 'es-ES' : locale;
+  const resolvedTitle = title[localeKey] ?? title['en'] ?? '';
+  const resolvedContent = content[localeKey] ?? content['en'] ?? '';
 
   const [headings, setHeadings] = useState<Heading[]>([]);
-  const [processedContent, setProcessedContent] = useState(content);
+  const [processedContent, setProcessedContent] = useState(resolvedContent);
   const activeId = useScrollSpy(headings.map((h) => h.id));
 
   useEffect(() => {
-    const extracted = extractHeadings(content);
+    const extracted = extractHeadings(resolvedContent);
     setHeadings(extracted);
 
     const div = document.createElement('div');
-    div.innerHTML = content;
+    div.innerHTML = resolvedContent;
     div.querySelectorAll('h2').forEach((el) => {
       const text = el.textContent?.trim() ?? '';
       const id = text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
       el.id = id;
     });
     setProcessedContent(div.innerHTML);
-  }, [content]);
+  }, [resolvedContent]);
 
   return (
     <section className="page-section bg-background">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useContent } from '@/hooks/useContent';
 import { blogContent } from '@/content';
+import { useLanguage } from '@/lib/i18n';
 
 type Category = {
   id: string;
@@ -36,6 +37,8 @@ type Props = {
 
 export default function BlogList({ posts, categories }: Props) {
   const c = useContent(blogContent).list;
+  const { locale } = useLanguage();
+  const localeKey = locale === 'es' ? 'es-ES' : locale;
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const filtered = activeCategory
@@ -68,7 +71,7 @@ export default function BlogList({ posts, categories }: Props) {
                     : 'bg-secondary-100 text-secondary-900 hover:bg-secondary-100/70'
                 }`}
               >
-                {cat.label['en'] ?? cat.slug}
+                {cat.label[localeKey] ?? cat.label['en'] ?? cat.slug}
               </button>
             ))}
           </div>
@@ -79,7 +82,7 @@ export default function BlogList({ posts, categories }: Props) {
         ) : (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((post) => (
-              <PostCard key={post.id} post={post} readMore={c.readMore} publishedOn={c.publishedOn} />
+              <PostCard key={post.id} post={post} readMore={c.readMore} publishedOn={c.publishedOn} localeKey={localeKey} showMoreTags={c.showMoreTags} showLessTags={c.showLessTags} />
             ))}
           </div>
         )}
@@ -92,14 +95,25 @@ function PostCard({
   post,
   readMore,
   publishedOn,
+  localeKey,
+  showMoreTags,
+  showLessTags,
 }: {
   post: Post;
   readMore: string;
   publishedOn: string;
+  localeKey: string;
+  showMoreTags: string;
+  showLessTags: string;
 }) {
-  const title = post.title['en'] ?? post.slug;
-  const excerpt = post.excerpt['en'] ?? '';
-  const coverImage = post.coverImage?.startsWith('http') ? post.coverImage : null;
+  const title = post.title[localeKey] ?? post.title['en'] ?? post.slug;
+  const excerpt = post.excerpt[localeKey] ?? post.excerpt['en'] ?? '';
+  const coverImage = post.coverImage ?? null;
+  const [tagsExpanded, setTagsExpanded] = useState(false);
+
+  const MAX_TAGS = 3;
+  const visibleTags = tagsExpanded ? post.tags : post.tags.slice(0, MAX_TAGS);
+  const hasMore = post.tags.length > MAX_TAGS;
 
   return (
     <Link
@@ -107,7 +121,7 @@ function PostCard({
       className="group flex flex-col rounded-panel bg-light shadow-card overflow-hidden transition-shadow hover:shadow-md"
     >
       {coverImage ? (
-        <div className="h-48 w-full overflow-hidden bg-secondary-100">
+        <div className="relative h-48 w-full overflow-hidden bg-secondary-100">
           <Image
             src={coverImage}
             alt={title}
@@ -115,9 +129,52 @@ function PostCard({
             height={192}
             className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
           />
+          {post.tags.length > 0 && (
+            <div className="absolute top-2 right-2 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              {visibleTags.map((tag) => (
+                <span
+                  key={tag.id}
+                  className="rounded-full bg-primary-500/90 px-3 py-1 text-sm font-medium text-light backdrop-blur-sm"
+                >
+                  {tag.label[localeKey] ?? tag.label['en'] ?? tag.slug}
+                </span>
+              ))}
+              {hasMore && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); setTagsExpanded((v) => !v); }}
+                  className="rounded-full bg-primary-500/90 px-3 py-1 text-sm font-semibold text-light backdrop-blur-sm hover:bg-primary-600/90 transition-colors"
+                >
+                  {tagsExpanded ? showLessTags : showMoreTags}
+                </button>
+              )}
+            </div>
+          )}
         </div>
       ) : (
-        <div className="h-48 w-full bg-secondary-100" />
+        <div className="relative h-48 w-full bg-secondary-100">
+          {post.tags.length > 0 && (
+            <div className="absolute top-2 right-2 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              {visibleTags.map((tag) => (
+                <span
+                  key={tag.id}
+                  className="rounded-full bg-primary-500/90 px-3 py-1 text-sm font-medium text-light backdrop-blur-sm"
+                >
+                  {tag.label[localeKey] ?? tag.label['en'] ?? tag.slug}
+                </span>
+              ))}
+              {hasMore && (
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); setTagsExpanded((v) => !v); }}
+                  className="rounded-full bg-primary-500/90 px-3 py-1 text-sm font-semibold text-light backdrop-blur-sm hover:bg-primary-600/90 transition-colors"
+                >
+                  {tagsExpanded ? showLessTags : showMoreTags}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       )}
 
       <div className="flex flex-1 flex-col p-6">
@@ -140,20 +197,6 @@ function PostCard({
           <p className="mb-4 flex-1 text-sm text-light-gray leading-relaxed line-clamp-3">
             {excerpt}
           </p>
-        )}
-
-        {/* Tags */}
-        {post.tags.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-1.5">
-            {post.tags.map((tag) => (
-              <span
-                key={tag.id}
-                className="rounded-full bg-primary-500/10 px-2.5 py-0.5 text-xs font-medium text-primary-600"
-              >
-                {tag.label['en'] ?? tag.slug}
-              </span>
-            ))}
-          </div>
         )}
 
         <span className="mt-auto text-sm font-semibold text-primary-500 group-hover:text-primary-600 transition-colors">

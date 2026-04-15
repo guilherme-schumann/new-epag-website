@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getCategories, getPostById, getTags } from '@/lib/strapi';
 import PostForm from '@/components/admin/PostForm';
+import AdminPageTitle from '@/components/admin/AdminPageTitle';
 
 export const metadata: Metadata = { title: 'Edit Post — epag Admin' };
 
@@ -17,7 +18,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="mb-6 text-2xl font-extrabold text-secondary-900">Edit Post</h1>
+      <AdminPageTitle type="editPost" />
       <PostForm
         initialData={{
           id: post.documentId,

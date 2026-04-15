@@ -10,13 +10,12 @@ type Props = {
 export default function RichTextEditor({ value, onChange }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Sync external value only on mount
+  // Sync whenever value changes externally (e.g. locale switch)
   useEffect(() => {
     if (ref.current && ref.current.innerHTML !== value) {
       ref.current.innerHTML = value;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
   return (
     <div className="rounded-panel border border-secondary-900/20 overflow-hidden">

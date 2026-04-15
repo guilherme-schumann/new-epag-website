@@ -12,14 +12,11 @@ function CoverImageUpload({ value, onChange }: { value: string; onChange: (url: 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-
     setUploading(true);
     const formData = new FormData();
     formData.append('files', file);
-
     const res = await fetch('/api/upload', { method: 'POST', body: formData });
     setUploading(false);
-
     if (res.ok) {
       const { url, id } = await res.json();
       onChange(url, id);
@@ -31,27 +28,16 @@ function CoverImageUpload({ value, onChange }: { value: string; onChange: (url: 
       {value ? (
         <div className="relative h-40 w-full overflow-hidden rounded-panel border border-secondary-900/20">
           <Image src={value} alt="Cover" fill className="object-cover" unoptimized />
-          <button
-            type="button"
-            onClick={() => onChange('', null)}
-            className="absolute top-2 right-2 rounded-full bg-secondary-900/60 px-2 py-0.5 text-xs text-light hover:bg-secondary-900 transition-colors"
-          >
+          <button type="button" onClick={() => onChange('', null)} className="absolute top-2 right-2 rounded-full bg-secondary-900/60 px-2 py-0.5 text-xs text-light hover:bg-secondary-900 transition-colors">
             Remove
           </button>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          disabled={uploading}
-          className="flex w-full items-center justify-center gap-2 rounded-panel border border-dashed border-secondary-900/20 px-3 py-6 text-sm text-light-gray hover:border-primary-500 hover:text-primary-500 transition-colors disabled:opacity-50"
-        >
+        <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading} className="flex w-full items-center justify-center gap-2 rounded-panel border border-dashed border-secondary-900/20 px-3 py-6 text-sm text-light-gray hover:border-primary-500 hover:text-primary-500 transition-colors disabled:opacity-50">
           {uploading ? 'Uploading…' : (
             <>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
               </svg>
               Upload image
             </>
@@ -77,7 +63,6 @@ const STATUS_OPTIONS = [
 ];
 
 type LocaleMap = Record<Locale, string>;
-
 type Category = { id: string; documentId: string; slug: string; label: Record<string, string> };
 type Tag = { id: string; documentId: string; slug: string; label: Record<string, string> };
 
@@ -100,10 +85,22 @@ type PostFormProps = {
 
 const emptyLocaleMap = (): LocaleMap => ({ en: '', 'pt-BR': '', 'es-ES': '' });
 
-function StatusSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+// ── Generic dropdown select ───────────────────────────────────────────────────
+
+function CustomSelect({
+  value,
+  onChange,
+  options,
+  placeholder = '— Select —',
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const selected = STATUS_OPTIONS.find((o) => o.value === value);
+  const selected = options.find((o) => o.value === value);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -120,30 +117,96 @@ function StatusSelect({ value, onChange }: { value: string; onChange: (v: string
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors bg-background"
       >
-        <span>{selected?.label}</span>
-        <svg
-          width="14" height="14" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          className={`text-light-gray transition-transform ${open ? 'rotate-180' : ''}`}
-        >
+        <span className={selected ? 'text-dark-gray' : 'text-light-gray'}>{selected?.label ?? placeholder}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`text-light-gray transition-transform ${open ? 'rotate-180' : ''}`}>
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
-
       {open && (
         <div className="absolute z-10 mt-1 w-full rounded-panel border border-secondary-900/10 bg-white shadow-dropdown overflow-hidden">
-          {STATUS_OPTIONS.map((opt) => (
+          <button
+            type="button"
+            onClick={() => { onChange(''); setOpen(false); }}
+            className={`w-full px-3 py-2 text-left text-sm transition-colors hover:bg-background ${!value ? 'font-semibold text-primary-500' : 'text-light-gray'}`}
+          >
+            {placeholder}
+          </button>
+          {options.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => { onChange(opt.value); setOpen(false); }}
-              className={`w-full px-3 py-2 text-left text-sm transition-colors hover:bg-background ${
-                opt.value === value ? 'font-semibold text-primary-500' : 'text-dark-gray'
-              }`}
+              className={`w-full px-3 py-2 text-left text-sm transition-colors hover:bg-background ${opt.value === value ? 'font-semibold text-primary-500' : 'text-dark-gray'}`}
             >
               {opt.label}
             </button>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Multi-select dropdown for tags ────────────────────────────────────────────
+
+function TagsSelect({
+  value,
+  onChange,
+  tags,
+}: {
+  value: string[];
+  onChange: (v: string[]) => void;
+  tags: Tag[];
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  function toggle(documentId: string) {
+    onChange(value.includes(documentId) ? value.filter((id) => id !== documentId) : [...value, documentId]);
+  }
+
+  const selectedLabels = tags.filter((t) => value.includes(t.documentId)).map((t) => t.label['en'] ?? t.slug);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between rounded-panel border border-secondary-900/20 px-3 py-2 text-sm outline-none focus:border-primary-500 transition-colors bg-background min-h-[38px]"
+      >
+        <span className={selectedLabels.length ? 'text-dark-gray' : 'text-light-gray'}>
+          {selectedLabels.length ? selectedLabels.join(', ') : '— No tags —'}
+        </span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`shrink-0 text-light-gray transition-transform ${open ? 'rotate-180' : ''}`}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute z-10 mt-1 w-full rounded-panel border border-secondary-900/10 bg-white shadow-dropdown overflow-hidden">
+          {tags.map((tag) => {
+            const active = value.includes(tag.documentId);
+            return (
+              <button
+                key={tag.id}
+                type="button"
+                onClick={() => toggle(tag.documentId)}
+                className={`w-full flex items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-background ${active ? 'font-semibold text-primary-500' : 'text-dark-gray'}`}
+              >
+                <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border ${active ? 'border-primary-500 bg-primary-500' : 'border-secondary-900/20'}`}>
+                  {active && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
+                </span>
+                {tag.label['en'] ?? tag.slug}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
@@ -169,18 +232,8 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  function setLocaleField<T extends LocaleMap>(
-    setter: React.Dispatch<React.SetStateAction<T>>,
-    value: string
-  ) {
+  function setLocaleField<T extends LocaleMap>(setter: React.Dispatch<React.SetStateAction<T>>, value: string) {
     setter((prev) => ({ ...prev, [locale]: value }));
-  }
-
-  // Helper to check if all required fields are filled for at least one locale
-  function hasValidContent() {
-    return LOCALES.some(({ key }) => 
-      title[key]?.trim() && excerpt[key]?.trim() && content[key]?.trim()
-    );
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -188,17 +241,20 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
     setSaving(true);
     setError('');
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       slug,
       postStatus: status,
       title,
       excerpt,
       content,
-      coverImage: coverImageId ?? undefined,
-      featuredImage: featuredImageId ?? undefined,
-      category: categoryId || undefined,
-      tags: selectedTagIds.length > 0 ? selectedTagIds : undefined,
+      category: categoryId || null,
+      tags: selectedTagIds,
     };
+
+    // Only send image IDs if a new image was uploaded; otherwise keep existing
+    if (coverImageId !== null) payload.coverImage = coverImageId;
+    if (featuredImageId !== null) payload.featuredImage = featuredImageId;
+
     const url = isEditing ? `/api/posts/${initialData.id}` : '/api/posts';
     const method = isEditing ? 'PUT' : 'POST';
 
@@ -227,6 +283,9 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
     router.refresh();
   }
 
+  const categoryOptions = categories.map((c) => ({ value: c.documentId, label: c.label['en'] ?? c.slug }));
+  const statusOptions = STATUS_OPTIONS;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Meta */}
@@ -243,7 +302,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
         </div>
         <div>
           <label className="block text-sm font-semibold text-secondary-900 mb-1">Status</label>
-          <StatusSelect value={status} onChange={setStatus} />
+          <CustomSelect value={status} onChange={setStatus} options={statusOptions} placeholder="— Status —" />
         </div>
       </div>
 
@@ -253,47 +312,13 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
           {categories.length > 0 && (
             <div>
               <label className="block text-sm font-semibold text-secondary-900 mb-1">Category</label>
-              <select
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-                className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors bg-background"
-              >
-                <option value="">— No category —</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.documentId}>
-                    {cat.label['en'] ?? cat.slug}
-                  </option>
-                ))}
-              </select>
+              <CustomSelect value={categoryId} onChange={setCategoryId} options={categoryOptions} placeholder="— No category —" />
             </div>
           )}
-
           {tags.length > 0 && (
             <div>
               <label className="block text-sm font-semibold text-secondary-900 mb-1">Tags</label>
-              <div className="flex flex-wrap gap-2 rounded-panel border border-secondary-900/20 px-3 py-2 min-h-[38px]">
-                {tags.map((tag) => {
-                  const active = selectedTagIds.includes(tag.documentId);
-                  return (
-                    <button
-                      key={tag.id}
-                      type="button"
-                      onClick={() =>
-                        setSelectedTagIds((prev) =>
-                          active ? prev.filter((id) => id !== tag.documentId) : [...prev, tag.documentId]
-                        )
-                      }
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors ${
-                        active
-                          ? 'bg-primary-500 text-light'
-                          : 'bg-secondary-100 text-secondary-900 hover:bg-secondary-100/70'
-                      }`}
-                    >
-                      {tag.label['en'] ?? tag.slug}
-                    </button>
-                  );
-                })}
-              </div>
+              <TagsSelect value={selectedTagIds} onChange={setSelectedTagIds} tags={tags} />
             </div>
           )}
         </div>
@@ -301,18 +326,12 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
 
       <div>
         <label className="block text-sm font-semibold text-secondary-900 mb-1">Cover Image</label>
-        <CoverImageUpload
-          value={coverImage}
-          onChange={(url, id) => { setCoverImage(url); setCoverImageId(id); }}
-        />
+        <CoverImageUpload value={coverImage} onChange={(url, id) => { setCoverImage(url); setCoverImageId(id); }} />
       </div>
 
       <div>
         <label className="block text-sm font-semibold text-secondary-900 mb-1">Featured Image <span className="text-light-gray font-normal">(appears inside the post)</span></label>
-        <CoverImageUpload
-          value={featuredImage}
-          onChange={(url, id) => { setFeaturedImage(url); setFeaturedImageId(id); }}
-        />
+        <CoverImageUpload value={featuredImage} onChange={(url, id) => { setFeaturedImage(url); setFeaturedImageId(id); }} />
       </div>
 
       {/* Locale tabs */}
@@ -329,17 +348,13 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
                 key={key}
                 type="button"
                 onClick={() => setLocale(key)}
-                className={`relative px-4 py-2 text-sm font-semibold transition-colors border-b-2 -mb-px ${
-                  locale === key
-                    ? 'border-primary-500 text-primary-500'
-                    : 'border-transparent text-light-gray hover:text-dark-gray'
-                }`}
+                className={`relative px-4 py-2 text-sm font-semibold transition-colors border-b-2 -mb-px ${locale === key ? 'border-primary-500 text-primary-500' : 'border-transparent text-light-gray hover:text-dark-gray'}`}
               >
                 {label}
                 {isFilled && (
                   <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
                   </span>
                 )}
               </button>
@@ -357,7 +372,6 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
               className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-secondary-900 mb-1">Excerpt</label>
             <textarea
@@ -368,13 +382,9 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
               className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors resize-none"
             />
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-secondary-900 mb-1">Content</label>
-            <RichTextEditor
-              value={content[locale]}
-              onChange={(val) => setLocaleField(setContent, val)}
-            />
+            <RichTextEditor value={content[locale]} onChange={(val) => setLocaleField(setContent, val)} />
           </div>
         </div>
       </div>
@@ -383,28 +393,15 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
 
       <div className="flex items-center justify-between pt-2">
         {isEditing ? (
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="text-sm text-red-500 hover:text-red-600 transition-colors"
-          >
+          <button type="button" onClick={handleDelete} className="text-sm text-red-500 hover:text-red-600 transition-colors">
             Delete post
           </button>
         ) : <span />}
-
         <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="rounded-panel border border-secondary-900/20 px-4 py-2 text-sm font-semibold text-dark-gray hover:bg-background transition-colors"
-          >
+          <button type="button" onClick={() => router.back()} className="rounded-panel border border-secondary-900/20 px-4 py-2 text-sm font-semibold text-dark-gray hover:bg-background transition-colors">
             Cancel
           </button>
-          <button
-            type="submit"
-            disabled={saving}
-            className="rounded-panel bg-primary-500 px-4 py-2 text-sm font-semibold text-light hover:bg-primary-600 transition-colors disabled:opacity-50"
-          >
+          <button type="submit" disabled={saving} className="rounded-panel bg-primary-500 px-4 py-2 text-sm font-semibold text-light hover:bg-primary-600 transition-colors disabled:opacity-50">
             {saving ? 'Saving…' : isEditing ? 'Save changes' : 'Create post'}
           </button>
         </div>

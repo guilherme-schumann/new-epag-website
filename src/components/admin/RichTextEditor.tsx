@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 type Props = {
   value: string;
@@ -10,10 +11,11 @@ type Props = {
 export default function RichTextEditor({ value, onChange }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // Sync whenever value changes externally (e.g. locale switch)
+  // Sanitize and sync whenever value changes externally (e.g. locale switch)
   useEffect(() => {
-    if (ref.current && ref.current.innerHTML !== value) {
-      ref.current.innerHTML = value;
+    const safe = sanitizeHtml(value);
+    if (ref.current && ref.current.innerHTML !== safe) {
+      ref.current.innerHTML = safe;
     }
   }, [value]);
 

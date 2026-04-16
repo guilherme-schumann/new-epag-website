@@ -76,16 +76,16 @@ export default function Footer() {
       items: [
         { label: nav.payin, href: '/solutions/payin' },
         { label: nav.checkout, children: [
-          { label: nav.hostedCheckout, href: '/solutions/checkout/hosted' },
-          { label: nav.redirectCheckout, href: '/solutions/checkout/redirect' },
-          { label: nav.embedCheckout, href: '/solutions/checkout/embed' },
+          { label: nav.hostedCheckout, href: '/contact' },
+          { label: nav.redirectCheckout, href: '/contact' },
+          { label: nav.embedCheckout, href: '/contact' },
         ]},
         { label: nav.recurrency, children: [
-          { label: nav.pixAutomatico, href: '/solutions/recurrency/pix-automatico' },
-          { label: nav.cards, href: '/solutions/recurrency/cards' },
+          { label: nav.pixAutomatico, href: '/contact' },
+          { label: nav.cards, href: '/contact' },
         ]},
-        { label: nav.serverToServer, href: '/solutions/server-to-server' },
-        { label: nav.idValidation, href: '/solutions/id-validation' },
+        { label: nav.serverToServer, href: '/contact' },
+        { label: nav.idValidation, href: '/contact' },
       ],
     },
     {
@@ -135,8 +135,8 @@ export default function Footer() {
       title: nav.industries,
       items: [
         { label: nav.niches, children: [
-          { label: nav.ecommerce, href: '/industries/ecommerce' },
-          { label: nav.saas, href: '/industries/saas' },
+          { label: nav.ecommerce, href: '/contact' },
+          { label: nav.saas, href: '/contact' },
         ]},
       ],
     },

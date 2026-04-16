@@ -119,6 +119,13 @@ const ptBR: Translations = {
       colUpdated: 'Atualizado',
       colLang: 'Idiomas',
     },
+    login: {
+      email: 'Email',
+      password: 'Senha',
+      signIn: 'Entrar',
+      signingIn: 'Entrando…',
+      invalidCredentials: 'Email ou senha inválidos.',
+    },
     post: {
       slugPlaceholder: 'meu-post-slug',
       slug: 'Slug',
@@ -134,6 +141,10 @@ const ptBR: Translations = {
       uploadImage: 'Enviar imagem',
       remove: 'Remover',
       multiLangHint: 'Preencha o conteúdo para cada idioma separadamente. Troque de aba para adicionar traduções. Você pode publicar com apenas um idioma preenchido.',
+      multiLangLabel: 'Multi-idioma',
+      localeEn: 'English',
+      localePt: 'Português',
+      localeEs: 'Español',
       title: 'Título',
       excerpt: 'Resumo',
       content: 'Conteúdo',
@@ -159,6 +170,7 @@ const ptBR: Translations = {
       edit: 'Editar',
       delete: 'Excluir',
       deleteConfirm: 'Excluir?',
+      slugDuplicate: 'Já existe uma tag/categoria com este slug:',
     },
     status: {
       draft: 'Rascunho',

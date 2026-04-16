@@ -3,13 +3,6 @@
 import { useState } from 'react';
 import { useLanguage, locales } from '@/lib/i18n';
 
-type Locale = 'en' | 'pt-BR' | 'es-ES';
-const LOCALES: { key: Locale; label: string }[] = [
-  { key: 'en', label: 'EN' },
-  { key: 'pt-BR', label: 'PT' },
-  { key: 'es-ES', label: 'ES' },
-];
-
 type Item = {
   id: string;
   documentId: string;
@@ -38,6 +31,15 @@ export default function TaxonomyManager({ endpoint, initialItems }: Props) {
   function closeForm() { setCreating(false); setEditing(null); }
 
   async function handleSave(slug: string, label: Record<string, string>) {
+    // Validate slug uniqueness client-side
+    const isDuplicate = items.some(
+      (i) => i.slug === slug && i.id !== editing?.id
+    );
+    if (isDuplicate) {
+      alert(`${a.taxonomy.slugDuplicate} "${slug}"`);
+      return;
+    }
+
     if (editing) {
       const res = await fetch(`${endpoint}/${editing.documentId}`, {
         method: 'PUT',

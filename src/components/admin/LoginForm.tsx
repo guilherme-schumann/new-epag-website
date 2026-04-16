@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/lib/i18n';
 
 export default function LoginForm() {
   const router = useRouter();
+  const { t } = useLanguage();
+  const a = t.admin.login;
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -26,7 +29,7 @@ export default function LoginForm() {
     setLoading(false);
 
     if (!res.ok) {
-      setError('Invalid email or password.');
+      setError(a.invalidCredentials);
       return;
     }
 
@@ -36,7 +39,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-semibold text-secondary-900 mb-1">Email</label>
+        <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.email}</label>
         <input
           name="email"
           type="email"
@@ -45,7 +48,7 @@ export default function LoginForm() {
         />
       </div>
       <div>
-        <label className="block text-sm font-semibold text-secondary-900 mb-1">Password</label>
+        <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.password}</label>
         <input
           name="password"
           type="password"
@@ -59,7 +62,7 @@ export default function LoginForm() {
         disabled={loading}
         className="w-full rounded-panel bg-primary-500 py-2 text-sm font-semibold text-light transition-colors hover:bg-primary-600 disabled:opacity-50"
       >
-        {loading ? 'Signing in…' : 'Sign in'}
+        {loading ? a.signingIn : a.signIn}
       </button>
     </form>
   );

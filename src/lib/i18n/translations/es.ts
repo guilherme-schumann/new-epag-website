@@ -119,6 +119,13 @@ const es: Translations = {
       colUpdated: 'Actualizado',
       colLang: 'Idiomas',
     },
+    login: {
+      email: 'Email',
+      password: 'Contraseña',
+      signIn: 'Iniciar sesión',
+      signingIn: 'Iniciando sesión…',
+      invalidCredentials: 'Email o contraseña inválidos.',
+    },
     post: {
       slugPlaceholder: 'mi-post-slug',
       slug: 'Slug',
@@ -134,6 +141,10 @@ const es: Translations = {
       uploadImage: 'Subir imagen',
       remove: 'Eliminar',
       multiLangHint: 'Completa el contenido para cada idioma por separado. Cambia de pestaña para agregar traducciones. Puedes publicar con solo un idioma completado.',
+      multiLangLabel: 'Multi-idioma',
+      localeEn: 'English',
+      localePt: 'Português',
+      localeEs: 'Español',
       title: 'Título',
       excerpt: 'Resumen',
       content: 'Contenido',
@@ -159,6 +170,7 @@ const es: Translations = {
       edit: 'Editar',
       delete: 'Eliminar',
       deleteConfirm: '¿Eliminar?',
+      slugDuplicate: 'Ya existe una tag/categoría con este slug:',
     },
     status: {
       draft: 'Borrador',

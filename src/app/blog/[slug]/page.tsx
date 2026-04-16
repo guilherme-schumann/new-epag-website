@@ -11,9 +11,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return {};
+
+  const title = post.title?.['en'] ?? slug;
+  const description = post.excerpt?.['en'] ?? '';
+  const image = post.coverImage ?? post.featuredImage ?? null;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://epag.io'}/blog/${slug}`;
+
   return {
-    title: `${post.title?.['en'] ?? slug} — epag Blog`,
-    description: post.excerpt?.['en'] ?? '',
+    title: `${title} — epag Blog`,
+    description,
+    openGraph: {
+      title: `${title} — epag Blog`,
+      description,
+      url,
+      type: 'article',
+      publishedTime: post.publishedAt ?? undefined,
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
+    },
+    twitter: {
+      card: image ? 'summary_large_image' : 'summary',
+      title: `${title} — epag Blog`,
+      description,
+      ...(image ? { images: [image] } : {}),
+    },
   };
 }
 
@@ -43,7 +63,6 @@ export default async function BlogPostPage({
       />
       <BlogPostLayout
         title={post.title ?? {}}
-        publishedAt={post.publishedAt}
         content={post.content ?? {}}
         featuredImage={post.featuredImage}
         tags={post.tags.map((t) => ({ id: String(t.id), slug: t.slug, label: t.label }))}

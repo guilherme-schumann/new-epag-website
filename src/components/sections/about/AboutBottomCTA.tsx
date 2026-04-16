@@ -62,7 +62,7 @@ export default function AboutBottomCTA() {
                 <Icon name="arrow-right" size={16} className="ml-2" />
               </Button>
             </Link>
-            <a href="/docs" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+            <a href="https://docs.epag.io" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
               {c.cta.secondary}
             </a>
           </motion.div>

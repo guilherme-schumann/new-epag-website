@@ -118,6 +118,13 @@ const en: Translations = {
       colUpdated: 'Updated',
       colLang: 'Languages',
     },
+    login: {
+      email: 'Email',
+      password: 'Password',
+      signIn: 'Sign in',
+      signingIn: 'Signing in…',
+      invalidCredentials: 'Invalid email or password.',
+    },
     post: {
       slugPlaceholder: 'my-post-slug',
       slug: 'Slug',
@@ -158,6 +165,7 @@ const en: Translations = {
       edit: 'Edit',
       delete: 'Delete',
       deleteConfirm: 'Delete?',
+      slugDuplicate: 'A tag/category with this slug already exists:',
     },
     status: {
       draft: 'Draft',

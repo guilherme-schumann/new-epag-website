@@ -23,7 +23,6 @@ export async function strapiRequest<T>(
 
   return res.json();
 }
-
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export type StrapiCategory = {
@@ -172,7 +171,7 @@ export async function getPosts(): Promise<StrapiPost[]> {
 export async function getPostBySlug(slug: string): Promise<StrapiPost | null> {
   if (USE_MOCK) return MOCK_POSTS.find((p) => p.slug === slug) ?? null;
   const res = await strapiRequest<StrapiListResponse<RawStrapiPost>>(
-    `/posts?filters[slug][$eq]=${slug}&populate=*`
+    `/posts?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=*`
   );
   return res.data[0] ? normalize(res.data[0]) : null;
 }
@@ -201,4 +200,12 @@ export async function getTags(): Promise<StrapiTag[]> {
   if (USE_MOCK) return MOCK_TAGS;
   const res = await strapiRequest<StrapiListResponse<StrapiTag>>('/tags?sort=label:asc');
   return res.data;
+}
+
+export async function getTagBySlug(slug: string): Promise<StrapiTag | null> {
+  if (USE_MOCK) return MOCK_TAGS.find((t) => t.slug === slug) ?? null;
+  const res = await strapiRequest<StrapiListResponse<StrapiTag>>(
+    `/tags?filters[slug][$eq]=${encodeURIComponent(slug)}`
+  );
+  return res.data[0] ?? null;
 }

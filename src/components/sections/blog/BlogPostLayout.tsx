@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useContent } from '@/hooks/useContent';
 import { blogContent } from '@/content';
 import { useLanguage } from '@/lib/i18n';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 type Heading = { id: string; text: string };
 
@@ -31,28 +32,12 @@ function useScrollSpy(ids: string[]) {
   return activeId;
 }
 
-function extractHeadings(html: string): Heading[] {
-  if (typeof window === 'undefined') return [];
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const headings: Heading[] = [];
-  div.querySelectorAll('h2').forEach((el) => {
-    const text = el.textContent?.trim() ?? '';
-    if (!text) return;
-    const id = text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-    el.id = id;
-    headings.push({ id, text });
-  });
-  return headings;
-}
-
 type RelatedPost = { slug: string; title: string; coverImage: string | null };
 
 type Tag = { id: string; slug: string; label: Record<string, string> };
 
 type Props = {
   title: Record<string, string>;
-  publishedAt: string | null;
   content: Record<string, string>;
   featuredImage?: string | null;
   relatedPosts?: RelatedPost[];
@@ -60,7 +45,7 @@ type Props = {
   tags?: Tag[];
 };
 
-export default function BlogPostLayout({ title, publishedAt, content, featuredImage, relatedPosts = [], backLabel, tags = [] }: Props) {
+export default function BlogPostLayout({ title, content, featuredImage, relatedPosts = [], backLabel, tags = [] }: Props) {
   const c = useContent(blogContent).post;
   const back = backLabel ?? c.backLabel;
   const { locale } = useLanguage();
@@ -69,23 +54,25 @@ export default function BlogPostLayout({ title, publishedAt, content, featuredIm
   const resolvedTitle = title[localeKey] ?? title['en'] ?? '';
   const resolvedContent = content[localeKey] ?? content['en'] ?? '';
 
-  const [headings, setHeadings] = useState<Heading[]>([]);
-  const [processedContent, setProcessedContent] = useState(resolvedContent);
-  const activeId = useScrollSpy(headings.map((h) => h.id));
-
-  useEffect(() => {
-    const extracted = extractHeadings(resolvedContent);
-    setHeadings(extracted);
-
+  // Process content and extract headings in one pass — avoids cascading setState in useEffect
+  const { processedContent, headings } = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return { processedContent: sanitizeHtml(resolvedContent), headings: [] };
+    }
     const div = document.createElement('div');
     div.innerHTML = resolvedContent;
+    const extracted: Heading[] = [];
     div.querySelectorAll('h2').forEach((el) => {
       const text = el.textContent?.trim() ?? '';
+      if (!text) return;
       const id = text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
       el.id = id;
+      extracted.push({ id, text });
     });
-    setProcessedContent(div.innerHTML);
+    return { processedContent: sanitizeHtml(div.innerHTML), headings: extracted };
   }, [resolvedContent]);
+
+  const activeId = useScrollSpy(headings.map((h) => h.id));
 
   return (
     <section className="page-section bg-background">
@@ -98,11 +85,12 @@ export default function BlogPostLayout({ title, publishedAt, content, featuredIm
               <div className="mb-8 overflow-hidden rounded-panel">
                 <Image
                   src={featuredImage}
-                  alt={title}
+                  alt={resolvedTitle}
                   width={1200}
                   height={360}
                   className="w-full h-[360px] object-cover"
                   priority
+                  loading="eager"
                 />
               </div>
             )}
@@ -115,12 +103,13 @@ export default function BlogPostLayout({ title, publishedAt, content, featuredIm
             {tags.length > 0 && (
               <div className="mt-10 flex flex-wrap gap-2 border-t border-secondary-900/10 pt-6">
                 {tags.map((tag) => (
-                  <span
+                  <Link
                     key={tag.id}
-                    className="rounded-full bg-primary-500/10 px-3 py-1 text-sm font-medium text-primary-600"
+                    href={`/blog/tag/${tag.slug}`}
+                    className="rounded-full bg-primary-500/10 px-3 py-1 text-sm font-medium text-primary-600 transition-colors hover:bg-primary-500/20"
                   >
-                    {tag.label['en'] ?? tag.slug}
-                  </span>
+                    {tag.label[localeKey] ?? tag.label['en'] ?? tag.slug}
+                  </Link>
                 ))}
               </div>
             )}

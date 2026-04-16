@@ -47,8 +47,11 @@ function detectLocale(): Locale {
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en');
 
-  // Hydrate from localStorage / browser language after mount
+  // Hydrate from localStorage / browser language after mount.
+  // This intentional setState-in-effect pattern is required for SSR hydration:
+  // the server renders with 'en', then the client corrects to the stored locale.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocaleState(detectLocale());
   }, []);
 

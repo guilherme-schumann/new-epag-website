@@ -132,6 +132,13 @@ export interface Translations {
       colUpdated: string;
       colLang: string;
     };
+    login: {
+      email: string;
+      password: string;
+      signIn: string;
+      signingIn: string;
+      invalidCredentials: string;
+    };
     post: {
       slugPlaceholder: string;
       slug: string;
@@ -147,6 +154,10 @@ export interface Translations {
       uploadImage: string;
       remove: string;
       multiLangHint: string;
+      multiLangLabel: string;
+      localeEn: string;
+      localePt: string;
+      localeEs: string;
       title: string;
       excerpt: string;
       content: string;
@@ -172,6 +183,7 @@ export interface Translations {
       edit: string;
       delete: string;
       deleteConfirm: string;
+      slugDuplicate: string;
     };
     status: {
       draft: string;

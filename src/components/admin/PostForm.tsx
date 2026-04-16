@@ -19,6 +19,19 @@ function CoverImageUpload({ value, onChange, uploadLabel, uploadingLabel, remove
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
+    const MAX_SIZE = 5 * 1024 * 1024;
+
+    if (!ALLOWED.includes(file.type)) {
+      alert('File type not allowed. Use JPEG, PNG, WebP, GIF or SVG.');
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      alert('File too large. Maximum size is 5MB.');
+      return;
+    }
+
     setUploading(true);
     const formData = new FormData();
     formData.append('files', file);
@@ -57,18 +70,6 @@ function CoverImageUpload({ value, onChange, uploadLabel, uploadingLabel, remove
 }
 
 type Locale = 'en' | 'pt-BR' | 'es-ES';
-const LOCALES: { key: Locale; label: string }[] = [
-  { key: 'en', label: 'English' },
-  { key: 'pt-BR', label: 'Português' },
-  { key: 'es-ES', label: 'Español' },
-];
-
-const STATUS_OPTIONS = [
-  { value: 'draft', label: 'Draft' },
-  { value: 'published', label: 'Published' },
-  { value: 'archived', label: 'Archived' },
-];
-
 type LocaleMap = Record<Locale, string>;
 type Category = { id: string; documentId: string; slug: string; label: Record<string, string> };
 type Tag = { id: string; documentId: string; slug: string; label: Record<string, string> };
@@ -228,6 +229,12 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
   const a = t.admin;
   const isEditing = !!initialData;
 
+  const LOCALES: { key: Locale; label: string }[] = [
+    { key: 'en', label: a.post.localeEn },
+    { key: 'pt-BR', label: a.post.localePt },
+    { key: 'es-ES', label: a.post.localeEs },
+  ];
+
   const STATUS_OPTIONS_I18N = [
     { value: 'draft', label: a.status.draft },
     { value: 'published', label: a.status.published },
@@ -248,9 +255,18 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>(initialData?.tagIds ?? []);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  // Track if slug was manually edited — if so, stop auto-generating
+  const slugManuallyEdited = useRef(false);
 
-  function setLocaleField<T extends LocaleMap>(setter: React.Dispatch<React.SetStateAction<T>>, value: string) {
+  function generateSlug(value: string) {
+    return value.toLowerCase().replace(/[^a-z0-9 -]/g, '').trim().replace(/\s+/g, '-');
+  }
+
+  function setLocaleField<T extends LocaleMap>(setter: React.Dispatch<React.SetStateAction<T>>, value: string, isTitle = false) {
     setter((prev) => ({ ...prev, [locale]: value }));
+    if (isTitle && !isEditing && !slugManuallyEdited.current) {
+      setSlug(generateSlug(value));
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -309,13 +325,15 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
           <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.slug}</label>
           <input
             value={slug}
-            onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'))}
+            onChange={(e) => {
+              slugManuallyEdited.current = true;
+              setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'));
+            }}
             placeholder={a.post.slugPlaceholder}
             required
             className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors"
           />
-        </div>
-        <div>
+        </div>        <div>
           <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.status}</label>
           <CustomSelect value={status} onChange={setStatus} options={STATUS_OPTIONS_I18N} placeholder={a.post.status} />
         </div>
@@ -350,7 +368,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
 
       <div>
         <div className="mb-3 rounded-panel bg-secondary-100/50 px-4 py-3 text-sm text-dark-gray">
-          <strong className="font-semibold">Multi-language:</strong> {a.post.multiLangHint}
+          <strong className="font-semibold">{a.post.multiLangLabel}:</strong> {a.post.multiLangHint}
         </div>
 
         <div className="flex gap-1 mb-4 border-b border-secondary-900/10">
@@ -380,7 +398,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
             <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.title}</label>
             <input
               value={title[locale]}
-              onChange={(e) => setLocaleField(setTitle, e.target.value)}
+              onChange={(e) => setLocaleField(setTitle, e.target.value, true)}
               placeholder={`${a.post.title} in ${locale}`}
               className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors"
             />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useContent } from '@/hooks/useContent';
@@ -33,26 +34,46 @@ type Post = {
 type Props = {
   posts: Post[];
   categories: Category[];
+  tags: Tag[];
+  initialTag?: string;
 };
 
-export default function BlogList({ posts, categories }: Props) {
+export default function BlogList({ posts, categories, tags, initialTag }: Props) {
   const c = useContent(blogContent).list;
   const { locale } = useLanguage();
   const localeKey = locale === 'es' ? 'es-ES' : locale;
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const filtered = activeCategory
-    ? posts.filter((p) => p.category?.slug === activeCategory)
-    : posts;
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const activeTag = searchParams.get('tag') ?? initialTag ?? null;
+
+  function setTagFilter(slug: string | null) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (slug) {
+      params.set('tag', slug);
+    } else {
+      params.delete('tag');
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  }
+
+  const filtered = posts.filter((p) => {
+    const matchCat = !activeCategory || p.category?.slug === activeCategory;
+    const matchTag = !activeTag || p.tags.some((t) => t.slug === activeTag);
+    return matchCat && matchTag;
+  });
 
   return (
     <section className="page-section bg-background">
       <div className="page-container">
         {/* Category filter */}
         {categories.length > 0 && (
-          <div className="mb-8 flex flex-wrap gap-2">
+          <div className="mb-4 flex flex-wrap gap-2">
             <button
               onClick={() => setActiveCategory(null)}
+              suppressHydrationWarning
               className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
                 activeCategory === null
                   ? 'bg-primary-500 text-light'
@@ -65,6 +86,7 @@ export default function BlogList({ posts, categories }: Props) {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.slug === activeCategory ? null : cat.slug)}
+                suppressHydrationWarning
                 className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
                   activeCategory === cat.slug
                     ? 'bg-primary-500 text-light'
@@ -72,6 +94,31 @@ export default function BlogList({ posts, categories }: Props) {
                 }`}
               >
                 {cat.label[localeKey] ?? cat.label['en'] ?? cat.slug}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Tag filter */}
+        {tags.length > 0 && (
+          <div className="mb-8 flex flex-wrap gap-2">
+            {activeTag && (
+              <button
+                onClick={() => setTagFilter(null)}
+                suppressHydrationWarning
+                className="rounded-full bg-primary-500 px-4 py-1.5 text-sm font-semibold text-light transition-colors"
+              >
+                #{activeTag} ×
+              </button>
+            )}
+            {!activeTag && tags.map((tag) => (
+              <button
+                key={tag.id}
+                onClick={() => setTagFilter(tag.slug)}
+                suppressHydrationWarning
+                className="rounded-full bg-secondary-100/60 px-3 py-1 text-xs font-semibold text-secondary-900 hover:bg-primary-500/10 hover:text-primary-600 transition-colors"
+              >
+                #{tag.label[localeKey] ?? tag.label['en'] ?? tag.slug}
               </button>
             ))}
           </div>

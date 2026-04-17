@@ -132,7 +132,7 @@ export const MOCK_POSTS: StrapiPost[] = [
 
 type StrapiMediaFile = { id: number; url: string };
 
-type RawStrapiPost = Omit<StrapiPost, 'status' | 'coverImage' | 'featuredImage' | 'category' | 'tags'> & {
+export type RawStrapiPost = Omit<StrapiPost, 'status' | 'coverImage' | 'featuredImage' | 'category' | 'tags'> & {
   postStatus: StrapiPost['status'];
   coverImage: StrapiMediaFile[] | StrapiMediaFile | null;
   featuredImage: StrapiMediaFile[] | StrapiMediaFile | null;
@@ -146,7 +146,7 @@ function resolveImage(img: StrapiMediaFile[] | StrapiMediaFile | null): string |
   return file.url.startsWith('http') ? file.url : `${STRAPI_URL}${file.url}`;
 }
 
-function normalize(raw: RawStrapiPost): StrapiPost {
+export function normalize(raw: RawStrapiPost): StrapiPost {
   const { postStatus, coverImage, featuredImage, tags, ...rest } = raw;
   return {
     ...rest,

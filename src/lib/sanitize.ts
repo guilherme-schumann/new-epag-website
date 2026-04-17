@@ -34,10 +34,16 @@ export function sanitizeText(text: string): string {
 }
 
 /**
- * Sanitizes a slug — only allows lowercase letters, numbers and hyphens.
+ * Sanitizes a slug — converts spaces to hyphens, removes special chars, lowercases.
  */
 export function sanitizeSlug(slug: string): string {
-  return slug.toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 200);
+  return slug
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 200);
 }
 
 const POST_LOCALES = ['en', 'pt-BR', 'es-ES'];

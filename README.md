@@ -219,3 +219,4 @@ Tokens are defined in `src/lib/design-tokens.ts` and `src/app/globals.css` (`@th
 | `STRAPI_URL` | Strapi instance URL | `http://localhost:1337` |
 | `STRAPI_API_TOKEN` | Strapi API token | — |
 | `MOCK_DB` | Enable mock mode | `false` |
+

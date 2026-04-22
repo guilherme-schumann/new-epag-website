@@ -44,23 +44,32 @@ function detectLocale(): Locale {
   return 'en';
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+export function LanguageProvider({ 
+  children, 
+  forcedLocale 
+}: { 
+  children: ReactNode;
+  forcedLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(forcedLocale || 'en');
 
   // Hydrate from localStorage / browser language after mount.
   // This intentional setState-in-effect pattern is required for SSR hydration:
   // the server renders with 'en', then the client corrects to the stored locale.
   useEffect(() => {
+    if (forcedLocale) return; // Skip detection if locale is forced
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocaleState(detectLocale());
-  }, []);
+  }, [forcedLocale]);
 
   // Sync <html lang> and persist preference
   useEffect(() => {
     const config = locales.find((l) => l.code === locale);
     if (config) document.documentElement.lang = config.htmlLang;
-    localStorage.setItem(STORAGE_KEY, locale);
-  }, [locale]);
+    if (!forcedLocale) {
+      localStorage.setItem(STORAGE_KEY, locale);
+    }
+  }, [locale, forcedLocale]);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);

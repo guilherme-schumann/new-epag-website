@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useContent } from '@/hooks/useContent';
 import { homeContent } from '@/content';
+import { links } from '@/content/links';
 
 export default function DeveloperSection() {
   const c = useContent(homeContent).developer;
@@ -26,7 +27,7 @@ export default function DeveloperSection() {
             </div>
 
             <div className="mt-8">
-              <Link href="https://docs.epag.io" className="inline-flex items-center gap-1.5 text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
+              <Link href={links.docs} className="inline-flex items-center gap-1.5 text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
                 {c.cta}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4">
                   <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />

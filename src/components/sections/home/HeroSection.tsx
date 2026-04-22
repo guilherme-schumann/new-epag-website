@@ -6,6 +6,7 @@ import { useContent } from '@/hooks/useContent';
 import { homeContent } from '@/content';
 import ScrollIndicator from './ScrollIndicator';
 import PaymentMethodsMarquee from './PaymentMethodsMarquee';
+import { links } from '@/content/links';
 
 export default function HeroSection() {
   const c = useContent(homeContent).hero;
@@ -53,7 +54,7 @@ export default function HeroSection() {
             className="mt-8 flex flex-wrap items-center justify-center gap-4 short-screen:mt-5"
           >
             <Link
-              href="https://docs.epag.io"
+              href={links.docs}
               className="inline-flex items-center gap-2 rounded-full bg-primary-500 px-6 py-3 text-sm font-semibold text-secondary-900 transition-colors hover:bg-primary-600"
             >
               {c.cta.primary}

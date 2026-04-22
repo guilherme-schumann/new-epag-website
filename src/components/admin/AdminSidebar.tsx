@@ -77,7 +77,7 @@ export default function AdminSidebar({ user }: { user: User }) {
   }
 
   return (
-    <aside className="flex w-52 flex-col bg-secondary-900 min-h-screen">
+    <aside className="flex w-52 flex-col bg-secondary-900 h-full overflow-y-auto">
       <div className="px-5 py-5">
         <div className="flex items-baseline gap-1">
           <span className="text-base font-extrabold text-light">epag</span>

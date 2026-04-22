@@ -5,6 +5,14 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import RichTextEditor from './RichTextEditor';
 import { useLanguage } from '@/lib/i18n';
+import { postSchema } from '@/lib/schemas/post';
+
+type FieldErrors = Partial<Record<string, string[]>>;
+
+function FieldError({ errors }: { errors?: string[] }) {
+  if (!errors?.length) return null;
+  return <p className="mt-1 text-xs text-red-500">{errors[0]}</p>;
+}
 
 function CoverImageUpload({ value, onChange, uploadLabel, uploadingLabel, removeLabel }: {
   value: string;
@@ -162,11 +170,13 @@ function TagsSelect({
   onChange,
   tags,
   noTagsLabel = '— No tags —',
+  adminLocale = 'en',
 }: {
   value: string[];
   onChange: (v: string[]) => void;
   tags: Tag[];
   noTagsLabel?: string;
+  adminLocale?: string;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -183,7 +193,7 @@ function TagsSelect({
     onChange(value.includes(documentId) ? value.filter((id) => id !== documentId) : [...value, documentId]);
   }
 
-  const selectedLabels = tags.filter((t) => value.includes(t.documentId)).map((t) => t.label['en'] ?? t.slug);
+  const selectedLabels = tags.filter((t) => value.includes(t.documentId)).map((t) => t.label[adminLocale] ?? t.label['en'] ?? t.slug);
 
   return (
     <div ref={ref} className="relative">
@@ -213,7 +223,7 @@ function TagsSelect({
                 <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border ${active ? 'border-primary-500 bg-primary-500' : 'border-secondary-900/20'}`}>
                   {active && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
                 </span>
-                {tag.label['en'] ?? tag.slug}
+                {tag.label[adminLocale] ?? tag.label['en'] ?? tag.slug}
               </button>
             );
           })}
@@ -235,6 +245,12 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
     { key: 'es-ES', label: a.post.localeEs },
   ];
 
+  const localeLabel: Record<Locale, string> = {
+    en: a.post.localeEn,
+    'pt-BR': a.post.localePt,
+    'es-ES': a.post.localeEs,
+  };
+
   const STATUS_OPTIONS_I18N = [
     { value: 'draft', label: a.status.draft },
     { value: 'published', label: a.status.published },
@@ -254,7 +270,8 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
   const [categoryId, setCategoryId] = useState<string>(initialData?.categoryId ?? '');
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>(initialData?.tagIds ?? []);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
+  const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   // Track if slug was manually edited — if so, stop auto-generating
   const slugManuallyEdited = useRef(false);
 
@@ -271,10 +288,10 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSaving(true);
-    setError('');
+    setFormError('');
+    setFieldErrors({});
 
-    const payload: Record<string, unknown> = {
+    const payload = {
       slug,
       postStatus: status,
       title,
@@ -282,11 +299,18 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
       content,
       category: categoryId || null,
       tags: selectedTagIds,
+      ...(coverImageId !== null && { coverImage: coverImageId }),
+      ...(featuredImageId !== null && { featuredImage: featuredImageId }),
     };
 
-    // Only send image IDs if a new image was uploaded; otherwise keep existing
-    if (coverImageId !== null) payload.coverImage = coverImageId;
-    if (featuredImageId !== null) payload.featuredImage = featuredImageId;
+    // Client-side validation before hitting the API
+    const parsed = postSchema.safeParse(payload);
+    if (!parsed.success) {
+      setFieldErrors(parsed.error.flatten().fieldErrors as FieldErrors);
+      return;
+    }
+
+    setSaving(true);
 
     const url = isEditing ? `/api/posts/${initialData.id}` : '/api/posts';
     const method = isEditing ? 'PUT' : 'POST';
@@ -301,7 +325,12 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
 
     if (!res.ok) {
       const data = await res.json();
-      setError(JSON.stringify(data.error ?? data));
+      const apiError = data.error;
+      if (apiError?.fieldErrors) {
+        setFieldErrors(apiError.fieldErrors as FieldErrors);
+      } else {
+        setFormError(apiError?.formErrors?.[0] ?? JSON.stringify(apiError ?? data));
+      }
       return;
     }
 
@@ -316,7 +345,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
     router.refresh();
   }
 
-  const categoryOptions = categories.map((c) => ({ value: c.documentId, label: c.label['en'] ?? c.slug }));
+  const categoryOptions = categories.map((c) => ({ value: c.documentId, label: c.label[locale] ?? c.label['en'] ?? c.slug }));
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -330,10 +359,11 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
               setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'));
             }}
             placeholder={a.post.slugPlaceholder}
-            required
-            className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors"
+            className={`w-full rounded-panel border px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors ${fieldErrors.slug ? 'border-red-400' : 'border-secondary-900/20'}`}
           />
-        </div>        <div>
+          <FieldError errors={fieldErrors.slug} />
+        </div>
+        <div>
           <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.status}</label>
           <CustomSelect value={status} onChange={setStatus} options={STATUS_OPTIONS_I18N} placeholder={a.post.status} />
         </div>
@@ -350,7 +380,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
           {tags.length > 0 && (
             <div>
               <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.tags}</label>
-              <TagsSelect value={selectedTagIds} onChange={setSelectedTagIds} tags={tags} noTagsLabel={a.post.noTags} />
+              <TagsSelect value={selectedTagIds} onChange={setSelectedTagIds} tags={tags} noTagsLabel={a.post.noTags} adminLocale={locale} />
             </div>
           )}
         </div>
@@ -374,6 +404,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
         <div className="flex gap-1 mb-4 border-b border-secondary-900/10">
           {LOCALES.map(({ key, label }) => {
             const isFilled = title[key]?.trim() && excerpt[key]?.trim() && content[key]?.trim();
+            const hasError = fieldErrors.title || fieldErrors.excerpt || fieldErrors.content;
             return (
               <button
                 key={key}
@@ -382,7 +413,7 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
                 className={`relative px-4 py-2 text-sm font-semibold transition-colors border-b-2 -mb-px ${locale === key ? 'border-primary-500 text-primary-500' : 'border-transparent text-light-gray hover:text-dark-gray'}`}
               >
                 {label}
-                {isFilled && (
+                {isFilled && !hasError && (
                   <span className="absolute -top-1 -right-1 flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
@@ -399,28 +430,31 @@ export default function PostForm({ initialData, categories = [], tags = [] }: Po
             <input
               value={title[locale]}
               onChange={(e) => setLocaleField(setTitle, e.target.value, true)}
-              placeholder={`${a.post.title} in ${locale}`}
-              className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors"
+              placeholder={`${a.post.title} in ${localeLabel[locale]}`}
+              className={`w-full rounded-panel border px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors ${fieldErrors.title ? 'border-red-400' : 'border-secondary-900/20'}`}
             />
+            <FieldError errors={fieldErrors.title} />
           </div>
           <div>
             <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.excerpt}</label>
             <textarea
               value={excerpt[locale]}
               onChange={(e) => setLocaleField(setExcerpt, e.target.value)}
-              placeholder={`${a.post.excerpt} in ${locale}`}
+              placeholder={`${a.post.excerpt} in ${localeLabel[locale]}`}
               rows={3}
-              className="w-full rounded-panel border border-secondary-900/20 px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors resize-none"
+              className={`w-full rounded-panel border px-3 py-2 text-sm text-dark-gray outline-none focus:border-primary-500 transition-colors resize-none ${fieldErrors.excerpt ? 'border-red-400' : 'border-secondary-900/20'}`}
             />
+            <FieldError errors={fieldErrors.excerpt} />
           </div>
           <div>
             <label className="block text-sm font-semibold text-secondary-900 mb-1">{a.post.content}</label>
             <RichTextEditor key={locale} value={content[locale]} onChange={(val) => setLocaleField(setContent, val)} />
+            <FieldError errors={fieldErrors.content} />
           </div>
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {formError && <p className="text-sm text-red-500">{formError}</p>}
 
       <div className="flex items-center justify-between pt-2">
         {isEditing ? (

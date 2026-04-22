@@ -4,7 +4,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - STRAPI_URL=${STRAPI_URL:-http://localhost:1337}
-      - STRAPI_API_TOKEN=${STRAPI_API_TOKEN:-}
-      - MOCK_DB=${MOCK_DB:-false}
+      STRAPI_URL: ${STRAPI_URL}
+      STRAPI_API_TOKEN: ${STRAPI_API_TOKEN}
+      MOCK_DB: ${MOCK_DB:-false}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
     restart: unless-stopped

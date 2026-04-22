@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
 import { useContent } from '@/hooks/useContent';
 import { aboutContent } from '@/content';
+import { links } from '@/content/links';
 
 export default function AboutHero() {
   const c = useContent(aboutContent).hero;
@@ -54,7 +55,7 @@ export default function AboutHero() {
               <Icon name="arrow-right" size={16} className="ml-2" />
             </Button>
           </Link>
-          <a href="https://docs.epag.io" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
+          <a href={links.docs} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500">
             {c.cta.secondary}
           </a>
         </motion.div>

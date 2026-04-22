@@ -3,6 +3,7 @@ import { MOCK_POSTS } from '@/lib/strapi';
 import { requireAuth, isAuthError } from '@/lib/auth';
 import { sanitizePostBody } from '@/lib/sanitize';
 import { auditLog } from '@/lib/audit';
+import { postSchema } from '@/lib/schemas/post';
 
 const STRAPI_URL = process.env.STRAPI_URL ?? 'http://localhost:1337';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN ?? '';
@@ -26,7 +27,13 @@ export async function POST(req: NextRequest) {
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const raw = await req.json();
-  const body = sanitizePostBody(raw);
+
+  const parsed = postSchema.safeParse(raw);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+  }
+
+  const body = sanitizePostBody(parsed.data as Record<string, unknown>);
 
   if (USE_MOCK) {
     auditLog('post.create', ip, { slug: body.slug });

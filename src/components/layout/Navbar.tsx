@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Logo, Icon, Button } from '@/components/ui';
 import NavDropdown, { type DropdownData, type DropdownItem } from './NavDropdown';
 import { useLanguage, type Translations } from '@/lib/i18n';
+import { links } from '@/content/links';
 
 type MenuItem = {
   label: string;
@@ -416,7 +417,7 @@ export default function Navbar() {
           {/* TopBar links on mobile */}
           <div className="flex items-center gap-4 border-b border-secondary-100 bg-secondary-900 px-6 py-3">
             <a
-              href="https://adm.epag.io/login"
+              href={links.adminLogin}
               className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
               onClick={() => setIsOpen(false)}
             >

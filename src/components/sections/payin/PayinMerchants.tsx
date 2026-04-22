@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
 import { useContent } from '@/hooks/useContent';
 import { payinContent } from '@/content';
+import { links } from '@/content/links';
 
 const merchants = ['monday', 'SHEIN', 'UBISOFT', 'PlayStation', 'TikTok', 'Spotify'];
 
@@ -50,7 +51,7 @@ export default function PayinMerchants() {
           <Link href="/solutions/payin" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
             {c.learnPayin}
           </Link>
-          <a href="https://docs.epag.io" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
+          <a href={links.docs} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
             {c.learnPayout}
           </a>
         </motion.div>

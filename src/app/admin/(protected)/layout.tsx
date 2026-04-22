@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { config } from '@/lib/config';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 const STRAPI_URL = process.env.STRAPI_URL ?? 'http://localhost:1337';
@@ -10,7 +11,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const token = store.get('session')?.value;
   if (!token) redirect('/admin/login');
 
-  let user = { email: 'admin@epag.io', username: 'Admin' };
+  let user = { email: config.mock.adminEmail, username: config.mock.adminUsername };
 
   if (!USE_MOCK) {
     const res = await fetch(`${STRAPI_URL}/api/users/me`, {
@@ -22,7 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <AdminSidebar user={{ email: user.email, name: user.username }} />
       <main className="flex-1 p-8 overflow-auto">{children}</main>
     </div>

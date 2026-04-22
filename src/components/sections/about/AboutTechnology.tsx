@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import { useContent } from '@/hooks/useContent';
 import { aboutContent } from '@/content';
+import { links } from '@/content/links';
 
 export default function AboutTechnology() {
   const c = useContent(aboutContent).technology;
@@ -46,7 +47,7 @@ export default function AboutTechnology() {
             </motion.p>
 
             <motion.a
-              href="https://docs.epag.io/"
+              href={links.docs}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-block text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500"

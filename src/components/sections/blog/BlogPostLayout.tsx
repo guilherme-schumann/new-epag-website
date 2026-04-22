@@ -7,6 +7,7 @@ import { useContent } from '@/hooks/useContent';
 import { blogContent } from '@/content';
 import { useLanguage } from '@/lib/i18n';
 import { sanitizeHtml } from '@/lib/sanitize';
+import { links } from '@/content/links';
 
 type Heading = { id: string; text: string };
 
@@ -165,7 +166,7 @@ export default function BlogPostLayout({ title, content, featuredImage, relatedP
                   {c.followUs}
                 </p>
                 <a
-                  href="https://www.linkedin.com/company/epag"
+                  href={links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-sm text-dark-gray hover:text-primary-500 transition-colors"

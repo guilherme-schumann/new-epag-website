@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Icon } from '@/components/ui';
 import { useLanguage, locales, type Locale } from '@/lib/i18n';
+import { links } from '@/content/links';
 
-export default function TopBar() {
+export default function TopBar({ hideLoginLink = false }: { hideLoginLink?: boolean }) {
   const { locale, t, setLocale } = useLanguage();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -14,7 +15,6 @@ export default function TopBar() {
   function updatePosition() {
     if (!buttonRef.current) return;
     const rect = buttonRef.current.getBoundingClientRect();
-    // Use the TopBar div's bottom so the dropdown clears the full TopBar row
     const topBarEl = buttonRef.current.closest('[data-topbar]') as HTMLElement | null;
     const topBarBottom = topBarEl ? topBarEl.getBoundingClientRect().bottom : rect.bottom;
     setDropdownPos({
@@ -28,12 +28,12 @@ export default function TopBar() {
     setOpen((v) => !v);
   }
 
-  // Recalculate position on scroll while open
   useEffect(() => {
     if (!open) return;
     window.addEventListener('scroll', updatePosition, { passive: true });
     return () => window.removeEventListener('scroll', updatePosition);
   }, [open]);
+
   useEffect(() => {
     if (!open) return;
     function handleClick(e: MouseEvent) {
@@ -61,36 +61,37 @@ export default function TopBar() {
     <div data-topbar className="page-x hidden bg-secondary-900 py-2.5 lg:flex">
       <div className="page-container flex w-full items-center justify-end">
         <div className="flex items-center gap-3">
-        {/* Login Admin link */}
-        <a
-          href="https://adm.epag.io/login"
-          className="text-sm font-semibold leading-5 text-secondary-100 hover:text-light transition-colors whitespace-nowrap"
-        >
-          {t.topBar.loginAdmin}
-        </a>
+          {!hideLoginLink && (
+            <>
+              <a
+                href={links.adminLogin}
+                className="text-sm font-semibold leading-5 text-secondary-100 hover:text-light transition-colors whitespace-nowrap"
+              >
+                {t.topBar.loginAdmin}
+              </a>
+              <span className="h-5 w-px bg-secondary-100/30" />
+            </>
+          )}
 
-        <span className="h-5 w-px bg-secondary-100/30" />
-
-        {/* Language selector */}
-        <button
-          ref={buttonRef}
-          onClick={handleOpen}
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          className="flex items-center gap-1.5 text-sm font-semibold leading-5 text-secondary-100 hover:text-light transition-colors cursor-pointer"
-        >
-          <span className={`fi fi-${currentLocale.flag} text-base`} aria-hidden="true" />
-          <span>{currentLocale.label}</span>
-          <Icon
-            name="chevron-down"
-            size={16}
-            className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-          />
-        </button>
+          {/* Language selector */}
+          <button
+            ref={buttonRef}
+            onClick={handleOpen}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+            className="flex items-center gap-1.5 text-sm font-semibold leading-5 text-secondary-100 hover:text-light transition-colors cursor-pointer"
+          >
+            <span className={`fi fi-${currentLocale.flag} text-base`} aria-hidden="true" />
+            <span>{currentLocale.label}</span>
+            <Icon
+              name="chevron-down"
+              size={16}
+              className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+            />
+          </button>
         </div>
       </div>
 
-      {/* Dropdown rendered via fixed positioning to escape sticky header stacking context */}
       {open && (
         <ul
           ref={dropdownRef}

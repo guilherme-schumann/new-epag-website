@@ -103,7 +103,7 @@ export default function NavDropdown({ data }: NavDropdownProps) {
         className="grid gap-8 [@media(min-width:1024px)_and_(max-width:1366px)]:gap-6"
         style={{ gridTemplateColumns: `repeat(${data.columns.length}, var(--size-xs))` }}
       >
-        {data.columns.map((col, idx) => (
+        {data.columns.map((col) => (
           <div key={col.title}>
             <p className="mb-4 flex items-center gap-2 text-sm font-bold text-theme-secondary">
               <span className="inline-block h-4 w-4 rounded bg-theme-secondary/10 ring-1 ring-theme-secondary/20" />

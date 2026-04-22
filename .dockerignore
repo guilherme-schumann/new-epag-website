@@ -1,0 +1,16 @@
+.git
+.gitignore
+.next
+node_modules
+out
+README.md
+REPORT.md
+PRODUCT.md
+AGENTS.md
+CLAUDE.md
+context/
+.env
+.env.*
+*.md
+Dockerfile
+.dockerignore

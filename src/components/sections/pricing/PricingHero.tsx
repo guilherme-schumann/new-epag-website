@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
 import { useContent } from '@/hooks/useContent';
 import { pricingContent } from '@/content';
+import { links } from '@/content/links';
 
 export default function PricingHero() {
   const c = useContent(pricingContent).hero;
@@ -53,7 +54,7 @@ export default function PricingHero() {
             </Button>
           </Link>
           <a
-            href="https://docs.epag.io/"
+            href={links.docs}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-semibold text-secondary-100 transition-colors hover:text-primary-500"

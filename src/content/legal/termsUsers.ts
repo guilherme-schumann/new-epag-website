@@ -78,7 +78,7 @@ export const termsUsersContent = {
       },
     ],
   },
-  'es-ES': {
+  'es': {
     title: 'Términos de Uso para Usuarios',
     sections: [
       {
@@ -114,3 +114,4 @@ export const termsUsersContent = {
     ],
   },
 };
+

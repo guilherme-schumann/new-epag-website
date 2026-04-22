@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import 'flag-icons/css/flag-icons.min.css';
-import { Header, Footer } from '@/components/layout';
 import { LanguageProvider } from '@/lib/i18n';
 
 export const metadata: Metadata = {
@@ -19,9 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen antialiased flex flex-col">
         <LanguageProvider>
-          <Header />
           {children}
-          <Footer />
         </LanguageProvider>
       </body>
     </html>

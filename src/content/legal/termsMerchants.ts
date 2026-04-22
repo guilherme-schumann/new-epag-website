@@ -90,7 +90,7 @@ export const termsMerchantsContent = {
       },
     ],
   },
-  'es-ES': {
+  'es': {
     title: 'Términos de Uso para Comerciantes',
     sections: [
       {
@@ -132,3 +132,4 @@ export const termsMerchantsContent = {
     ],
   },
 };
+

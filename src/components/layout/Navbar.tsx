@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Logo, Icon, Button } from '@/components/ui';
 import NavDropdown, { type DropdownData, type DropdownItem } from './NavDropdown';
 import { useLanguage, type Translations } from '@/lib/i18n';
+import { links } from '@/content/links';
 
 type MenuItem = {
   label: string;
@@ -68,18 +69,18 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
                 label: nav.checkout,
                 bold: true,
                 children: [
-                  { label: nav.hostedCheckout, href: '/solutions/checkout/hosted' },
-                  { label: nav.redirectCheckout, href: '/solutions/checkout/redirect' },
-                  { label: nav.embedCheckout, href: '/solutions/checkout/embed' },
+                  { label: nav.hostedCheckout, href: '/contact' },
+                  { label: nav.redirectCheckout, href: '/contact' },
+                  { label: nav.embedCheckout, href: '/contact' },
                 ],
               },
               { label: nav.recurrency, bold: true, children: [
-                  { label: nav.pixAutomatico, href: '/solutions/recurrency/pix-automatico' },
-                  { label: nav.cards, href: '/solutions/recurrency/cards' },
+                  { label: nav.pixAutomatico, href: '/contact' },
+                  { label: nav.cards, href: '/contact' },
                 ],
               },
-              { label: nav.serverToServer, href: '/solutions/server-to-server', bold: true },
-              { label: nav.idValidation, href: '/solutions/id-validation', bold: true },
+              { label: nav.serverToServer, href: '/contact', bold: true },
+              { label: nav.idValidation, href: '/contact', bold: true },
             ],
           },
           {
@@ -243,8 +244,8 @@ function buildMenuItems(nav: Translations['nav']): MenuItem[] {
                 label: nav.niches,
                 bold: true,
                 children: [
-                  { label: nav.ecommerce, href: '/industries/ecommerce' },
-                  { label: nav.saas, href: '/industries/saas' },
+                  { label: nav.ecommerce, href: '/contact' },
+                  { label: nav.saas, href: '/contact' },
                 ],
               },
             ],
@@ -298,21 +299,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
-  const [dropdownLeft, setDropdownLeft] = useState<number>(0);
   const navRef = useRef<HTMLElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const menuItems = buildMenuItems(t.nav);
 
   function handleMenuEnter(label: string) {
-    const btn = buttonRefs.current[label];
-    const nav = navRef.current;
-    if (btn && nav) {
-      const btnRect = btn.getBoundingClientRect();
-      const navRect = nav.getBoundingClientRect();
-      // center of button relative to nav left edge
-      setDropdownLeft(btnRect.left - navRect.left + btnRect.width / 2);
-    }
     setActiveMenu(label);
   }
 
@@ -425,7 +417,7 @@ export default function Navbar() {
           {/* TopBar links on mobile */}
           <div className="flex items-center gap-4 border-b border-secondary-100 bg-secondary-900 px-6 py-3">
             <a
-              href="https://adm.epag.io/login"
+              href={links.adminLogin}
               className="text-sm font-semibold text-secondary-100 transition-colors hover:text-light"
               onClick={() => setIsOpen(false)}
             >

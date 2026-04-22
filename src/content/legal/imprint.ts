@@ -78,7 +78,7 @@ export const imprintContent = {
       },
     ],
   },
-  'es-ES': {
+  'es': {
     title: 'Imprint',
     sections: [
       {
@@ -114,3 +114,4 @@ export const imprintContent = {
     ],
   },
 };
+

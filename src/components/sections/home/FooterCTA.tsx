@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useContent } from '@/hooks/useContent';
 import { homeContent } from '@/content';
+import { links } from '@/content/links';
 
 export default function FooterCTA() {
   const c = useContent(homeContent).footerCTA;
@@ -22,7 +23,7 @@ export default function FooterCTA() {
                 <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />
               </svg>
             </Link>
-            <Link href="https://docs.epag.io" className="inline-flex items-center gap-2 rounded-full border border-secondary-100/35 px-6 py-3 text-sm font-semibold text-secondary-100 transition-colors hover:border-secondary-100/60 hover:text-light">
+            <Link href={links.docs} className="inline-flex items-center gap-2 rounded-full border border-secondary-100/35 px-6 py-3 text-sm font-semibold text-secondary-100 transition-colors hover:border-secondary-100/60 hover:text-light">
               {c.cta.secondary}
             </Link>
           </div>

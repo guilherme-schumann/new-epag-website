@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { Button, Icon } from '@/components/ui';
 import { useContent } from '@/hooks/useContent';
 import { payinContent } from '@/content';
+import { links } from '@/content/links';
 
 const merchants = ['monday', 'SHEIN', 'UBISOFT', 'PlayStation', 'TikTok', 'Spotify'];
 
@@ -47,12 +48,12 @@ export default function PayinMerchants() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link href="/solutions/pay-in" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
+          <Link href="/solutions/payin" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
             {c.learnPayin}
           </Link>
-          <Link href="/solutions/payout" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
+          <a href={links.docs} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-theme-secondary transition-colors hover:text-secondary-500">
             {c.learnPayout}
-          </Link>
+          </a>
         </motion.div>
 
         <motion.div

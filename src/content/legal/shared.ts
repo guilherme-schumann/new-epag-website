@@ -161,7 +161,7 @@ export const legalSharedContent = {
       ],
     },
   },
-  'es-ES': {
+  'es': {
     hero: {
       eyebrow: 'epag',
       headline: 'Legal y',
@@ -228,3 +228,4 @@ export const legalSharedContent = {
     },
   },
 };
+

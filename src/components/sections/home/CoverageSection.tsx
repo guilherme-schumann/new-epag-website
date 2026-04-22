@@ -5,12 +5,12 @@ import { useContent } from '@/hooks/useContent';
 import { homeContent } from '@/content';
 
 const countryHrefs: Record<string, string> = {
-  br: '/coverage/brazil',
-  mx: '/coverage/mexico',
-  co: '/coverage/colombia',
-  pe: '/coverage/peru',
-  cl: '/coverage/chile',
-  ec: '/coverage/ecuador',
+  br: '/coverage',
+  mx: '/coverage',
+  co: '/coverage',
+  pe: '/coverage',
+  cl: '/coverage',
+  ec: '/coverage',
 };
 
 export default function CoverageSection() {
